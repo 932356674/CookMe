@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--
+            配置链接数据库的内容driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql:///pet_hospital"
+                        userId="root"
+                        password="admin"
+        -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql:///cookme"
+                        userId="root"
+                        password="root">
+        </jdbcConnection>
+
+        <javaTypeResolver >
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!--实体类位置-->
+        <javaModelGenerator targetPackage="com.gss.entity" targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--mapper映射文件位置-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="./src/main/resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!--mapper接口位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gss.mapper"
+                             targetProject="./src/main/java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 用户权限角色,修改表名 -->
+        <table tableName="user" ></table>
+        <table tableName="role" ></table>
+        <table tableName="user_role" ></table>
+
+        <!--编写数据库文档-->
+        <table tableName="attention"></table>
+        <table tableName="book_comment"></table>
+        <table tableName="booktype"></table>
+        <table tableName="collect"></table>
+        <table tableName="consignee" ></table>
+        <table tableName="cookbook"></table>
+        <table tableName="cookbook_type"></table>
+        <table tableName="material"></table>
+        <table tableName="product"></table>
+        <table tableName="regist"></table>
+        <table tableName="shopcar"></table>
+        <table tableName="step"></table>
+
+
+
+    </context>
+</generatorConfiguration>
