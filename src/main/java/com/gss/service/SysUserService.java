@@ -5,7 +5,7 @@ import com.gss.utils.R;
 public interface SysUserService {
 
 
-
+    public R selectMobile();
 
 
 }
