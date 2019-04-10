@@ -94,6 +94,5 @@ public interface AttentionMapper {
      */
     int updateByPrimaryKey(Attention record);
 
-    Attention selectById();
 
 }

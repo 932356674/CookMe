@@ -1,5 +1,6 @@
 package com.gss.mapper;
 
+import com.gss.dto.UserAttentionDto;
 import com.gss.entity.User;
 import com.gss.entity.UserExample;
 import java.util.List;
@@ -93,4 +94,11 @@ public interface UserMapper {
      * @mbggenerated Tue Apr 09 21:23:38 CST 2019
      */
     int updateByPrimaryKey(User record);
+
+    //我的关注
+    List<UserAttentionDto> selectAttentionFans(Integer usId);
+
+    //我的粉丝
+    List<UserAttentionDto> selectMyFans(Integer usId);
+
 }

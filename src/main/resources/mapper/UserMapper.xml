@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gss.mapper.UserMapper">
+
+  <!--<resultMap id="UserMap" type="com.gss.entity.User">-->
+    <!--<result column="us_name" jdbcType="VARCHAR" property="usName" />-->
+    <!--<result column="us_head" jdbcType="VARCHAR" property="usHead" />-->
+    <!--<result column="us_fansCount" jdbcType="INTEGER" property="usFanscount" />-->
+    <!--<result column="us_bookCount" jdbcType="INTEGER" property="usBookcount" />-->
+  <!--</resultMap>-->
   <resultMap id="BaseResultMap" type="com.gss.entity.User">
     <!--
       WARNING - @mbggenerated
@@ -21,6 +28,15 @@
     <result column="us_fansCount" jdbcType="INTEGER" property="usFanscount" />
     <result column="us_bookCount" jdbcType="INTEGER" property="usBookcount" />
     <result column="us_createdate" jdbcType="DATE" property="usCreatedate" />
+  </resultMap>
+
+
+  <resultMap id="AttentionFansMap" type="com.gss.dto.UserAttentionDto" extends="BaseResultMap">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="fans_id" jdbcType="INTEGER" property="fansId" />
+    <result column="attention_id" jdbcType="INTEGER" property="attentionId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -425,4 +441,20 @@
       us_createdate = #{usCreatedate,jdbcType=DATE}
     where us_id = #{usId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectAttentionFans" parameterType="java.lang.Integer" resultMap="AttentionFansMap">
+SELECT *
+from user u
+INNER JOIN attention att
+on u.us_id = att.attention_id
+where att.fans_id=#{uid}
+  </select>
+  <select id="selectMyFans" parameterType="java.lang.Integer" resultMap="AttentionFansMap">
+  SELECT *
+  from user u
+  INNER JOIN attention att
+  on u.us_id = att.fans_id
+  where att.attention_id=#{uid}
+  </select>
+
 </mapper>

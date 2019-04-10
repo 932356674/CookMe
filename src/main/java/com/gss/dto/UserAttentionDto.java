@@ -1,7 +1,8 @@
-package com.gss.service.impl;
+package com.gss.dto;
 
-import com.gss.service.AttentionService;
-import org.springframework.stereotype.Service;
+import com.gss.entity.User;
+
+import java.util.List;
 
 /**
  * //                            _ooOoo_
@@ -37,8 +38,53 @@ import org.springframework.stereotype.Service;
  *
  * @Author: M.J
  * @Date: 2019/4/10
- * @Time: 8:46
+ * @Time: 10:30
  */
-@Service(value = "attionServiceImpl" )
-public class AttentionServiceImpl implements AttentionService {
+public class UserAttentionDto extends User {
+
+    private Integer id;
+    private Integer fansId;
+    private Integer attentionId;
+    private Integer status;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Integer getFansId() {
+        return fansId;
+    }
+
+    public void setFansId(Integer fansId) {
+        this.fansId = fansId;
+    }
+
+    public Integer getAttentionId() {
+        return attentionId;
+    }
+
+    public void setAttentionId(Integer attentionId) {
+        this.attentionId = attentionId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAttentionDto{" +
+                "fansId=" + fansId +
+                ", attentionId=" + attentionId +
+                ", status=" + status +
+                '}';
+    }
 }

@@ -1,5 +1,12 @@
 package com.gss.service;
 
+import com.gss.dto.UserAttentionDto;
+import com.gss.entity.Attention;
+import com.gss.entity.User;
+import com.gss.utils.R;
+
+import java.util.List;
+
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -36,6 +43,18 @@ package com.gss.service;
  * @Date: 2019/4/10
  * @Time: 8:45
  */
-public interface AttentionService {
+public interface SysAttentionService {
+    //关注
+    List<UserAttentionDto> selectAttentionFans(Integer usId);
+    //粉丝
+    List<UserAttentionDto> selectMyFans(Integer usId);
 
+    //插入关注状态
+    R insertAttentionStauts(Attention attention);
+
+    //修改状态
+    int updateAttentionStauts(Attention attention);
+
+    //取消关注状态
+    R deleteAttention(Integer attentionId);
 }
