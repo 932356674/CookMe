@@ -1,15 +1,13 @@
 package com.gss.controller;
 
 
+import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -38,9 +36,26 @@ public class SysUserController {
 
     @ApiOperation(value = "注册",notes = "提交注册信息")
     @RequestMapping(value = "/user/register/{code}",method = RequestMethod.POST)
-    public R register(@PathVariable int code, User user){
+    public R register(@PathVariable int code,@RequestBody User user){
         return sysUserService.register(user,code);
     }
+
+
+    @ApiOperation(value = "重置密码",notes = "重置密码的验证码")
+    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.POST)
+    public R verifyCode(@RequestBody Regist regist){
+        return sysUserService.verifyCode(regist);
+    }
+
+
+    @ApiOperation(value = "重置密码",notes = "修改密码")
+    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.POST)
+    public R resetPwd(@RequestBody User user){
+        return sysUserService.resetPwd(user);
+    }
+
+
+
 
 
 }

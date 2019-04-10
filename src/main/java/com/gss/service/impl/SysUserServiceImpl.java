@@ -119,12 +119,51 @@ public class SysUserServiceImpl implements SysUserService {
             return R.error("注册失败!!");
         }
 
-
-
-
-
     }
-    
 
+    @Override
+    public R verifyCode(Regist regist) {
 
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUsMobileEqualTo(regist.getPhone());
+
+        List<User> users = userMapper.selectByExample(example);
+
+        if (!users.isEmpty()){
+
+            RegistExample registExample = new RegistExample();
+
+            RegistExample.Criteria criteria1 = registExample.createCriteria();
+
+            criteria1.andPhoneEqualTo(regist.getPhone());
+
+            List<Regist> regist1 = registMapper.selectByExample(registExample);
+
+            if(regist.getCode().equals(regist1.get(0).getCode())){
+                return R.ok("认证成功");
+            }else{
+                return R.error("验证码错误");
+            }
+        }else {
+            return R.error("用户不存在");
+        }
+    }
+
+    @Override
+    public R resetPwd(User user) {
+
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andUsMobileEqualTo(user.getUsMobile());
+        List<User> users = userMapper.selectByExample(example);
+        Md5Hash md5Hash = new Md5Hash(user.getUsPassword(),user.getUsMobile()+"",1024);
+        users.get(0).setUsPassword(md5Hash.toString());
+        int i = userMapper.updateByPrimaryKeySelective(users.get(0));
+        if(i>0){
+            return R.ok("重置成功");
+        }
+        return R.error("重置失败");
+    }
 }
