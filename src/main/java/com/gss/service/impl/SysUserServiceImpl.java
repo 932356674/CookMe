@@ -126,12 +126,6 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
 
-    public static void main(String[] args) {
-
-        Md5Hash md5Hash = new Md5Hash("admin","17853303959",1024);
-        System.out.println(md5Hash.toString());
-
-    }
 
 
 }
