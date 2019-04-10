@@ -4,8 +4,8 @@ import com.gss.utils.R;
 
 public interface SysUserService {
 
-
-    public R selectMobile();
+//查询用户手机号是否存在
+    public R selectMobile(Long mobile);
 
 
 }
