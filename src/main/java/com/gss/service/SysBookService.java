@@ -1,7 +1,9 @@
 package com.gss.service;
 
 import com.gss.dto.CookbookDTO;
+import com.gss.utils.Pager;
 import com.gss.utils.R;
+import com.gss.utils.ResultData;
 
 /**
  * //                            _ooOoo_
@@ -47,5 +49,11 @@ public interface SysBookService {
     public R add(CookbookDTO cookbook);
 
     public R addCollect(int bookId);
+
+    public ResultData selectBook(Pager pager, String search);
+
+    public ResultData selectMaterial(Pager pager, String search);
+
+    public R comment(int bookId,String commentValue);
 
 }
