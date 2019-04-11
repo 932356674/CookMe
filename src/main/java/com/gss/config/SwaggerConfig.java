@@ -27,7 +27,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo(){
         return new ApiInfoBuilder()
                 .title("CookMe")//大标题
-                .description("BookStore Platform's REST API, all the applications could access the Object model data via JSON.")//详细描述
+                .description("CookMe在线接口文档")//详细描述
                 .version("1.0")//版本
                 .contact(new Contact("java", "http://gss.com", "123456@qq.com"))//作者
                 .license("The Apache License, Version 2.0")//许可证信息
@@ -36,5 +36,6 @@ public class SwaggerConfig {
 
     }
 
+    //http://localhost:8080/swagger-ui.html
 
 }

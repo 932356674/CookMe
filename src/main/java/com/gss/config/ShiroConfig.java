@@ -1,6 +1,6 @@
 package com.gss.config;
 
-import com.qf.realm.UserRealm;
+import com.gss.realm.UserRealm;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.SessionManager;
@@ -36,7 +36,7 @@ public class ShiroConfig {
 
     //方法的参数相当于传入spring容器中创建的对象
     @Bean(value = "securityManager")
-    public SecurityManager securityManager(UserRealm userRealm,SessionManager sessionManager){
+    public SecurityManager securityManager(UserRealm userRealm, SessionManager sessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setSessionManager(sessionManager);
         securityManager.setRealm(userRealm);
@@ -88,10 +88,10 @@ public class ShiroConfig {
         map.put("/public/**","anon");//静态js css
         //map.put("/json/**","anon");//假数据
         map.put("/captcha.jpg","anon");//验证码
-        map.put("/sys/login","anon");
+        map.put("/sys/user/login","anon");
        // map.put("/sys/menu/*","perms[\"sys:menu\"]");
-        map.put("/**","user");//选中记住我能访问的资源
-        map.put("/**","authc");//登录后才能访问
+       // map.put("/**","user");//选中记住我能访问的资源
+        //map.put("/**","authc");//登录后才能访问
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
 
