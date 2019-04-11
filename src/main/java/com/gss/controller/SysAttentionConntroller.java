@@ -1,5 +1,5 @@
-
 package com.gss.controller;
+
 
 import com.gss.dto.UserAttentionDto;
 import com.gss.entity.Attention;
@@ -64,7 +64,10 @@ public class SysAttentionConntroller {
     @RequestMapping(value = "/user/selectMyAttention",method = RequestMethod.POST)
     public List<UserAttentionDto> selectMyAttention(){
         int userId = ShiroUtils.getUserId();
+<<<<<<< HEAD
         System.out.println(userId);
+=======
+>>>>>>> remotes/origin/maojiang
         return attentionService.selectAttentionFans(userId);
     }
     @ApiOperation(value = "粉丝",notes = "查询我的粉丝")
@@ -128,4 +131,8 @@ public class SysAttentionConntroller {
         }
 
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> remotes/origin/maojiang
