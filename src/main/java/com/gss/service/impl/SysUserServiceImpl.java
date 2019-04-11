@@ -191,7 +191,7 @@ public class SysUserServiceImpl implements SysUserService {
         if(users.size()>0&&users!=null){
             return R.ok();
         }else {
-            return R.error("改手机号未注册，请先注册");
+            return R.error("改手机号未注册，请先注册。");
         }
     }
 
