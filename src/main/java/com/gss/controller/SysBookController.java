@@ -31,4 +31,11 @@ public class SysBookController {
     public R add(@RequestBody CookbookDTO cookbook){
         return sysBookService.add(cookbook);
     }
+
+    @ApiOperation(value = "收藏菜谱",notes = "收藏菜谱")
+    @RequestMapping(value = "/user/bookAddCollect",method = RequestMethod.POST)
+    public R addCollect(int bookId){
+        return sysBookService.addCollect(bookId);
+    }
+
 }

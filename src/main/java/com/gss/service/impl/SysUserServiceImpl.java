@@ -11,7 +11,6 @@ import com.gss.utils.GetMessageCode;
 import com.gss.utils.R;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
@@ -99,7 +98,8 @@ public class SysUserServiceImpl implements SysUserService {
 
             //第一次注册用户名随机生成
             user.setUsName(System.currentTimeMillis()+"");
-
+            user.setUsFanscount(0);
+            user.setUsBookcount(0);
             user.setUsCreatedate(new Date(System.currentTimeMillis()));
 
             String password = user.getUsPassword();
@@ -149,6 +149,7 @@ public class SysUserServiceImpl implements SysUserService {
         }
     }
 
+
     @Override
     public R resetPwd(User user) {
 
@@ -180,7 +181,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public R findMobile(long phone) {
+    public List<User> findMobile(long phone) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
 
@@ -188,11 +189,7 @@ public class SysUserServiceImpl implements SysUserService {
 
         List<User> users = userMapper.selectByExample(example);
 
-        if(users.size()>0&&users!=null){
-            return R.ok();
-        }else {
-            return R.error("改手机号未注册，请先注册");
-        }
+        return users;
     }
 
     @Override
@@ -206,6 +203,6 @@ public class SysUserServiceImpl implements SysUserService {
         if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }
-        return R.error("登录失败");
+        return R.error("验证码错误");
     }
 }
