@@ -10,6 +10,15 @@ public class CookbookDTO extends Cookbook {
 
     List<Step> method;
     List<Material> material;
+    List<Integer> types;
+
+    public List<Integer> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<Integer> types) {
+        this.types = types;
+    }
 
     public List<Step> getMethod() {
         return method;
