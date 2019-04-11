@@ -180,7 +180,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public R findMobile(long phone) {
+    public List<User> findMobile(long phone) {
         UserExample example = new UserExample();
         UserExample.Criteria criteria = example.createCriteria();
 
@@ -188,11 +188,7 @@ public class SysUserServiceImpl implements SysUserService {
 
         List<User> users = userMapper.selectByExample(example);
 
-        if(users.size()>0&&users!=null){
-            return R.ok();
-        }else {
-            return R.error("改手机号未注册，请先注册");
-        }
+        return users;
     }
 
     @Override
