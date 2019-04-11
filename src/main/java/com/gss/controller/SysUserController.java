@@ -14,6 +14,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RestController
 @RequestMapping("/sys")
@@ -82,7 +83,11 @@ public class SysUserController {
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
     @RequestMapping(value = "/user/selectMobile",method = RequestMethod.POST)
     public R findMobile(@RequestBody Long phone){
-        return sysUserService.findMobile(phone);
+        List<User> list=sysUserService.findMobile(phone);
+        if (list.size()>0){
+            return sysUserService.getCode(phone);
+        }
+        return R.error("手机号未注册，请先注册");
     }
 
     @ApiOperation(value = "发送验证码",notes = "用户登录")
