@@ -378,4 +378,9 @@
       book_time = #{bookTime,jdbcType=DATE}
     where book_Id = #{bookId,jdbcType=INTEGER}
   </update>
+  <select id="selectByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT c.*
+    FROM cookbook_type t JOIN cookbook c
+    ON c.`book_Id`=t.`book_id` WHERE t.`type_id`=#{typeId jdbcType=INTEGER}
+  </select>
 </mapper>

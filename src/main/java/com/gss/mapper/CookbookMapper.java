@@ -93,4 +93,6 @@ public interface CookbookMapper {
      * @mbggenerated Tue Apr 09 21:38:01 CST 2019
      */
     int updateByPrimaryKey(Cookbook record);
+
+    List<Cookbook> selectByType(int typeId);
 }
