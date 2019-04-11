@@ -193,12 +193,10 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R mobileLogin(Regist regist) {
-
         RegistExample registExample=new RegistExample();
         RegistExample.Criteria criteria=registExample.createCriteria();
         criteria.andPhoneEqualTo(regist.getPhone());
         List<Regist> list=registMapper.selectByExample(registExample);
-
         if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }
