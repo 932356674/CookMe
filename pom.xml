@@ -75,6 +75,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.45</version>
         </dependency>
         <!-- 集成druid -->
         <dependency>
@@ -89,7 +90,6 @@
             <artifactId>kaptcha</artifactId>
             <version>${kaptcha.version}</version>
         </dependency>
-
 
         <!-- 集成shiro -->
         <dependency>
