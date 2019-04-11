@@ -90,11 +90,11 @@ public class SysUserController {
         return R.error("手机号未注册，请先注册");
     }
 
-    @ApiOperation(value = "发送验证码",notes = "用户登录")
+  /*  @ApiOperation(value = "发送验证码",notes = "用户登录")
     @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
     public R gainCodes(@RequestBody Long phone){
         return sysUserService.getCode(phone);
-    }
+    }*/
 
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
