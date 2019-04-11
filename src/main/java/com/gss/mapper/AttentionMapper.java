@@ -93,4 +93,6 @@ public interface AttentionMapper {
      * @mbggenerated Tue Apr 09 21:38:01 CST 2019
      */
     int updateByPrimaryKey(Attention record);
+
+
 }

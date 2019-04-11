@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gss.mapper.UserMapper">
+
+  <!--<resultMap id="UserMap" type="com.gss.entity.User">-->
+    <!--<result column="us_name" jdbcType="VARCHAR" property="usName" />-->
+    <!--<result column="us_head" jdbcType="VARCHAR" property="usHead" />-->
+    <!--<result column="us_fansCount" jdbcType="INTEGER" property="usFanscount" />-->
+    <!--<result column="us_bookCount" jdbcType="INTEGER" property="usBookcount" />-->
+  <!--</resultMap>-->
   <resultMap id="BaseResultMap" type="com.gss.entity.User">
     <!--
       WARNING - @mbggenerated
@@ -425,5 +432,4 @@
       us_createdate = #{usCreatedate,jdbcType=DATE}
     where us_id = #{usId,jdbcType=INTEGER}
   </update>
-
 </mapper>
