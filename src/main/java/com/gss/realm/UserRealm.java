@@ -24,8 +24,8 @@ public class UserRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         System.out.println("--------------->认证");
         UsernamePasswordToken u= (UsernamePasswordToken) token;
-
         String uphone=u.getUsername();
+
         String upass=new String(u.getPassword());
 
         User user=sysUserService.login(Long.valueOf(uphone));
@@ -36,7 +36,6 @@ public class UserRealm extends AuthorizingRealm {
         if(!user.getUsPassword().equals(upass)){
             throw  new IncorrectCredentialsException("密码错误");
         }
-
         SimpleAuthenticationInfo info=new SimpleAuthenticationInfo(user,upass,this.getName());
 
         return info;

@@ -1,43 +1,12 @@
 package com.gss.controller;
 
+
+import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-<<<<<<< HEAD
-import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
-@RequestMapping("/sys")
-@Api(value = "个人信息" ,produces = "application/json")
-@RestController
-public class SysUserController {
-    @Resource
-    private SysUserService sysUserService;
-
-    @ApiOperation(value ="修改个人信息",notes = "修改个人信息")
-    @RequestMapping(value = "/user/changeInfoById",method = RequestMethod.POST)
-    public R changeInfoById(@RequestBody User user){
-        return sysUserService.changeInfoById(user);
-    }
-
-    @ApiOperation(value ="个人主页",notes = "个人主页")
-    @RequestMapping(value = "/user/selectMyHome",method = RequestMethod.POST)
-    public R selectMyHome( Integer usId){
-        return sysUserService.selectMyHome(usId);
-    }
-
-
-    @ApiOperation(value ="修改密码",notes = "修改密码")
-    @RequestMapping(value = "/user/updatePassword",method = RequestMethod.POST)
-    public R updatePassword(@RequestBody Integer usId,String newPassword,String oldPassword ){
-        return sysUserService.updatePassword(usId, newPassword, oldPassword);
-    }
-
-
-
-=======
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -45,7 +14,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @RestController
 @RequestMapping("/sys")
@@ -114,11 +82,11 @@ public class SysUserController {
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
     @RequestMapping(value = "/user/selectMobile",method = RequestMethod.POST)
     public R findMobile(@RequestBody Long phone){
-       List<User> list= sysUserService.findMobile(phone);
-       if(list.size()>0&&list!=null){
-           return sysUserService.getCode(phone);
-       }
-       return R.error("手机号未注册，请先注册");
+        List<User> list= sysUserService.findMobile(phone);
+        if(list.size()>0&&list!=null){
+            return sysUserService.getCode(phone);
+        }
+        return R.error("手机号未注册，请先注册");
     }
 
     /*@ApiOperation(value = "发送验证码",notes = "用户登录")
@@ -132,5 +100,4 @@ public class SysUserController {
     public R mobileLogin(@RequestBody Regist regist){
         return sysUserService.mobileLogin(regist);
     }
->>>>>>> origin/master
 }
