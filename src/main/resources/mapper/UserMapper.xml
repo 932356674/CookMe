@@ -456,5 +456,10 @@ where att.fans_id=#{uid}
   on u.us_id = att.fans_id
   where att.attention_id=#{uid}
   </select>
+  <select id="selectMyFansCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+   SELECT u.us_fansCount
+  from user u
+  where u.us_id=#{uid}
+  </select>
 
 </mapper>

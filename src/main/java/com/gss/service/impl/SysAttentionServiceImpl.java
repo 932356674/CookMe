@@ -3,6 +3,7 @@ package com.gss.service.impl;
 import com.gss.dto.UserAttentionDto;
 import com.gss.entity.Attention;
 import com.gss.entity.AttentionExample;
+import com.gss.entity.User;
 import com.gss.mapper.AttentionMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysAttentionService;
@@ -70,8 +71,21 @@ public class SysAttentionServiceImpl implements SysAttentionService {
     @Override
     public R insertAttentionStauts(Attention attention) {
         int a = attentionMapper.insertSelective(attention);
+        System.out.println(attention.getFansId());
+
+        int c = userMapper.selectMyFansCounts(attention.getAttentionId());
+        User user = userMapper.selectByPrimaryKey(attention.getAttentionId());
         if (a>0){
-           return R.ok();
+            c+=1;
+            user.setUsFanscount(c);
+            int i = userMapper.updateByPrimaryKeySelective(user);
+            System.out.println(user.toString());
+            if(i>0){
+                return R.ok();
+            }
+            else {
+                return R.error("服务器忙，请刷新页面");
+            }
         }else {
             return R.error("服务器忙，请刷新页面");
         }

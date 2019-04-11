@@ -113,6 +113,7 @@ public class SysAttentionConntroller {
                     Attention attention1 = new Attention(userAttentionDto.getId(),userAttentionDto.getFansId(),userAttentionDto.getAttentionId(),userAttentionDto.getStatus());
                     int i = attentionService.updateAttentionStauts(attention1);
                     if(i>0){
+
                         return attentionService.deleteAttention(attention.getId());
                     }else {
                         return R.error("服务器忙，请刷新页面");

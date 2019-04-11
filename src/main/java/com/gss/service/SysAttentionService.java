@@ -57,4 +57,7 @@ public interface SysAttentionService {
 
     //取消关注状态
     R deleteAttention(Integer attentionId);
+
+//    //我的粉丝数
+//    Integer selectMyFansCounts(Integer id);
 }

@@ -101,4 +101,7 @@ public interface UserMapper {
     //我的粉丝
     List<UserAttentionDto> selectMyFans(Integer usId);
 
+    //我的粉丝数量
+    Integer selectMyFansCounts(Integer usId);
+
 }
