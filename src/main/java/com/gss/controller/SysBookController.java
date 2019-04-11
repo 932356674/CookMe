@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/sys")
-@Api(value = "发布菜谱",produces = "application/json")
+@Api(value = "菜谱",produces = "application/json")
 public class SysBookController {
 
     @Resource
