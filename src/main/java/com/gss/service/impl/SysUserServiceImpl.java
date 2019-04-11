@@ -185,9 +185,7 @@ public class SysUserServiceImpl implements SysUserService {
         UserExample.Criteria criteria = example.createCriteria();
 
         criteria.andUsMobileEqualTo(phone);
-
         List<User> users = userMapper.selectByExample(example);
-
         return users;
     }
 
