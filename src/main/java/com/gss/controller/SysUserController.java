@@ -70,7 +70,7 @@ public class SysUserController {
             String pwd=user.getUsPassword();
             Md5Hash md5Hash=new Md5Hash(pwd,user.getUsMobile()+"",1024);
             pwd=md5Hash.toString();
-            UsernamePasswordToken token=new UsernamePasswordToken(user.getUsName(),pwd);
+            UsernamePasswordToken token=new UsernamePasswordToken(String.valueOf(user.getUsMobile()),pwd);
             subject.login(token);
             return R.ok();
         }catch (Exception e){
