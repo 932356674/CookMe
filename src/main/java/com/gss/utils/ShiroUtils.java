@@ -28,7 +28,7 @@ public class ShiroUtils {
         SecurityUtils.getSubject().logout();
     }
 
-    public static long getUserId(){
+    public static Integer getUserId(){
         return getCurrentUser().getUsId();
     }
 }

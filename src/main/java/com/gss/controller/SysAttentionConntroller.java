@@ -4,6 +4,7 @@ import com.gss.dto.UserAttentionDto;
 import com.gss.entity.Attention;
 import com.gss.service.SysAttentionService;
 import com.gss.utils.R;
+import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,13 +62,14 @@ public class SysAttentionConntroller {
     @ApiOperation(value = "关注",notes = "查询我关注的人")
     @RequestMapping(value = "/user/selectMyAttention",method = RequestMethod.POST)
     public List<UserAttentionDto> selectMyAttention(){
-        return attentionService.selectAttentionFans(3);
+        int userId = ShiroUtils.getUserId();
+        return attentionService.selectAttentionFans(userId);
     }
-
     @ApiOperation(value = "粉丝",notes = "查询我的粉丝")
     @RequestMapping(value = "/user/fans",method = RequestMethod.POST)
     public List<UserAttentionDto> selectMyFans(){
-        return attentionService.selectMyFans(2);
+        int userId = ShiroUtils.getUserId();
+        return attentionService.selectMyFans(userId);
     }
 
     @ApiOperation(value = "他关注",notes = "查询他关注的人")
