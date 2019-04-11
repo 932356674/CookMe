@@ -1,9 +1,8 @@
-package com.gss.service;
+package com.gss.dto;
 
-import com.gss.dto.CookbookDTO;
-import com.gss.utils.Pager;
-import com.gss.utils.R;
-import com.gss.utils.ResultData;
+import com.gss.entity.User;
+
+import java.util.List;
 
 /**
  * //                            _ooOoo_
@@ -37,23 +36,56 @@ import com.gss.utils.ResultData;
  * //                  别人笑我忒疯癫，我笑自己命太贱；
  * //                  不见满街漂亮妹，哪个归得程序员？
  *
- * @Description:
- * @Company:
- * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Author: M.J
+ * @Date: 2019/4/10
+ * @Time: 10:30
  */
-public interface SysBookService {
+public class UserAttentionDto extends User {
 
-    //新增菜谱
-    public R add(CookbookDTO cookbook);
+    private Integer id;
+    private Integer fansId;
+    private Integer attentionId;
+    private Integer status;
 
-    public R addCollect(int bookId);
+    public Integer getId() {
+        return id;
 
-    public ResultData selectBook(Pager pager, String search);
+    }
 
-    public ResultData selectMaterial(Pager pager, String search);
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-    public R comment(int bookId,String commentValue);
+    public Integer getFansId() {
+        return fansId;
+    }
 
+    public void setFansId(Integer fansId) {
+        this.fansId = fansId;
+    }
+
+    public Integer getAttentionId() {
+        return attentionId;
+    }
+
+    public void setAttentionId(Integer attentionId) {
+        this.attentionId = attentionId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAttentionDto{" +
+                "fansId=" + fansId +
+                ", attentionId=" + attentionId +
+                ", status=" + status +
+                '}';
+    }
 }

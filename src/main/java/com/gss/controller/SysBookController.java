@@ -5,7 +5,9 @@ import com.gss.entity.Cookbook;
 import com.gss.entity.Material;
 import com.gss.entity.Step;
 import com.gss.service.SysBookService;
+import com.gss.utils.Pager;
 import com.gss.utils.R;
+import com.gss.utils.ResultData;
 import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +38,18 @@ public class SysBookController {
     @RequestMapping(value = "/user/bookAddCollect",method = RequestMethod.POST)
     public R addCollect(int bookId){
         return sysBookService.addCollect(bookId);
+    }
+
+    @ApiOperation(value = "模糊查询菜谱或食材",notes = "模糊查询菜谱或食材")
+    @RequestMapping(value = "/book/fuzzySelectBook",method = RequestMethod.POST)
+    public ResultData selectBook(Pager pager, String search){
+        return sysBookService.selectBook(pager,search);
+    }
+
+    @ApiOperation(value = "菜谱评论",notes = "菜谱评论")
+    @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
+    public R comment(int bookId,String commentValue){
+        return sysBookService.comment(bookId,commentValue);
     }
 
 }

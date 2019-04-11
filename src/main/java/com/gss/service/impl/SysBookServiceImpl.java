@@ -1,11 +1,12 @@
 package com.gss.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.gss.dto.CookbookDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
-import com.gss.utils.R;
-import com.gss.utils.ShiroUtils;
+import com.gss.utils.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -66,6 +67,8 @@ public class SysBookServiceImpl implements SysBookService {
     private CookbookTypeMapper cookbookTypeMapper;
     @Resource
     private CollectMapper collectMapper;
+    @Resource
+    private BookCommentMapper bookCommentMapper;
 
     @Override
     public R add(CookbookDTO cookbook) {
@@ -108,6 +111,50 @@ public class SysBookServiceImpl implements SysBookService {
             return R.ok("收藏成功！");
         }else{
             return R.error("收藏失败！");
+        }
+    }
+
+    @Override
+    public ResultData selectBook(Pager pager, String search) {
+        PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        CookbookExample example = null;
+        if(StringUtils.isNotEmpty(search)){
+            example = new CookbookExample();
+            CookbookExample.Criteria criteria = example.createCriteria();
+            criteria.andBookNameLike("%"+search+"%");
+        }
+        List<Cookbook> list = cookbookMapper.selectByExample(example);
+        PageInfo info = new PageInfo(list);
+        return new ResultData(info.getTotal(),info.getList());
+    }
+
+    @Override
+    public ResultData selectMaterial(Pager pager, String search) {
+        PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        MaterialExample example = null;
+        if(StringUtils.isNotEmpty(search)){
+            example = new MaterialExample();
+            MaterialExample.Criteria criteria = example.createCriteria();
+            criteria.andMatNameLike("%"+search+"%");
+        }
+        List<Material> list = materialMapper.selectByExample(example);
+        PageInfo info = new PageInfo(list);
+        return new ResultData(info.getTotal(),info.getList());
+    }
+
+    @Override
+    public R comment(int bookId, String commentValue) {
+
+        BookComment bookComment = new BookComment();
+        bookComment.setBookId(bookId);
+        bookComment.setCommentTime(new Date());
+        bookComment.setCommentValue(commentValue);
+        bookComment.setUsId(ShiroUtils.getUserId());
+        int i = bookCommentMapper.insert(bookComment);
+        if (i>0){
+            return R.ok("评论成功！");
+        }else{
+            return R.error("评论失败！");
         }
     }
 }

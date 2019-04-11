@@ -1,9 +1,11 @@
 package com.gss.service;
 
-import com.gss.dto.CookbookDTO;
-import com.gss.utils.Pager;
+import com.gss.dto.UserAttentionDto;
+import com.gss.entity.Attention;
+import com.gss.entity.User;
 import com.gss.utils.R;
-import com.gss.utils.ResultData;
+
+import java.util.List;
 
 /**
  * //                            _ooOoo_
@@ -37,23 +39,25 @@ import com.gss.utils.ResultData;
  * //                  别人笑我忒疯癫，我笑自己命太贱；
  * //                  不见满街漂亮妹，哪个归得程序员？
  *
- * @Description:
- * @Company:
- * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Author: M.J
+ * @Date: 2019/4/10
+ * @Time: 8:45
  */
-public interface SysBookService {
+public interface SysAttentionService {
+    //关注
+    List<UserAttentionDto> selectAttentionFans(Integer usId);
+    //粉丝
+    List<UserAttentionDto> selectMyFans(Integer usId);
 
-    //新增菜谱
-    public R add(CookbookDTO cookbook);
+    //插入关注状态
+    R insertAttentionStauts(Attention attention);
 
-    public R addCollect(int bookId);
+    //修改状态
+    int updateAttentionStauts(Attention attention);
 
-    public ResultData selectBook(Pager pager, String search);
+    //取消关注状态
+    R deleteAttention(Integer attentionId);
 
-    public ResultData selectMaterial(Pager pager, String search);
-
-    public R comment(int bookId,String commentValue);
-
+//    //我的粉丝数
+//    Integer selectMyFansCounts(Integer id);
 }
