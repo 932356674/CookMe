@@ -46,4 +46,6 @@ public interface SysBookService {
     //新增菜谱
     public R add(CookbookDTO cookbook);
 
+    public R addCollect(int bookId);
+
 }

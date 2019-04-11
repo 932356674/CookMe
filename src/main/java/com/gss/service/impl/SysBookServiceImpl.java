@@ -64,12 +64,13 @@ public class SysBookServiceImpl implements SysBookService {
     private UserMapper userMapper;
     @Resource
     private CookbookTypeMapper cookbookTypeMapper;
+    @Resource
+    private CollectMapper collectMapper;
 
     @Override
     public R add(CookbookDTO cookbook) {
         try{
-            //ShiroUtils.getUserId()
-            cookbook.setUsId(1);
+            cookbook.setUsId(ShiroUtils.getUserId());
             cookbook.setBookTime(new Date());
             int i = cookbookMapper.insert(cookbook);
             List<Material> materials = cookbook.getMaterial();
@@ -80,7 +81,7 @@ public class SysBookServiceImpl implements SysBookService {
             for (Step step : steps) {
                 stepMapper.insert(step);
             }
-            User u = userMapper.selectByPrimaryKey(1);
+            User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
             u.setUsBookcount(u.getUsBookcount()+1);
             userMapper.updateByPrimaryKey(u);
             List<Integer> types = cookbook.getTypes();
@@ -95,5 +96,18 @@ public class SysBookServiceImpl implements SysBookService {
             return R.error("新增失败！");
         }
         return R.ok("新增成功！");
+    }
+
+    @Override
+    public R addCollect(int bookId) {
+        Collect collect = new Collect();
+        collect.setUsId(ShiroUtils.getUserId());
+        collect.setBookId(bookId);
+        int i = collectMapper.insert(collect);
+        if (i>0){
+            return R.ok("收藏成功！");
+        }else{
+            return R.error("收藏失败！");
+        }
     }
 }
