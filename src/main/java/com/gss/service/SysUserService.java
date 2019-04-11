@@ -20,5 +20,9 @@ public interface SysUserService {
 
 //重置密码
     public R resetPwd(User user);
+//用户名密码登录
+    User login(long phone);
+//短信验证登录
+    R mobileLogin(Regist regist);
 
 }

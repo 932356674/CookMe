@@ -7,6 +7,10 @@ import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -56,6 +60,34 @@ public class SysUserController {
 
 
 
+    @ApiOperation(value = "账号密码码登录",notes = "用户登录")
+    @RequestMapping(value = "/user/login",method =RequestMethod.POST )
+    public R login(@RequestBody User user){
+        String s=null;
+        try{
+            Subject subject=SecurityUtils.getSubject();
+            String pwd=user.getUsPassword();
+            Md5Hash md5Hash=new Md5Hash(pwd,user.getUsMobile()+"",1024);
+            pwd=md5Hash.toString();
+            UsernamePasswordToken token=new UsernamePasswordToken(user.getUsName(),pwd);
+            subject.login(token);
+            return R.ok();
+        }catch (Exception e){
+            e.printStackTrace();;
+            s=e.getMessage();
+        }
+        return R.error(s);
+    }
 
+    @ApiOperation(value = "发送验证码",notes = "用户登录")
+    @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
+    public R gainCodes(@RequestBody Long phone){
+        return sysUserService.getCode(phone);
+    }
 
+    @ApiOperation(value = "验证验证码登录",notes = "用户登录")
+    @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
+    public R mobileLogin(@RequestBody Regist regist){
+        return sysUserService.mobileLogin(regist);
+    }
 }
