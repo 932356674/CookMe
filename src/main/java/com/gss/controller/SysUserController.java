@@ -79,6 +79,12 @@ public class SysUserController {
         return R.error(s);
     }
 
+    @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
+    @RequestMapping(value = "/user/selectMobile",method = RequestMethod.POST)
+    public R findMobile(@RequestBody Long phone){
+        return sysUserService.findMobile(phone);
+    }
+
     @ApiOperation(value = "发送验证码",notes = "用户登录")
     @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
     public R gainCodes(@RequestBody Long phone){

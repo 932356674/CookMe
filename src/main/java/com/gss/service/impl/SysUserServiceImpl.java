@@ -42,7 +42,6 @@ public class SysUserServiceImpl implements SysUserService {
         }else {
             return R.error("该手机号已注册");
         }
-
     }
 
     @Override
@@ -178,6 +177,22 @@ public class SysUserServiceImpl implements SysUserService {
             return list.get(0);
         }
         return null;
+    }
+
+    @Override
+    public R findMobile(long phone) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUsMobileEqualTo(phone);
+
+        List<User> users = userMapper.selectByExample(example);
+
+        if(users.size()>0&&users!=null){
+            return R.ok();
+        }else {
+            return R.error("改手机号未注册，请先注册");
+        }
     }
 
     @Override
