@@ -203,7 +203,7 @@ public class SysUserServiceImpl implements SysUserService {
         criteria.andPhoneEqualTo(regist.getPhone());
         List<Regist> list=registMapper.selectByExample(registExample);
 
-        if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
+        if(list.size()>0&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }
         return R.error("登录失败");
