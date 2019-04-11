@@ -90,7 +90,6 @@
             <version>${kaptcha.version}</version>
         </dependency>
 
-
         <!-- 集成shiro -->
         <dependency>
             <groupId>org.apache.shiro</groupId>

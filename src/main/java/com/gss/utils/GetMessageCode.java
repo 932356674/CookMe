@@ -1,6 +1,8 @@
 package com.gss.utils;
 
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -10,9 +12,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-
-import com.alibaba.fastjson.JSONObject;
 
 public class GetMessageCode {
     private static final String QUERY_PATH = "https://api.miaodiyun.com/20150822/industrySMS/sendSMS";
@@ -107,4 +106,3 @@ public class GetMessageCode {
         return random;
     }
 }
-
