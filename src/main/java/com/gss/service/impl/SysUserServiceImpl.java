@@ -11,7 +11,6 @@ import com.gss.utils.GetMessageCode;
 import com.gss.utils.R;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
@@ -101,7 +100,8 @@ public class SysUserServiceImpl implements SysUserService {
 
             //第一次注册用户名随机生成
             user.setUsName(System.currentTimeMillis()+"");
-
+            user.setUsFanscount(0);
+            user.setUsBookcount(0);
             user.setUsCreatedate(new Date(System.currentTimeMillis()));
 
             String password = user.getUsPassword();
@@ -150,6 +150,7 @@ public class SysUserServiceImpl implements SysUserService {
             return R.error("用户不存在");
         }
     }
+
 
     @Override
     public R resetPwd(User user) {
