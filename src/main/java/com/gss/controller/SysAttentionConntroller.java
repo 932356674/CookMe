@@ -91,6 +91,7 @@ public class SysAttentionConntroller {
     public R updateAttentionStatus(@RequestBody Attention attention){
         //判断关注状态是否为已关注
         if(attention.getStatus()==0){
+
             List<UserAttentionDto> list = attentionService.selectAttentionFans(attention.getAttentionId());
             for (UserAttentionDto userAttentionDto : list) {
                 System.out.println(userAttentionDto.getId());
