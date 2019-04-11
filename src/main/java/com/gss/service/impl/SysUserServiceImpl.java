@@ -18,7 +18,6 @@ import java.util.List;
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
-
     @Resource
     private UserMapper userMapper;
 
@@ -42,7 +41,6 @@ public class SysUserServiceImpl implements SysUserService {
         }else {
             return R.error("该手机号已注册");
         }
-
     }
 
     @Override
@@ -166,5 +164,49 @@ public class SysUserServiceImpl implements SysUserService {
             return R.ok("重置成功");
         }
         return R.error("重置失败");
+    }
+
+
+    @Override
+    public User login(long phone) {
+        UserExample example=new UserExample();
+        UserExample.Criteria criteria=example.createCriteria();
+
+        criteria.andUsMobileEqualTo(phone);
+        List<User> list=userMapper.selectByExample(example);
+        if(list!=null&&list.size()>0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public R findMobile(long phone) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+
+        criteria.andUsMobileEqualTo(phone);
+
+        List<User> users = userMapper.selectByExample(example);
+
+        if(users.size()>0&&users!=null){
+            return R.ok();
+        }else {
+            return R.error("改手机号未注册，请先注册");
+        }
+    }
+
+    @Override
+    public R mobileLogin(Regist regist) {
+
+        RegistExample registExample=new RegistExample();
+        RegistExample.Criteria criteria=registExample.createCriteria();
+        criteria.andPhoneEqualTo(regist.getPhone());
+        List<Regist> list=registMapper.selectByExample(registExample);
+
+        if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
+            return R.ok();
+        }
+        return R.error("登录失败");
     }
 }
