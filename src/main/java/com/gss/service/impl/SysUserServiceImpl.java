@@ -1,9 +1,6 @@
 package com.gss.service.impl;
 
-import com.gss.entity.All;
-import com.gss.entity.Collect;
-import com.gss.entity.Cookbook;
-import com.gss.entity.User;
+import com.gss.entity.*;
 import com.gss.mapper.CollectMapper;
 import com.gss.mapper.CookbookMapper;
 import com.gss.mapper.UserMapper;
@@ -14,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service(value = "sysUserServiceImpl")
@@ -38,6 +36,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R changeInfoById(User user) {
+        user.setUsCreatedate(new Date(System.currentTimeMillis()));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i>0){
             return R.ok();
@@ -54,14 +53,15 @@ public class SysUserServiceImpl implements SysUserService {
         newPassword = newPasswords.toString();
         System.out.println(oldPassword+"旧密码");
         System.out.println(newPassword+"新密码");
-        if (oldPassword.equals(user.getUsPassword())){
+        if (oldPassword.equals(user.getUsPassword())) {
             user.setUsPassword(newPassword);
             int i = userMapper.updateByPrimaryKey(user);
-            if (i>0){
+            if (i > 0) {
                 return R.ok();
             }
         }
         return R.error("修改失败");
     }
+
 
 }
