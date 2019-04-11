@@ -70,7 +70,7 @@ public class SysUserController {
             String pwd=user.getUsPassword();
             Md5Hash md5Hash=new Md5Hash(pwd,user.getUsMobile()+"",1024);
             pwd=md5Hash.toString();
-            UsernamePasswordToken token=new UsernamePasswordToken(user.getUsName(),pwd);
+            UsernamePasswordToken token=new UsernamePasswordToken(String.valueOf(user.getUsMobile()),pwd);
             subject.login(token);
             return R.ok();
         }catch (Exception e){
@@ -83,11 +83,11 @@ public class SysUserController {
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
     @RequestMapping(value = "/user/selectMobile",method = RequestMethod.POST)
     public R findMobile(@RequestBody Long phone){
-       List<User> list= sysUserService.findMobile(phone);
-       if(list.size()>0&&list!=null){
-           return sysUserService.getCode(phone);
-       }
-       return R.error("手机号未注册，请先注册");
+        List<User> list= sysUserService.findMobile(phone);
+        if(list.size()>0&&list!=null){
+            return sysUserService.getCode(phone);
+        }
+        return R.error("手机号未注册，请先注册");
     }
 
     /*@ApiOperation(value = "发送验证码",notes = "用户登录")
