@@ -4,6 +4,8 @@ import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.utils.R;
 
+import java.util.List;
+
 public interface SysUserService {
 
 //查询用户手机号是否存在
@@ -20,5 +22,12 @@ public interface SysUserService {
 
 //重置密码
     public R resetPwd(User user);
+
+//验证手机号是否存在
+    List<User> findMobile(long phone);
+//用户名密码登录
+    User login(long phone);
+//短信验证登录
+    R mobileLogin(Regist regist);
 
 }

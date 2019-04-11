@@ -29,15 +29,6 @@
     <result column="us_bookCount" jdbcType="INTEGER" property="usBookcount" />
     <result column="us_createdate" jdbcType="DATE" property="usCreatedate" />
   </resultMap>
-
-
-  <resultMap id="AttentionFansMap" type="com.gss.dto.UserAttentionDto" extends="BaseResultMap">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="fans_id" jdbcType="INTEGER" property="fansId" />
-    <result column="attention_id" jdbcType="INTEGER" property="attentionId" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-
-  </resultMap>
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbggenerated
@@ -441,25 +432,4 @@
       us_createdate = #{usCreatedate,jdbcType=DATE}
     where us_id = #{usId,jdbcType=INTEGER}
   </update>
-
-  <select id="selectAttentionFans" parameterType="java.lang.Integer" resultMap="AttentionFansMap">
-SELECT *
-from user u
-INNER JOIN attention att
-on u.us_id = att.attention_id
-where att.fans_id=#{uid}
-  </select>
-  <select id="selectMyFans" parameterType="java.lang.Integer" resultMap="AttentionFansMap">
-  SELECT *
-  from user u
-  INNER JOIN attention att
-  on u.us_id = att.fans_id
-  where att.attention_id=#{uid}
-  </select>
-  <select id="selectMyFansCounts" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-   SELECT u.us_fansCount
-  from user u
-  where u.us_id=#{uid}
-  </select>
-
 </mapper>
