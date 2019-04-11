@@ -202,6 +202,6 @@ public class SysUserServiceImpl implements SysUserService {
         if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }
-        return R.error("登录失败");
+        return R.error("验证码错误");
     }
 }
