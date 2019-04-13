@@ -21,4 +21,5 @@ public interface SysUserService {
 //重置密码
     public R resetPwd(User user);
 
+    R selectBest();
 }

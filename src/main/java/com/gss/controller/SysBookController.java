@@ -22,7 +22,7 @@ public class SysBookController {
     @Resource
     private SysBookService sysBookService;
     //根据菜谱类型获得菜谱简略信息
-    @ApiOperation(value = "查询",notes = "根据菜谱类型获得菜谱简略信息")
+    @ApiOperation(value = "根据菜谱类型查询",notes = "根据菜谱类型获得菜谱简略信息")
     @RequestMapping(value = "/book/selectByType",method = RequestMethod.POST)
     public ResultData selectByType(int typeId , Pager pager){
         return sysBookService.selectByType(typeId,pager);

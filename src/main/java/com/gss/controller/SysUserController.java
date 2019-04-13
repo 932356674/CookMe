@@ -54,6 +54,12 @@ public class SysUserController {
         return sysUserService.resetPwd(user);
     }
 
+    @ApiOperation(value = "首页获取用户信息",notes = "首页随机获取用户信息")
+    @RequestMapping(value = "/user/selectBest",method = RequestMethod.POST)
+    public R selectBest(){
+        return sysUserService.selectBest();
+    }
+
 
 
 
