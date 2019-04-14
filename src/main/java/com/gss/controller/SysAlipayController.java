@@ -47,7 +47,7 @@ public class SysAlipayController {
             String out_trade_no = orderNum;
             //付款金额，必填
 //	String total_amount = new String(request.getParameter("WIDtotal_amount").getBytes("ISO-8859-1"),"UTF-8");
-            BigDecimal amount = order.getAmount();// 100F;
+            Long amount = order.getAmount();// 100F;
             String total_amount = amount.toString();
             //订单名称，必填
             //String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");

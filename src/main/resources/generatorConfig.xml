@@ -38,9 +38,9 @@
         </javaClientGenerator>
 
         <!-- 用户权限角色,修改表名 -->
-        <table tableName="user" ></table>
-        <table tableName="role" ></table>
-        <table tableName="user_role" ></table>
+        <!--<table tableName="user" ></table>-->
+        <!--<table tableName="role" ></table>-->
+        <!--<table tableName="user_role" ></table>-->
 
         <!--编写数据库文档-->
         <!--<table tableName="attention"></table>-->
