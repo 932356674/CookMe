@@ -52,4 +52,8 @@ public class SysBookController {
         return sysBookService.comment(bookId,commentValue);
     }
 
+    @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
+    @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
+    public CookbookDTO selectByBookId(int bookId){return sysBookService.selectBookById(bookId);}
+
 }

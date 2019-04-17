@@ -1,5 +1,6 @@
 package com.gss.mapper;
 
+import com.gss.dto.CookbookDTO;
 import com.gss.entity.Cookbook;
 import com.gss.entity.CookbookExample;
 import java.util.List;
@@ -93,4 +94,5 @@ public interface CookbookMapper {
      * @mbggenerated Tue Apr 09 21:38:01 CST 2019
      */
     int updateByPrimaryKey(Cookbook record);
+
 }
