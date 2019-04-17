@@ -378,4 +378,8 @@
       taboo = #{taboo,jdbcType=VARCHAR}
     where productId = #{productid,jdbcType=INTEGER}
   </update>
+  <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" />
+    FROM product p  WHERE  p.sort=#{sort}
+  </select>
 </mapper>
