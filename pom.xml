@@ -195,7 +195,17 @@ pagerhelper 的 springboot 配置方式
             <artifactId>alipay-sdk-java</artifactId>
             <version>3.4.49.ALL</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-jasper</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.eclipse.jdt.core.compiler</groupId>
+            <artifactId>ecj</artifactId>
+            <version>4.6.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
