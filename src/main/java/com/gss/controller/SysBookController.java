@@ -54,6 +54,8 @@ public class SysBookController {
 
     @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
     @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
-    public CookbookDTO selectByBookId(int bookId){return sysBookService.selectBookById(bookId);}
+    public R selectByBookId(int bookId){
+        return R.ok().put("cookbookdto",sysBookService.selectBookById(bookId)).put("user",ShiroUtils.getCurrentUser());
+        }
 
 }
