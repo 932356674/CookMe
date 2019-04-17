@@ -104,4 +104,5 @@ public interface UserMapper {
     //我的粉丝数量
     Integer selectMyFansCounts(Integer usId);
 
+
 }

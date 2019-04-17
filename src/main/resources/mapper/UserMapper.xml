@@ -432,4 +432,5 @@
       us_createdate = #{usCreatedate,jdbcType=DATE}
     where us_id = #{usId,jdbcType=INTEGER}
   </update>
+
 </mapper>

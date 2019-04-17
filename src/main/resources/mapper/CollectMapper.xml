@@ -10,6 +10,29 @@
     <id column="collect_id" jdbcType="INTEGER" property="collectId" />
     <result column="us_id" jdbcType="INTEGER" property="usId" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+    <result column="us_id" jdbcType="INTEGER" property="usId" />
+    <result column="book_details" jdbcType="VARCHAR" property="bookDetails" />
+    <result column="book_comment" jdbcType="VARCHAR" property="bookComment" />
+    <result column="book_pageView" jdbcType="INTEGER" property="bookPageview" />
+    <result column="book_grade" jdbcType="DOUBLE" property="bookGrade" />
+    <result column="book_collect" jdbcType="INTEGER" property="bookCollect" />
+    <result column="book_image" jdbcType="VARCHAR" property="bookImage" />
+    <result column="book_time" jdbcType="DATE" property="bookTime" />
+    <result column="us_name" jdbcType="VARCHAR" property="usName" />
+    <result column="us_password" jdbcType="VARCHAR" property="usPassword" />
+    <result column="us_mobile" jdbcType="BIGINT" property="usMobile" />
+    <result column="us_email" jdbcType="VARCHAR" property="usEmail" />
+    <result column="us_message" jdbcType="VARCHAR" property="usMessage" />
+    <result column="us_sex" jdbcType="INTEGER" property="usSex" />
+    <result column="us_birthday" jdbcType="DATE" property="usBirthday" />
+    <result column="us_nowhome" jdbcType="VARCHAR" property="usNowhome" />
+    <result column="us_job" jdbcType="VARCHAR" property="usJob" />
+    <result column="us_head" jdbcType="VARCHAR" property="usHead" />
+    <result column="us_fansCount" jdbcType="INTEGER" property="usFanscount" />
+    <result column="us_bookCount" jdbcType="INTEGER" property="usBookcount" />
+    <result column="us_createdate" jdbcType="DATE" property="usCreatedate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -253,4 +276,8 @@
       book_id = #{bookId,jdbcType=INTEGER}
     where collect_id = #{collectId,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCookbookByUsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from (collect c inner join cookbook b on c.book_id=b.book_id) inner join user u on c.us_id=u.us_id where c.us_id=#{usId}
+  </select>
 </mapper>

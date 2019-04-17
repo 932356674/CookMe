@@ -8,12 +8,18 @@ import com.gss.mapper.RegistMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
 import com.gss.utils.GetMessageCode;
+import com.gss.entity.*;
+import com.gss.mapper.CollectMapper;
+import com.gss.mapper.CookbookMapper;
+import com.gss.mapper.UserMapper;
+import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import javax.annotation.Resource;
-import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -21,6 +27,11 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private CookbookMapper cookbookMapper;
+    @Resource
+    private CollectMapper collectMapper;
 
     @Resource
     private RegistMapper registMapper;
@@ -74,7 +85,7 @@ public class SysUserServiceImpl implements SysUserService {
             int i = registMapper.updateByPrimaryKeySelective(regist2);
 
             if(i>0){
-                return R.ok("验证码成功");
+                return R.ok("验证码成功。");
             }else {
                 return R.error("验证码获取失败");
             }
@@ -185,9 +196,7 @@ public class SysUserServiceImpl implements SysUserService {
         UserExample.Criteria criteria = example.createCriteria();
 
         criteria.andUsMobileEqualTo(phone);
-
         List<User> users = userMapper.selectByExample(example);
-
         return users;
     }
 
@@ -199,9 +208,54 @@ public class SysUserServiceImpl implements SysUserService {
         criteria.andPhoneEqualTo(regist.getPhone());
         List<Regist> list=registMapper.selectByExample(registExample);
 
-        if(list!=null&&list.get(0).getCode().equals(regist.getCode())){
+        if(list.size()>0&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }
         return R.error("登录失败");
     }
+
+
+
+    @Override
+    public R selectMyHome(Integer usId) {
+        User user = userMapper.selectByPrimaryKey(usId);
+        //分享的菜谱
+        List<Cookbook> list = cookbookMapper.selectCookbookByUsId(usId);
+
+        //收藏的菜谱
+        List<Collect> list1 = collectMapper.selectCookbookByUsId(usId);
+
+        return R.ok().put("user",user).put("cookbook1",list).put("cookbook2",list1);
+    }
+
+    @Override
+    public R changeInfoById(User user) {
+        user.setUsCreatedate(new Date(System.currentTimeMillis()));
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i>0){
+            return R.ok();
+        }
+        return R.error("完善失败");
+    }
+
+    @Override
+    public R updatePassword(Integer usId, String newPassword,String oldPassword) {
+        User user = userMapper.selectByPrimaryKey(usId);
+        Md5Hash oldPasswords = new Md5Hash(oldPassword,user.getUsMobile()+"",1024);
+        oldPassword = oldPasswords.toString();
+        Md5Hash newPasswords = new Md5Hash(newPassword,user.getUsMobile()+"",1024);
+        newPassword = newPasswords.toString();
+        System.out.println(oldPassword+"旧密码");
+        System.out.println(newPassword+"新密码");
+        if (oldPassword.equals(user.getUsPassword())) {
+            user.setUsPassword(newPassword);
+            int i = userMapper.updateByPrimaryKey(user);
+            if (i > 0) {
+                return R.ok();
+            }
+        }
+        return R.error("修改失败");
+    }
+
+
 }

@@ -379,4 +379,7 @@
     where book_Id = #{bookId,jdbcType=INTEGER}
   </update>
 
+  <select id="selectCookbookByUsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+      SELECT * FROM cookbook WHERE us_id=#{usId}
+  </select>
 </mapper>
