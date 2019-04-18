@@ -22,7 +22,7 @@ public class SysShopController {
     private SysShopService sysShopService;
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "根据商品类型查询",notes = "根据商品类型获得商品简略信息")
-    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.POST)
+    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.GET)
     public R selectByType(String sort){
         return sysShopService.selectByType(sort);
     }

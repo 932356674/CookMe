@@ -23,18 +23,18 @@ public class SysBookController {
     private SysBookService sysBookService;
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "根据菜谱类型查询",notes = "根据菜谱类型获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByType",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/selectByType",method = RequestMethod.GET)
     public ResultData selectByType(int typeId , Pager pager){
         return sysBookService.selectByType(typeId,pager);
     }
 
     @ApiOperation(value = "查询首页时间菜谱",notes = "根据菜谱类型获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByTimeType",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/selectByTimeType",method = RequestMethod.GET)
     public R selectByTimeType(int typeId){
         return sysBookService.selectByTimeType(typeId);
     }
     @ApiOperation(value = "查询首页推荐菜谱",notes = "获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByBest",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/selectByBest",method = RequestMethod.GET)
     public R selectByBest(){
         return sysBookService.selectByBest();
     }

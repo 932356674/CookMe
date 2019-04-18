@@ -55,7 +55,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "首页获取用户信息",notes = "首页随机获取用户信息")
-    @RequestMapping(value = "/user/selectBest",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/selectBest",method = RequestMethod.GET)
     public R selectBest(){
         return sysUserService.selectBest();
     }
