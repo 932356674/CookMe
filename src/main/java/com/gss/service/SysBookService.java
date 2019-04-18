@@ -52,8 +52,8 @@ public interface SysBookService {
 
     public ResultData selectBook(Pager pager, String search);
 
-    public ResultData selectMaterial(Pager pager, String search);
-
     public R comment(int bookId,String commentValue);
+
+    CookbookDTO selectBookById(int bookId);
 
 }

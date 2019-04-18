@@ -11,8 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * //                            _ooOoo_
@@ -69,6 +68,8 @@ public class SysBookServiceImpl implements SysBookService {
     private CollectMapper collectMapper;
     @Resource
     private BookCommentMapper bookCommentMapper;
+    @Resource
+    private BooktypeMapper booktypeMapper;
 
     @Override
     public R add(CookbookDTO cookbook) {
@@ -87,10 +88,10 @@ public class SysBookServiceImpl implements SysBookService {
             User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
             u.setUsBookcount(u.getUsBookcount()+1);
             userMapper.updateByPrimaryKey(u);
-            List<Integer> types = cookbook.getTypes();
-            for (Integer type : types) {
+            List<Booktype> types = cookbook.getTypes();
+            for (Booktype type : types) {
                 CookbookType cookbookType = new CookbookType();
-                cookbookType.setTypeId(type);
+                cookbookType.setTypeId(type.getTypeId());
                 cookbookType.setBookId(cookbook.getBookId());
                 cookbookTypeMapper.insert(cookbookType);
             }
@@ -117,27 +118,28 @@ public class SysBookServiceImpl implements SysBookService {
     @Override
     public ResultData selectBook(Pager pager, String search) {
         PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
-        CookbookExample example = null;
+        CookbookExample cookbookExample = null;
+        MaterialExample materialExample = null;
         if(StringUtils.isNotEmpty(search)){
-            example = new CookbookExample();
-            CookbookExample.Criteria criteria = example.createCriteria();
+            cookbookExample = new CookbookExample();
+            CookbookExample.Criteria criteria = cookbookExample.createCriteria();
             criteria.andBookNameLike("%"+search+"%");
-        }
-        List<Cookbook> list = cookbookMapper.selectByExample(example);
-        PageInfo info = new PageInfo(list);
-        return new ResultData(info.getTotal(),info.getList());
-    }
 
-    @Override
-    public ResultData selectMaterial(Pager pager, String search) {
-        PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
-        MaterialExample example = null;
-        if(StringUtils.isNotEmpty(search)){
-            example = new MaterialExample();
-            MaterialExample.Criteria criteria = example.createCriteria();
-            criteria.andMatNameLike("%"+search+"%");
+            materialExample = new MaterialExample();
+            MaterialExample.Criteria criteria1 = materialExample.createCriteria();
+            criteria1.andMatNameLike("%"+search+"%");
         }
-        List<Material> list = materialMapper.selectByExample(example);
+        List<Cookbook> list = cookbookMapper.selectByExample(cookbookExample);
+        List<Material> list1 = materialMapper.selectByExample(materialExample);
+        List<Integer> list2=new ArrayList<>();
+        for (Cookbook cookbook : list) {
+            list2.add(cookbook.getBookId());
+        }
+        for (Material material : list1) {
+            if (!list2.contains(material.getBookId())){
+                list.add(cookbookMapper.selectByPrimaryKey(material.getBookId()));
+            }
+        }
         PageInfo info = new PageInfo(list);
         return new ResultData(info.getTotal(),info.getList());
     }
@@ -157,4 +159,41 @@ public class SysBookServiceImpl implements SysBookService {
             return R.error("评论失败！");
         }
     }
+
+    @Override
+    public CookbookDTO selectBookById(int bookId) {
+        CookbookDTO cookbookDTO = new CookbookDTO();
+
+        Cookbook cookbook = cookbookMapper.selectByPrimaryKey(bookId);
+
+        CookbookTypeExample example = new CookbookTypeExample();
+        CookbookTypeExample.Criteria criteria= example.createCriteria();
+        criteria.andBookIdEqualTo(bookId);
+        List<CookbookType> bt = cookbookTypeMapper.selectByExample(example);
+
+        List<Booktype> booktypes = null;
+        for (CookbookType cookbookType : bt) {
+            int i = cookbookType.getTypeId();
+            Booktype booktype = booktypeMapper.selectByPrimaryKey(i);
+            booktypes.add(booktype);
+        }
+        cookbookDTO = (CookbookDTO) cookbook;
+        cookbookDTO.setTypes(booktypes);
+
+        StepExample stepExample = new StepExample();
+        StepExample.Criteria stepcriteria = stepExample.createCriteria();
+        stepcriteria.andBookIdEqualTo(bookId);
+        List<Step> stepList = stepMapper.selectByExample(stepExample);
+
+        MaterialExample materialExample = new MaterialExample();
+        MaterialExample.Criteria criteria1 = materialExample.createCriteria();
+        criteria1.andBookIdEqualTo(bookId);
+        List<Material> materials = materialMapper.selectByExample(materialExample);
+        cookbookDTO.setMaterial(materials);
+        cookbookDTO.setMethod(stepList);
+
+        return cookbookDTO;
+    }
+
+
 }

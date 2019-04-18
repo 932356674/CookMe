@@ -4,7 +4,9 @@ import com.gss.dto.CookbookDTO;
 import com.gss.entity.Cookbook;
 import com.gss.entity.Material;
 import com.gss.entity.Step;
+import com.gss.entity.User;
 import com.gss.service.SysBookService;
+import com.gss.service.SysUserService;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
@@ -27,6 +29,8 @@ public class SysBookController {
 
     @Resource
     private SysBookService sysBookService;
+    @Resource
+    private SysUserService sysUserService;
 
     @ApiOperation(value = "发布",notes = "发布菜谱")
     @RequestMapping(value = "/user/book/addBook",method = RequestMethod.POST)
@@ -51,5 +55,13 @@ public class SysBookController {
     public R comment(int bookId,String commentValue){
         return sysBookService.comment(bookId,commentValue);
     }
+
+    @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
+    @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
+    public R selectByBookId(int bookId){
+        CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
+        User user = (User) sysUserService.selectMyHome(cookbookDTO.getUsId()).get("user");
+        return R.ok().put("cookbookdto",cookbookDTO).put("user",user);
+        }
 
 }
