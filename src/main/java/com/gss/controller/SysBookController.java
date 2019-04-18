@@ -10,17 +10,11 @@ import com.gss.service.SysUserService;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
-import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/sys")
@@ -57,11 +51,10 @@ public class SysBookController {
     }
 
     @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
-    @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/selectById",method = RequestMethod.POST)
     public R selectByBookId(int bookId){
         CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
         User user = (User) sysUserService.selectMyHome(cookbookDTO.getUsId()).get("user");
         return R.ok().put("cookbookdto",cookbookDTO).put("user",user);
-        }
-
+    }
 }
