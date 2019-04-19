@@ -9,14 +9,18 @@ import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.gss.config.AlipayConfig;
 import com.gss.entity.AliOrder;
 import com.gss.service.SysOrderService;
+import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
-@Controller
+@RequestMapping("/sys")
+@Api(value = "支付宝支付" ,produces = "application/json")
+@RestController
 public class SysOrderController {
     @Resource
     private SysOrderService orderService;

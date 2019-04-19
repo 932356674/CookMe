@@ -12,13 +12,9 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
-import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import java.util.List;
 
-
-import javax.annotation.Resource;
 @RequestMapping("/sys")
 @Api(value = "个人信息" ,produces = "application/json")
 @RestController
@@ -27,20 +23,20 @@ public class SysUserController {
     private SysUserService sysUserService;
 
     @ApiOperation(value ="修改个人信息",notes = "修改个人信息")
-    @RequestMapping(value = "/user/changeInfoById",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/changeInfoById",method = RequestMethod.PUT)
     public R changeInfoById(@RequestBody User user){
         return sysUserService.changeInfoById(user);
     }
 
     @ApiOperation(value ="个人主页",notes = "个人主页")
-    @RequestMapping(value = "/user/selectMyHome/{usId}",method = RequestMethod.POST)
-    public R selectMyHome( Integer usId){
+    @RequestMapping(value = "/user/selectMyHome/{usId}",method = RequestMethod.GET)
+    public R selectMyHome(@PathVariable Integer usId){
         return sysUserService.selectMyHome(usId);
     }
 
 
     @ApiOperation(value ="修改密码",notes = "修改密码")
-    @RequestMapping(value = "/user/updatePassword",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/updatePassword",method = RequestMethod.PUT)
     public R updatePassword(@RequestBody Integer usId,String newPassword,String oldPassword ){
         return sysUserService.updatePassword(usId, newPassword, oldPassword);
     }
@@ -48,7 +44,7 @@ public class SysUserController {
 
 
     @ApiOperation(value = "注册",notes = "查询手机号是否存在")
-    @RequestMapping(value = "/user/selectMobile/{usMobile}",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/selectMobile/{usMobile}",method = RequestMethod.GET)
     public R selectMobile(@PathVariable Long usMobile){
         return sysUserService.selectMobile(usMobile);
     }
@@ -56,7 +52,7 @@ public class SysUserController {
 
 
     @ApiOperation(value = "注册",notes = "获取手机验证码")
-    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.GET)
     public R getCode(@PathVariable Long usMobile){
         return sysUserService.getCode(usMobile);
     }
@@ -70,14 +66,14 @@ public class SysUserController {
 
 
     @ApiOperation(value = "重置密码",notes = "重置密码的验证码")
-    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.PUT)
     public R verifyCode(@RequestBody Regist regist){
         return sysUserService.verifyCode(regist);
     }
 
 
     @ApiOperation(value = "重置密码",notes = "修改密码")
-    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.PUT)
     public R resetPwd(@RequestBody User user){
         return sysUserService.resetPwd(user);
     }

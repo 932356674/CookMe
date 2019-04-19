@@ -8,9 +8,13 @@ import com.gss.config.AlipayConfig;
 import com.gss.entity.AliOrder;
 import com.gss.service.SysOrderService;
 import com.gss.utils.Constants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,13 +24,16 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-@Controller
+@RequestMapping("/sys")
+@Api(value = "支付宝支付" ,produces = "application/json")
+@RestController
 public class SysAlipayController {
     @Autowired
     private SysOrderService orderService;
 
-    @RequestMapping("pay.html")
-    public void order(String orderNum, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    @ApiOperation(value ="调用支付宝支付接口",notes = "调用支付宝支付接口")
+    @RequestMapping("/alipay/pay")
+    public void order(@RequestBody String orderNum, HttpServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
         if (orderNum != null) {
             AliOrder order = orderService.getOrderByOrderNum(orderNum);
