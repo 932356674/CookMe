@@ -384,4 +384,22 @@ public class Product {
     public void setSales(Long sales) {
         this.sales = sales;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", alias='" + alias + '\'' +
+                ", productImages='" + productImages + '\'' +
+                ", price=" + price +
+                ", unit='" + unit + '\'' +
+                ", sort='" + sort + '\'' +
+                ", productMassage='" + productMassage + '\'' +
+                ", merit='" + merit + '\'' +
+                ", recommend='" + recommend + '\'' +
+                ", taboo='" + taboo + '\'' +
+                ", sales=" + sales +
+                '}';
+    }
 }

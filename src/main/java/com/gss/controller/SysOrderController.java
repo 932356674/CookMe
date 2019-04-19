@@ -87,7 +87,7 @@ public class SysOrderController {
         try {
             //这里和普通的接口调用不同，使用的是sdkExecute
             AlipayTradeAppPayResponse response = alipayClient.sdkExecute(request);
-            System.out.println(response.getBody());//就是orderString 可以直接给客户端请求，无需再做处理。
+            System.out.println("呃呃呃呃呃"+response.getBody());//就是orderString 可以直接给客户端请求，无需再做处理。
             return response.getBody();
         } catch (AlipayApiException e) {
             e.printStackTrace();

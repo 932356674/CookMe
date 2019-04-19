@@ -357,6 +357,8 @@ public class AliOrder {
         this.aliItem = aliItem;
     }
 
+    public AliOrder() {
+    }
 
     public AliOrder(String orderNum, Integer usId, Long amount, String remark) {
         this.orderNum = orderNum;
