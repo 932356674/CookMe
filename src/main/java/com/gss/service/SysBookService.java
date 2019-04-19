@@ -1,6 +1,6 @@
 package com.gss.service;
 
-import com.gss.dto.CookbookDTO;
+import com.gss.entity.ConsigneeExample;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
@@ -46,7 +46,7 @@ import com.gss.utils.ResultData;
 public interface SysBookService {
 
     //新增菜谱
-    public R add(CookbookDTO cookbook);
+    public R add(ConsigneeExample.CookbookDTO cookbook);
 
     public R addCollect(int bookId);
 
@@ -54,6 +54,6 @@ public interface SysBookService {
 
     public R comment(int bookId,String commentValue);
 
-    CookbookDTO selectBookById(int bookId);
+    ConsigneeExample.CookbookDTO selectBookById(int bookId);
 
 }

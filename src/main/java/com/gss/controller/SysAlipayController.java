@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class SysAlipayController {
     @Autowired
     private SysOrderService orderService;
+
 
     @ApiOperation(value ="调用支付宝支付接口",notes = "调用支付宝支付接口")
     @RequestMapping("/alipay/pay")
@@ -57,6 +59,9 @@ public class SysAlipayController {
             String total_amount = amount.toString();
             //订单名称，必填
             //String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");
+            Long aliItem = order.getAliItem();
+
+
             String subject = "111";
             //商品描述，可空
             //String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");

@@ -1,10 +1,6 @@
 package com.gss.controller;
 
-import com.gss.dto.CookbookDTO;
-import com.gss.entity.Cookbook;
-import com.gss.entity.Material;
-import com.gss.entity.Step;
-import com.gss.entity.User;
+import com.gss.entity.*;
 import com.gss.service.SysBookService;
 import com.gss.service.SysUserService;
 import com.gss.utils.Pager;
@@ -28,7 +24,7 @@ public class SysBookController {
 
     @ApiOperation(value = "发布",notes = "发布菜谱")
     @RequestMapping(value = "/user/book/addBook",method = RequestMethod.POST)
-    public R add(@RequestBody CookbookDTO cookbook){
+    public R add(@RequestBody ConsigneeExample.CookbookDTO cookbook){
         return sysBookService.add(cookbook);
     }
 
@@ -53,7 +49,7 @@ public class SysBookController {
     @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
     @RequestMapping(value = "/book/selectById",method = RequestMethod.POST)
     public R selectByBookId(int bookId){
-        CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
+        ConsigneeExample.CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
         User user = (User) sysUserService.selectMyHome(cookbookDTO.getUsId()).get("user");
         return R.ok().put("cookbookdto",cookbookDTO).put("user",user);
     }

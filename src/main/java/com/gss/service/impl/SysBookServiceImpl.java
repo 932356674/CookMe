@@ -2,13 +2,11 @@ package com.gss.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gss.dto.CookbookDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
 import com.gss.utils.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -72,7 +70,7 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
-    public R add(CookbookDTO cookbook) {
+    public R add(ConsigneeExample.CookbookDTO cookbook) {
         try{
             cookbook.setUsId(ShiroUtils.getUserId());
             cookbook.setBookTime(new Date());
@@ -161,8 +159,8 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
     @Override
-    public CookbookDTO selectBookById(int bookId) {
-        CookbookDTO cookbookDTO = new CookbookDTO();
+    public ConsigneeExample.CookbookDTO selectBookById(int bookId) {
+        ConsigneeExample.CookbookDTO cookbookDTO = new ConsigneeExample.CookbookDTO();
 
         Cookbook cookbook = cookbookMapper.selectByPrimaryKey(bookId);
 
@@ -177,7 +175,7 @@ public class SysBookServiceImpl implements SysBookService {
             Booktype booktype = booktypeMapper.selectByPrimaryKey(i);
             booktypes.add(booktype);
         }
-        cookbookDTO = (CookbookDTO) cookbook;
+        cookbookDTO = (ConsigneeExample.CookbookDTO) cookbook;
         cookbookDTO.setTypes(booktypes);
 
         StepExample stepExample = new StepExample();

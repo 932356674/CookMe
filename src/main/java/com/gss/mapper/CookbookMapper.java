@@ -1,6 +1,5 @@
 package com.gss.mapper;
 
-import com.gss.dto.CookbookDTO;
 import com.gss.entity.Cookbook;
 import com.gss.entity.CookbookExample;
 import java.util.List;
