@@ -1,5 +1,7 @@
 package com.gss.entity;
 
+import com.gss.utils.Constants;
+
 import java.util.Date;
 
 public class AliOrder {
@@ -353,5 +355,14 @@ public class AliOrder {
      */
     public void setAliItem(Long aliItem) {
         this.aliItem = aliItem;
+    }
+
+
+    public AliOrder(String orderNum, Integer usId, Long amount, String remark) {
+        this.orderNum = orderNum;
+        this.usId = usId;
+        this.status = Constants.ORDER_STATUS_CREATE;
+        this.amount = amount;
+        this.remark = remark;
     }
 }
