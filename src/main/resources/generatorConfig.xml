@@ -53,10 +53,10 @@
         <!--<table tableName="material"></table>-->
         <!--<table tableName="product"></table>-->
         <!--<table tableName="regist"></table>-->
-        <table tableName="shopcar"></table>
+        <!--<table tableName="shopcar"></table>-->
         <!--<table tableName="step"></table>-->
-        <!--<table tableName="ali_order"></table>-->
-        <!--<table tableName="order_items"></table>-->
+        <table tableName="ali_order"></table>
+        <table tableName="order_items"></table>
         <!--<table tableName="tp_region2"></table>-->
 
 

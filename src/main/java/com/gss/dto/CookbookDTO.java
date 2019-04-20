@@ -1,5 +1,6 @@
 package com.gss.dto;
 
+import com.gss.entity.Booktype;
 import com.gss.entity.Cookbook;
 import com.gss.entity.Material;
 import com.gss.entity.Step;
@@ -10,13 +11,13 @@ public class CookbookDTO extends Cookbook {
 
     List<Step> method;
     List<Material> material;
-    List<Integer> types;
+    List<Booktype> types;
 
-    public List<Integer> getTypes() {
+    public List<Booktype> getTypes() {
         return types;
     }
 
-    public void setTypes(List<Integer> types) {
+    public void setTypes(List<Booktype> types) {
         this.types = types;
     }
 
