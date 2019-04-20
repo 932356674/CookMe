@@ -13,6 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import java.util.*;
 
+import com.gss.entity.Cookbook;
+import com.gss.mapper.CookbookMapper;
+import com.gss.service.SysBookService;
+import com.gss.utils.Pager;
+import com.gss.utils.R;
+import com.gss.utils.RandomUtils;
+import com.gss.utils.ResultData;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -196,22 +209,9 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
 
-import com.gss.entity.Cookbook;
-import com.gss.mapper.CookbookMapper;
-import com.gss.service.SysBookService;
-import com.gss.utils.Pager;
-import com.gss.utils.R;
-import com.gss.utils.RandomUtils;
-import com.gss.utils.ResultData;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
-@Service
-public class SysBookServiceImpl implements SysBookService {
+
     @Override
     public R selectByBest() {
         List<Cookbook> list=cookbookMapper.selectByExample(null);
@@ -234,8 +234,7 @@ public class SysBookServiceImpl implements SysBookService {
         return new R().put("timeType",list1);
     }
 
-    @Resource
-    private CookbookMapper cookbookMapper;
+
     @Override
     public ResultData selectByType(int typeId, Pager pager) {
         PageHelper pageHelper=new PageHelper();

@@ -4,7 +4,7 @@ import com.gss.dto.CookbookDTO;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
-
+import java.util.List;
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -56,9 +56,8 @@ public interface SysBookService {
 
     CookbookDTO selectBookById(int bookId);
 
-import java.util.List;
 
-public interface SysBookService {
+
     ResultData selectByType(int typeId, Pager pager);
 
     R selectByTimeType(int typeId);

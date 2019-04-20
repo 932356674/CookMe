@@ -5,11 +5,14 @@ import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
 
-public interface SysShopService {
-    R selectByType(String sort);
 import java.util.List;
 
 public interface SysShopService {
+
+    //首页获取
+    R selectByType(String sort);
+
+
     //菜市场首页
     public List<Product> selectProductList(String sort);
 

@@ -1,6 +1,5 @@
 package com.gss.controller;
 
-import com.gss.service.SysBookService;
 import com.gss.entity.Product;
 import com.gss.service.SysShopService;
 import com.gss.utils.Pager;
@@ -8,7 +7,6 @@ import com.gss.utils.R;
 import com.gss.utils.ResultData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,9 +19,7 @@ import java.util.*;
 @RequestMapping("/sys")
 @Api(value = "商城",produces = "application/json")
 
-@RestController
-@RequestMapping("/sys")
-@Api(value = "商品控制器",produces = "application/json")
+
 public class SysShopController {
 
     @Resource

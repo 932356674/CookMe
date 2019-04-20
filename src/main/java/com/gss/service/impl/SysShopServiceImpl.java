@@ -11,21 +11,6 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-@Service
-public class SysShopServiceImpl implements SysShopService {
-    @Resource
-    private ProductMapper productMapper;
-    @Override
-    public R selectByType(String sort) {
-        List<Product> list=productMapper.selectByType(sort);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
-        List<Product> list1=new ArrayList<>();
-        for (Integer integer : set) {
-            list1.add(list.get(integer));
-        }
-        return new R().put("bestProduct",list1);
-    }
-}
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gss.entity.Product;
@@ -41,9 +26,22 @@ import javax.annotation.Resource;
 import java.util.List;
 @Service(value = "sysShopServiceImpl")
 public class SysShopServiceImpl implements SysShopService {
-
     @Resource
     private ProductMapper productMapper;
+    @Override
+    public R selectByType(String sort) {
+        List<Product> list=productMapper.selectByType(sort);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        List<Product> list1=new ArrayList<>();
+        for (Integer integer : set) {
+            list1.add(list.get(integer));
+        }
+        return new R().put("bestProduct",list1);
+    }
+
+
+
+
 
 
     @Override
