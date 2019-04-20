@@ -1,10 +1,20 @@
 package com.gss.service;
 
+import com.gss.entity.User;
+import com.gss.utils.R;
 import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.utils.R;
 
+import java.util.List;
+
 public interface SysUserService {
+    //个人主页
+    public R selectMyHome(Integer usId);
+    //完善个人信息
+    public R changeInfoById(User user);
+    //修改密码
+    public R updatePassword(Integer usId,String oldPassword,String newPasswords);
 
 //查询用户手机号是否存在
     public R selectMobile(Long mobile);
@@ -22,4 +32,11 @@ public interface SysUserService {
     public R resetPwd(User user);
 
     R selectBest();
+//验证手机号是否存在（跟注册的验证结果相反）
+    List<User> findMobile(long phone);
+//用户名密码登录
+    User login(long phone);
+//短信验证登录
+    R mobileLogin(Regist regist);
+
 }

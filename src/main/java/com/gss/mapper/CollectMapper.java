@@ -1,5 +1,6 @@
 package com.gss.mapper;
 
+import com.gss.entity.All;
 import com.gss.entity.Collect;
 import com.gss.entity.CollectExample;
 import java.util.List;
@@ -93,4 +94,6 @@ public interface CollectMapper {
      * @mbggenerated Tue Apr 09 21:38:01 CST 2019
      */
     int updateByPrimaryKey(Collect record);
+
+    List<Collect> selectCookbookByUsId(Integer usId);
 }

@@ -38,23 +38,26 @@
         </javaClientGenerator>
 
         <!-- 用户权限角色,修改表名 -->
-        <table tableName="user" ></table>
-        <table tableName="role" ></table>
-        <table tableName="user_role" ></table>
+        <!--<table tableName="user" ></table>-->
+        <!--<table tableName="role" ></table>-->
+        <!--<table tableName="user_role" ></table>-->
 
         <!--编写数据库文档-->
-        <table tableName="attention"></table>
-        <table tableName="book_comment"></table>
-        <table tableName="booktype"></table>
-        <table tableName="collect"></table>
+        <!--<table tableName="attention"></table>-->
+        <!--<table tableName="book_comment"></table>-->
+        <!--<table tableName="booktype"></table>-->
+        <!--<table tableName="collect"></table>-->
         <table tableName="consignee" ></table>
-        <table tableName="cookbook"></table>
-        <table tableName="cookbook_type"></table>
-        <table tableName="material"></table>
-        <table tableName="product"></table>
-        <table tableName="regist"></table>
-        <table tableName="shopcar"></table>
-        <table tableName="step"></table>
+        <!--<table tableName="cookbook"></table>-->
+        <!--<table tableName="cookbook_type"></table>-->
+        <!--<table tableName="material"></table>-->
+        <!--<table tableName="product"></table>-->
+        <!--<table tableName="regist"></table>-->
+        <!--<table tableName="shopcar"></table>-->
+        <!--<table tableName="step"></table>-->
+        <!--<table tableName="ali_order"></table>-->
+        <!--<table tableName="order_items"></table>-->
+        <!--<table tableName="tp_region2"></table>-->
 
 
 
