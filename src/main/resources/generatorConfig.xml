@@ -47,7 +47,7 @@
         <!--<table tableName="book_comment"></table>-->
         <!--<table tableName="booktype"></table>-->
         <!--<table tableName="collect"></table>-->
-        <!--<table tableName="consignee" ></table>-->
+        <table tableName="consignee" ></table>
         <!--<table tableName="cookbook"></table>-->
         <!--<table tableName="cookbook_type"></table>-->
         <!--<table tableName="material"></table>-->
@@ -55,8 +55,8 @@
         <!--<table tableName="regist"></table>-->
         <!--<table tableName="shopcar"></table>-->
         <!--<table tableName="step"></table>-->
-        <table tableName="ali_order"></table>
-        <table tableName="order_items"></table>
+        <!--<table tableName="ali_order"></table>-->
+        <!--<table tableName="order_items"></table>-->
         <!--<table tableName="tp_region2"></table>-->
 
 
