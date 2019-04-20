@@ -395,4 +395,11 @@
       sales = #{sales,jdbcType=BIGINT}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
+  <select id="selectBySort" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List" /> from product where sort = #{sort}
+  </select>
+
+  <select id="selectByRandom" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List" /> FROM product ORDER BY RAND() LIMIT 6
+  </select>
 </mapper>
