@@ -365,4 +365,21 @@ public class AliOrder {
         this.amount = amount;
         this.remark = remark;
     }
+
+    public AliOrder() {
+    }
+
+    public AliOrder(Long orderId, String orderNum, Integer usId, Integer conId, Integer status, Integer payStatus, Long amount, String tradeNum, Date createDate, String remark, Long aliItem) {
+        this.orderId = orderId;
+        this.orderNum = orderNum;
+        this.usId = usId;
+        this.conId = conId;
+        this.status = status;
+        this.payStatus = payStatus;
+        this.amount = amount;
+        this.tradeNum = tradeNum;
+        this.createDate = createDate;
+        this.remark = remark;
+        this.aliItem = aliItem;
+    }
 }

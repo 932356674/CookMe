@@ -8,15 +8,20 @@ import com.alipay.api.request.AlipayTradeAppPayRequest;
 import com.alipay.api.response.AlipayTradeAppPayResponse;
 import com.gss.config.AlipayConfig;
 import com.gss.entity.AliOrder;
+import com.gss.entity.Consignee;
+import com.gss.entity.OrderItems;
+import com.gss.entity.TpRegion2;
 import com.gss.service.SysOrderService;
+import com.gss.utils.R;
+import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @RequestMapping("/sys")
 @Api(value = "支付宝支付" ,produces = "application/json")
@@ -93,5 +98,41 @@ public class SysOrderController {
             e.printStackTrace();
         }
         return "";
+    }
+    @ApiOperation(value = "储存收货人信息",notes = "收货人信息")
+    @RequestMapping(value = "/order/consignee",method =RequestMethod.POST)
+    public R insertConsignee(@RequestBody Consignee consignee){
+        consignee.setUsId(ShiroUtils.getUserId());
+        return orderService.insertCon(consignee);
+    }
+
+    @ApiOperation(value = "新增订单详情并返回",notes = "订单信息")
+    @RequestMapping(value = "/order/itemandpro",method = RequestMethod.POST)
+    public List<Object> itemandpro(@RequestBody List<OrderItems> list){
+        return orderService.findCount(list);
+    }
+
+    @ApiOperation(value = "返回订单信息",notes = "订单信息")
+    @RequestMapping(value = "/order/aliOrder",method = RequestMethod.POST)
+    public List<AliOrder> aliOrder(@RequestBody AliOrder aliOrder){
+        return orderService.findtrade(aliOrder);
+    }
+
+    @ApiOperation(value = "下拉框地址信息",notes = "收货人信息")
+    @RequestMapping(value = "/order/selectParent",method = RequestMethod.POST)
+    public List<TpRegion2> selectParent(int parentId){
+        return orderService.selectParent(parentId);
+    }
+
+    @ApiOperation(value = "查找单个收货人信息",notes = "收货人信息")
+    @RequestMapping(value = "/order/selectConsignee",method = RequestMethod.POST)
+    public R selectconsignee(){
+        return orderService.selectConsignee();
+    }
+
+    @ApiOperation(value = "修改收货人信息",notes = "收货人信息")
+    @RequestMapping(value = "/order/updateConsignee",method = RequestMethod.POST)
+    public R updateConsignee(@RequestBody Consignee consignee){
+        return orderService.updateConsignee(consignee);
     }
 }

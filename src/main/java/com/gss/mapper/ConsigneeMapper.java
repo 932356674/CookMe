@@ -93,4 +93,7 @@ public interface ConsigneeMapper {
      * @mbggenerated Sat Apr 20 17:21:29 CST 2019
      */
     int updateByPrimaryKey(Consignee record);
+
+    int updateConsig(Consignee consignee);
+
 }
