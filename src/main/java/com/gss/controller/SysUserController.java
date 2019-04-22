@@ -106,7 +106,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
-    @RequestMapping(value = "/user/selectMobile",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/findMobile",method = RequestMethod.POST)
     public R findMobile(@RequestBody Long phone){
         List<User> list= sysUserService.findMobile(phone);
         if(list.size()>0&&list!=null){
