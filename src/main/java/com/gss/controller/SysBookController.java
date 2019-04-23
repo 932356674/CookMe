@@ -1,5 +1,6 @@
 package com.gss.controller;
 
+import com.gss.dto.BookDTO;
 import com.gss.dto.CookbookDTO;
 import com.gss.entity.Cookbook;
 import com.gss.entity.Material;
@@ -28,8 +29,8 @@ public class SysBookController {
 
     @ApiOperation(value = "发布",notes = "发布菜谱")
     @RequestMapping(value = "/user/book/addBook",method = RequestMethod.POST)
-    public R add(@RequestBody CookbookDTO cookbook){
-        return sysBookService.add(cookbook);
+    public R add(@RequestBody BookDTO bookDTO){
+        return sysBookService.add(bookDTO);
     }
 
     @ApiOperation(value = "收藏菜谱",notes = "收藏菜谱")
