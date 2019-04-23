@@ -59,9 +59,9 @@ public class SysUserController {
 
 
     @ApiOperation(value = "注册",notes = "提交注册信息")
-    @RequestMapping(value = "/user/register/{code}",method = RequestMethod.POST)
-    public R register(@PathVariable int code,@RequestBody User user){
-        return sysUserService.register(user,code);
+    @RequestMapping(value = "/user/register/{verifyCode}",method = RequestMethod.POST)
+    public R register(@PathVariable int verifyCode,@RequestBody User user){
+        return sysUserService.register(user,verifyCode);
     }
 
 
