@@ -2,7 +2,9 @@ package com.gss.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gss.dto.BookDTO;
 import com.gss.dto.CookbookDTO;
+import com.gss.dto.StepDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
@@ -34,27 +36,29 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
-    public R add(CookbookDTO cookbook) {
+    public R add(BookDTO bookDTO) {
         try{
-            cookbook.setUsId(ShiroUtils.getUserId());
-            cookbook.setBookTime(new Date());
-            int i = cookbookMapper.insert(cookbook);
-            List<Material> materials = cookbook.getMaterial();
+            bookDTO.setUsId(ShiroUtils.getUserId());
+            bookDTO.setBookTime(new Date());
+            bookDTO.setBookImage(Images.getImages(bookDTO.getBookImagefile()));
+            cookbookMapper.insert(bookDTO);
+            List<Material> materials = bookDTO.getMaterial();
             for (Material material : materials) {
                 materialMapper.insert(material);
             }
-            List<Step> steps = cookbook.getMethod();
-            for (Step step : steps) {
+            List<StepDTO> steps = bookDTO.getStepDTOS();
+            for (StepDTO step : steps) {
+                step.setStepImage(Images.getImages(step.getStepImageFile()));
                 stepMapper.insert(step);
             }
             User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
             u.setUsBookcount(u.getUsBookcount()+1);
             userMapper.updateByPrimaryKey(u);
-            List<Booktype> types = cookbook.getTypes();
+            List<Booktype> types = bookDTO.getTypes();
             for (Booktype type : types) {
                 CookbookType cookbookType = new CookbookType();
                 cookbookType.setTypeId(type.getTypeId());
-                cookbookType.setBookId(cookbook.getBookId());
+                cookbookType.setBookId(bookDTO.getBookId());
                 cookbookTypeMapper.insert(cookbookType);
             }
         }catch(Exception e){

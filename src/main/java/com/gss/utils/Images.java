@@ -42,18 +42,17 @@ import java.io.File;
  * @Date: 2019/4/23 0023
  * @Time: 下午 23:26
  */
-public class images {
+public class Images {
 
-    public String images(MultipartFile file){
+    public static String getImages(MultipartFile file){
         StringBuffer sb=new StringBuffer();
         try{
             byte[] b= file.getBytes();
             String fileName = file.getOriginalFilename();
             String suffix =fileName.substring(fileName.lastIndexOf(".")+1);
-            FastDFSClient fastDFSClient = new FastDFSClient("client/conf");
+            FastDFSClient fastDFSClient = new FastDFSClient("client.conf");
             String ss[] = fastDFSClient.uploadFile(b,suffix);
             sb.append(ss[0]+ File.pathSeparator+ss[1]);
-            return sb.toString();
         }catch(Exception e){
             e.printStackTrace();
         }
