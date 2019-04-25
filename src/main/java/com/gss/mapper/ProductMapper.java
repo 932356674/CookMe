@@ -94,6 +94,8 @@ public interface ProductMapper {
      */
     int updateByPrimaryKey(Product record);
 
+    Product selectProduct(int id);
+
     List<Product> selectByType(String sort);
 
     List<Product> selectBySort(String sort);

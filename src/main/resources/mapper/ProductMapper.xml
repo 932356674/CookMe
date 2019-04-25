@@ -395,6 +395,9 @@
       sales = #{sales,jdbcType=BIGINT}
     where product_id = #{productId,jdbcType=INTEGER}
   </update>
+  <select id="selectProduct" parameterType="java.lang.Integer" resultType="com.gss.entity.Product">
+    select product_id,product_name,price from product where product_id=#{pid}
+  </select>
   <select id="selectBySort" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="Base_Column_List" /> from product where sort = #{sort}
   </select>
