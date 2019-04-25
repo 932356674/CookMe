@@ -30,8 +30,8 @@ public class SysUserController {
     }
 
     @ApiOperation(value ="个人主页",notes = "个人主页")
-    @RequestMapping(value = "/user/selectMyHome/{usId}",method = RequestMethod.GET)
-    public R selectMyHome(@PathVariable Integer usId){
+    @RequestMapping(value = "/user/selectMyHome",method = RequestMethod.POST)
+    public R selectMyHome(@RequestBody Integer usId){
         return sysUserService.selectMyHome(usId);
     }
 
@@ -50,8 +50,8 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "注册",notes = "获取手机验证码")
-    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.GET)
-    public R getCode(@PathVariable Long usMobile){
+    @RequestMapping(value = "/user/sendCode",method = RequestMethod.POST)
+    public R getCode(@RequestBody Long usMobile){
         return sysUserService.getCode(usMobile);
     }
 
