@@ -7,19 +7,15 @@ import com.gss.utils.R;
 import com.gss.utils.ResultData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
 
 @RestController
 @RequestMapping("/sys")
+@CrossOrigin(origins = {"*"})
 @Api(value = "商城",produces = "application/json")
-
-
 public class SysShopController {
 
     @Resource

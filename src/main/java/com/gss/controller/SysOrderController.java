@@ -25,6 +25,7 @@ import java.util.List;
 
 @RequestMapping("/sys")
 @Api(value = "支付宝支付" ,produces = "application/json")
+@CrossOrigin(origins = {"*"})
 @RestController
 public class SysOrderController {
     @Resource

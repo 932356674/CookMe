@@ -23,8 +23,7 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/sys")
 @Api(value = "菜谱控制器",produces = "application/json")
-
-
+@CrossOrigin(origins = {"*"})
 public class SysBookController {
 
     @Resource

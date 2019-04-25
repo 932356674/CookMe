@@ -16,9 +16,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RequestMapping("/sys")
+@CrossOrigin(origins = {"*"})
 @Api(value = "个人信息" ,produces = "application/json")
 @RestController
-@CrossOrigin(origins = {"*"})
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
@@ -123,11 +123,15 @@ public class SysUserController {
 
 
 
-
     @RequestMapping(value = "/test1")
     public String test11(@RequestBody String usMobile){
         System.out.println(usMobile);
         return usMobile+"";
+    }
+
+    @RequestMapping(value = "/test")
+    public String test1(){
+        return "测试测试！";
     }
 
 }

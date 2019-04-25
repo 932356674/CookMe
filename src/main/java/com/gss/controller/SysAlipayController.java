@@ -8,6 +8,7 @@ import com.gss.config.AlipayConfig;
 import com.gss.entity.AliOrder;
 import com.gss.service.SysOrderService;
 import com.gss.utils.Constants;
+import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,10 @@ public class SysAlipayController {
 
     @ApiOperation(value ="调用支付宝支付接口",notes = "调用支付宝支付接口")
     @RequestMapping("/alipay/pay")
-    public void order(@RequestBody String orderNum, HttpServletResponse response) throws Exception {
+    public void order(HttpServletResponse response) throws Exception {
         PrintWriter out = response.getWriter();
-        if (orderNum != null) {
+        String orderNum = (String) ShiroUtils.getAttribute("orderNum");
+        if ( orderNum != null) {
             AliOrder order = orderService.getOrderByOrderNum(orderNum);
             // 商户订单号，商户网站订单系统中唯一订单号，必填
             // 订单名称，必填

@@ -8,15 +8,13 @@ import com.gss.utils.R;
 import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
 @RestController
 @RequestMapping("/sys")
+@CrossOrigin(origins = {"*"})
 @Api(value = "我的关注粉丝",produces = "application/json")
 public class SysAttentionConntroller {
 
