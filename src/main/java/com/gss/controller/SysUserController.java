@@ -50,13 +50,13 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "注册",notes = "获取手机验证码")
-    @RequestMapping(value = "/user/sendCode/{usMobile}")
+    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.GET)
     public R getCode(@PathVariable Long usMobile){
         return sysUserService.getCode(usMobile);
     }
 
     @ApiOperation(value = "注册",notes = "提交注册信息")
-    @RequestMapping(value = "/user/register/{code}",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/register/{code}",method = RequestMethod.GET)
     public R register(@PathVariable int code,@RequestBody User user){
         return sysUserService.register(user,code);
     }
@@ -93,7 +93,7 @@ public class SysUserController {
             subject.login(token);
             return R.ok();
         }catch (Exception e){
-            e.printStackTrace();;
+            e.printStackTrace();
             s=e.getMessage();
         }
         return R.error(s);
@@ -109,11 +109,11 @@ public class SysUserController {
         return R.error("手机号未注册，请先注册");
     }
 
-    /*@ApiOperation(value = "发送验证码",notes = "用户登录")
+    @ApiOperation(value = "发送验证码",notes = "用户登录")
     @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
     public R gainCodes(@RequestBody Long phone){
         return sysUserService.getCode(phone);
-    }*/
+    }
 
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
