@@ -1,10 +1,7 @@
 package com.gss.service.impl;
 
 import com.gss.entity.*;
-import com.gss.mapper.AliOrderMapper;
-import com.gss.mapper.ConsigneeMapper;
-import com.gss.mapper.OrderItemsMapper;
-import com.gss.mapper.TpRegion2Mapper;
+import com.gss.mapper.*;
 import com.gss.service.SysOrderService;
 import com.gss.utils.R;
 import com.gss.utils.ShiroUtils;
@@ -27,6 +24,8 @@ public class SysOrderServiceImpl implements SysOrderService {
     private AliOrderMapper aliOrderMapper;
     @Resource
     private TpRegion2Mapper tpRegion2Mapper;
+    @Resource
+    private ShopcarMapper shopcarMapper;
     @Override
     public void addOrder(AliOrder order) {
         orderDAO.insert(order);
@@ -66,6 +65,7 @@ public class SysOrderServiceImpl implements SysOrderService {
         for (OrderItems orderItems : list) {
             orderItems.setProItm(j);
             int i=orderItemsMapper.insert(orderItems);
+
             OrderItemsAndProduct orderItemsAndProduct=orderItemsMapper.findOrderAndPro(orderItems);
             list1.add(orderItemsAndProduct);
         }
@@ -75,16 +75,33 @@ public class SysOrderServiceImpl implements SysOrderService {
 
     @Override
     public List<AliOrder> findtrade(AliOrder aliOrder) {
-       // long j=System.currentTimeMillis();
-         aliOrder.setOrderNum(System.currentTimeMillis()+"");
+         long aaa=System.currentTimeMillis();
+         aliOrder.setOrderNum(aaa+"");
+         ShiroUtils.setAttribute("aaa",aaa+"");
          aliOrder.setUsId(ShiroUtils.getUserId());
          aliOrder.setConId(Integer.valueOf(String.valueOf(ShiroUtils.getAttribute("conId"))).intValue());
          aliOrder.setAliItem(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
-      //   aliOrder.setUsId(2);
-      //    aliOrder.setConId(7);
-      //    aliOrder.setAliItem(j);
+       //  aliOrder.setUsId(3);
+       //  aliOrder.setConId(7);
+       //  aliOrder.setAliItem(aaa);
         aliOrder.setCreateDate(new Date(System.currentTimeMillis()));
         int i=aliOrderMapper.insert(aliOrder);
+        //生成订单删除购物车
+        OrderItemsExample orderItemsExample=new OrderItemsExample();
+        OrderItemsExample.Criteria criteria1=orderItemsExample.createCriteria();
+        criteria1.andProItmEqualTo(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
+        List<OrderItems> list1=orderItemsMapper.selectByExample(orderItemsExample);
+        for (OrderItems orderItems : list1) {
+            ShopcarExample shopcarExample=new ShopcarExample();
+            ShopcarExample.Criteria criteria2=shopcarExample.createCriteria();
+            criteria2.andProductIdEqualTo(orderItems.getProductId());
+            List<Shopcar> list2=shopcarMapper.selectByExample(shopcarExample);
+            for (Shopcar shopcar : list2) {
+                shopcar.setUsId(ShiroUtils.getUserId());
+                int ddd=shopcarMapper.deleteshopca(shopcar);
+            }
+        }
+
         AliOrderExample example=new AliOrderExample();
         AliOrderExample.Criteria criteria=example.createCriteria();
         criteria.andOrderIdEqualTo(aliOrder.getOrderId());

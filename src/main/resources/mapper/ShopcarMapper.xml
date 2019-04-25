@@ -268,4 +268,7 @@
       car_count = #{carCount,jdbcType=INTEGER}
     where car_id = #{carId,jdbcType=INTEGER}
   </update>
+  <delete id="deleteshopca" parameterType="com.gss.entity.Shopcar">
+    DELETE FROM shopcar WHERE product_id=#{productId} AND us_id=#{usId}
+  </delete>
 </mapper>

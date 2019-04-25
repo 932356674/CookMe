@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/sys")
 @Api(value = "个人信息" ,produces = "application/json")
 @RestController
+@CrossOrigin(origins = {"*"})
 public class SysUserController {
     @Resource
     private SysUserService sysUserService;
@@ -41,22 +42,18 @@ public class SysUserController {
         return sysUserService.updatePassword(usId, newPassword, oldPassword);
     }
 
-
-
     @ApiOperation(value = "注册",notes = "查询手机号是否存在")
-    @RequestMapping(value = "/user/selectMobile/{usMobile}",method = RequestMethod.GET)
-    public R selectMobile(@PathVariable Long usMobile){
-        return sysUserService.selectMobile(usMobile);
+    @RequestMapping(value = "/user/selectMobile", method = RequestMethod.POST)
+    public R selectMobile(@RequestBody User user){
+        System.out.println(user.getUsMobile());
+        return sysUserService.selectMobile(user.getUsMobile());
     }
 
-
-
     @ApiOperation(value = "注册",notes = "获取手机验证码")
-    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.GET)
+    @RequestMapping(value = "/user/sendCode/{usMobile}")
     public R getCode(@PathVariable Long usMobile){
         return sysUserService.getCode(usMobile);
     }
-
 
     @ApiOperation(value = "注册",notes = "提交注册信息")
     @RequestMapping(value = "/user/register/{code}",method = RequestMethod.POST)
@@ -71,7 +68,6 @@ public class SysUserController {
         return sysUserService.verifyCode(regist);
     }
 
-
     @ApiOperation(value = "重置密码",notes = "修改密码")
     @RequestMapping(value = "/user/resetPwd",method = RequestMethod.PUT)
     public R resetPwd(@RequestBody User user){
@@ -83,8 +79,6 @@ public class SysUserController {
     public R selectBest(){
         return sysUserService.selectBest();
     }
-
-
 
     @ApiOperation(value = "账号密码码登录",notes = "用户登录")
     @RequestMapping(value = "/user/login",method =RequestMethod.POST )
@@ -126,4 +120,14 @@ public class SysUserController {
     public R mobileLogin(@RequestBody Regist regist){
         return sysUserService.mobileLogin(regist);
     }
+
+
+
+
+    @RequestMapping(value = "/test1")
+    public String test11(@RequestBody String usMobile){
+        System.out.println(usMobile);
+        return usMobile+"";
+    }
+
 }

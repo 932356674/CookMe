@@ -1,5 +1,6 @@
 package com.gss.mapper;
 
+import com.gss.entity.OrderItems;
 import com.gss.entity.Shopcar;
 import com.gss.entity.ShopcarExample;
 import java.util.List;
@@ -93,4 +94,6 @@ public interface ShopcarMapper {
      * @mbggenerated Wed Apr 17 10:59:22 CST 2019
      */
     int updateByPrimaryKey(Shopcar record);
+
+    int deleteshopca(Shopcar shopcar);
 }
