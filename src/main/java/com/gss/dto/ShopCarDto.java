@@ -1,14 +1,7 @@
-package com.gss.service;
+package com.gss.dto;
 
-import com.gss.dto.ShopCarDto;
 import com.gss.entity.Product;
-import com.gss.entity.Shopcar;
-import com.gss.utils.R;
-import com.gss.utils.Pager;
-import com.gss.utils.ResultData;
-
-import java.util.List;
-
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 
 /**
  * //                            _ooOoo_
@@ -44,37 +37,56 @@ import java.util.List;
  *
  * @Author: M.J
  * @Date: 2019/4/14
- * @Time: 18:35
+ * @Time: 18:10
  */
-public interface SysShopService {
-    Product selectProduct(int productId);
-
-    Product selectProductShopCar(int productId);
-
-    int insertShopCar(Shopcar shopCar);
-
-    List<Shopcar> selectShopcarByUsId(int usId);
-
-    Shopcar selectShopCarById(int productId);
-
-    int updateShopCar(Shopcar shopcar);
-
-    Shopcar selectShopCarByUsProductId(ShopCarDto shopCarDto);
-
-    R delShopCarDel(List<Integer> CarId);
-
-    R multipleShopCar(List<Shopcar> shopcars);
-
-    //首页获取
-    R selectByType(String sort);
+public class ShopCarDto extends Product {
+    private Integer carId;
+    private Integer usId;
+    private Integer carCount;
+    private String isChecked;
 
 
-    //菜市场首页
-    public List<Product> selectProductList(String sort);
+    public ShopCarDto() {
+    }
 
-    //模糊查询
-    public ResultData selectByPage(Pager pager,String search);
+    public Integer getCarId() {
+        return carId;
+    }
 
-    //今日推荐
-    public List<Product> selectRecommend();
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    public Integer getUsId() {
+        return usId;
+    }
+
+    public void setUsId(Integer usId) {
+        this.usId = usId;
+    }
+
+    public Integer getCarCount() {
+        return carCount;
+    }
+
+    public void setCarCount(Integer carCount) {
+        this.carCount = carCount;
+    }
+
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopCarDto{" +
+                "carId=" + carId +
+                ", usId=" + usId +
+                ", carCount=" + carCount +
+                '}';
+    }
 }
