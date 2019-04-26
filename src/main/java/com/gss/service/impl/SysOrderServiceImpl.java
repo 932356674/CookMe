@@ -26,6 +26,9 @@ public class SysOrderServiceImpl implements SysOrderService {
     private TpRegion2Mapper tpRegion2Mapper;
     @Resource
     private ShopcarMapper shopcarMapper;
+    @Resource
+    private ProductMapper productMapper;
+
     @Override
     public void addOrder(AliOrder order) {
         orderDAO.insert(order);
@@ -136,6 +139,25 @@ public class SysOrderServiceImpl implements SysOrderService {
     public R updateConsignee(Consignee consignee) {
         int i=consigneeMapper.updateConsig(consignee);
         return i>0?R.ok():R.error("修改失败");
+    }
+
+    @Override
+    public List<Product> getProByAliNum(Long aliNum) {
+
+        OrderItemsExample orderItemsExample=new OrderItemsExample();
+        OrderItemsExample.Criteria criteria1=orderItemsExample.createCriteria();
+        criteria1.andItemsIdEqualTo(aliNum);
+        List<OrderItems> orderItems = orderItemsMapper.selectByExample(orderItemsExample);
+
+        List list = new ArrayList();
+        if (orderItems!=null) {
+            for (OrderItems orderItem : orderItems) {
+                Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                list.add(product);
+            }
+            return list;
+        }
+        return null;
     }
 
 }

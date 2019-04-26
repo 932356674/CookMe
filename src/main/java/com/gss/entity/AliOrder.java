@@ -368,8 +368,6 @@ public class AliOrder {
         this.remark = remark;
     }
 
-    public AliOrder() {
-    }
 
     public AliOrder(Long orderId, String orderNum, Integer usId, Integer conId, Integer status, Integer payStatus, Long amount, String tradeNum, Date createDate, String remark, Long aliItem) {
         this.orderId = orderId;

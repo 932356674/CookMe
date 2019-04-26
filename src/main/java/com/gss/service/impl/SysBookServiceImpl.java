@@ -2,6 +2,7 @@ package com.gss.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gss.dto.CookbookDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
@@ -83,7 +84,7 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
-    public R add(ConsigneeExample.CookbookDTO cookbook) {
+    public R add(CookbookDTO cookbook) {
         try{
             cookbook.setUsId(ShiroUtils.getUserId());
             cookbook.setBookTime(new Date());
@@ -112,6 +113,7 @@ public class SysBookServiceImpl implements SysBookService {
         }
         return R.ok("新增成功！");
     }
+
 
     @Override
     public R addCollect(int bookId) {
@@ -172,8 +174,8 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
     @Override
-    public ConsigneeExample.CookbookDTO selectBookById(int bookId) {
-        ConsigneeExample.CookbookDTO cookbookDTO = new ConsigneeExample.CookbookDTO();
+    public CookbookDTO selectBookById(int bookId) {
+        CookbookDTO cookbookDTO = new CookbookDTO();
 
         Cookbook cookbook = cookbookMapper.selectByPrimaryKey(bookId);
 
@@ -188,7 +190,7 @@ public class SysBookServiceImpl implements SysBookService {
             Booktype booktype = booktypeMapper.selectByPrimaryKey(i);
             booktypes.add(booktype);
         }
-        cookbookDTO = (ConsigneeExample.CookbookDTO) cookbook;
+        cookbookDTO = (CookbookDTO) cookbook;
         cookbookDTO.setTypes(booktypes);
 
         StepExample stepExample = new StepExample();

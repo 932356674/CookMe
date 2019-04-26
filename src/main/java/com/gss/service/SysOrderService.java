@@ -1,9 +1,6 @@
 package com.gss.service;
 
-import com.gss.entity.AliOrder;
-import com.gss.entity.Consignee;
-import com.gss.entity.OrderItems;
-import com.gss.entity.TpRegion2;
+import com.gss.entity.*;
 import com.gss.utils.R;
 
 import java.util.List;
@@ -25,5 +22,7 @@ public interface SysOrderService {
     R selectConsignee();
     //修改登录用户的地址信息
     R updateConsignee(Consignee consignee);
+    //根据订单号查询商品信息
+    List<Product> getProByAliNum(Long aliNum);
 
 }
