@@ -68,7 +68,7 @@ public class SysShopController {
 
     @ApiOperation(value = "购物车商品详情",notes = "查询商品")
     @RequestMapping(value = "/user/selectCommodityDetails",method = RequestMethod.POST)
-    public Product selectProduct(@RequestBody int productId){
+    public Product selectProduct(@RequestParam("productId") Integer productId){
         return sysShopService.selectProduct(productId);
     }
     @ApiOperation(value = "购物车",notes = "查询商品")
