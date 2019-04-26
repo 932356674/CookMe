@@ -207,7 +207,6 @@ public class SysUserServiceImpl implements SysUserService {
         RegistExample.Criteria criteria=registExample.createCriteria();
         criteria.andPhoneEqualTo(regist.getPhone());
         List<Regist> list=registMapper.selectByExample(registExample);
-
         if(list.size()>0&&list.get(0).getCode().equals(regist.getCode())){
             return R.ok();
         }

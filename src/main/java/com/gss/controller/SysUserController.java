@@ -7,7 +7,6 @@ import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.codec.language.bm.Rule;
 import org.springframework.web.bind.annotation.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -64,13 +63,16 @@ public class SysUserController {
 
 
     @ApiOperation(value = "重置密码",notes = "重置密码的验证码")
-    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.PUT)
-    public R verifyCode(@RequestBody Regist regist){
+    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.POST)
+    public R verifyCode(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
+        Regist regist = new Regist();
+        regist.setPhone(usMobile);
+        regist.setCode(code);
         return sysUserService.verifyCode(regist);
     }
 
     @ApiOperation(value = "重置密码",notes = "修改密码")
-    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.POST)
     public R resetPwd(@RequestBody User user){
         return sysUserService.resetPwd(user);
     }
@@ -118,7 +120,10 @@ public class SysUserController {
 
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
-    public R mobileLogin(@RequestBody Regist regist){
+    public R mobileLogin(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
+        Regist regist = new Regist();
+        regist.setPhone(usMobile);
+        regist.setCode(code);
         return sysUserService.mobileLogin(regist);
     }
 
