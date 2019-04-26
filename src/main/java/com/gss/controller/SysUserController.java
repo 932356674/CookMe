@@ -7,6 +7,7 @@ import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.codec.language.bm.Rule;
 import org.springframework.web.bind.annotation.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -30,15 +31,15 @@ public class SysUserController {
     }
 
     @ApiOperation(value ="个人主页",notes = "个人主页")
-    @RequestMapping(value = "/user/selectMyHome",method = RequestMethod.POST)
-    public R selectMyHome(@RequestBody Integer usId){
+    @RequestMapping(value = "/user/selectMyHome/{usId}",method = RequestMethod.GET)
+    public R selectMyHome(@PathVariable Integer usId){
         return sysUserService.selectMyHome(usId);
     }
 
 
     @ApiOperation(value ="修改密码",notes = "修改密码")
     @RequestMapping(value = "/user/updatePassword",method = RequestMethod.PUT)
-    public R updatePassword(@RequestBody Integer usId,String newPassword,String oldPassword ){
+    public R updatePassword(@RequestParam("usId") Integer usId,@RequestParam("newPassword") String newPassword,@RequestParam("oldPassword") String oldPassword ){
         return sysUserService.updatePassword(usId, newPassword, oldPassword);
     }
 
@@ -50,14 +51,14 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "注册",notes = "获取手机验证码")
-    @RequestMapping(value = "/user/sendCode",method = RequestMethod.POST)
-    public R getCode(@RequestBody Long usMobile){
+    @RequestMapping(value = "/user/sendCode/{usMobile}",method = RequestMethod.GET)
+    public R getCode(@PathVariable Long usMobile){
         return sysUserService.getCode(usMobile);
     }
 
     @ApiOperation(value = "注册",notes = "提交注册信息")
-    @RequestMapping(value = "/user/register/{code}",method = RequestMethod.GET)
-    public R register(@PathVariable int code,@RequestBody User user){
+    @RequestMapping(value = "/user/register/{code}",method = RequestMethod.POST)
+    public R register(@PathVariable Integer code,@RequestBody User user){
         return sysUserService.register(user,code);
     }
 
@@ -101,7 +102,7 @@ public class SysUserController {
 
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
     @RequestMapping(value = "/user/findMobile",method = RequestMethod.POST)
-    public R findMobile(@RequestBody Long phone){
+    public R findMobile(@RequestParam("phone") Long phone){
         List<User> list= sysUserService.findMobile(phone);
         if(list.size()>0&&list!=null){
             return sysUserService.getCode(phone);
@@ -111,7 +112,7 @@ public class SysUserController {
 
     @ApiOperation(value = "发送验证码",notes = "用户登录")
     @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
-    public R gainCodes(@RequestBody Long phone){
+    public R gainCodes(@RequestParam("phone") Long phone){
         return sysUserService.getCode(phone);
     }
 
@@ -122,9 +123,8 @@ public class SysUserController {
     }
 
 
-
     @RequestMapping(value = "/test1")
-    public String test11(@RequestBody String usMobile){
+    public String test11(@RequestParam("usMobile") String usMobile){
         System.out.println(usMobile);
         return usMobile+"";
     }
