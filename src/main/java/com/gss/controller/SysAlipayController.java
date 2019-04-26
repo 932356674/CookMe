@@ -6,45 +6,44 @@ import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.gss.config.AlipayConfig;
 import com.gss.entity.AliOrder;
+import com.gss.entity.Product;
 import com.gss.service.SysOrderService;
 import com.gss.utils.Constants;
-import com.gss.utils.ShiroUtils;
+import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
-@RequestMapping("/sys")
 @Api(value = "支付宝支付" ,produces = "application/json")
 @RestController
 public class SysAlipayController {
     @Autowired
     private SysOrderService orderService;
 
+    @Resource
+    private SysOrderService sysOrderService;
+
     @ApiOperation(value ="调用支付宝支付接口",notes = "调用支付宝支付接口")
-    @RequestMapping("/alipay/pay")
-    public void order(HttpServletResponse response) throws Exception {
-        PrintWriter out = response.getWriter();
-        String orderNum = (String) ShiroUtils.getAttribute("orderNum");
-        if ( orderNum != null) {
+    @RequestMapping(value = "/sys/alipay/pay",method = RequestMethod.POST)
+    public R order(@RequestBody String orderNum) throws Exception {
+        if (orderNum != null) {
             AliOrder order = orderService.getOrderByOrderNum(orderNum);
             // 商户订单号，商户网站订单系统中唯一订单号，必填
             // 订单名称，必填
             // 付款金额，必填
             //获得初始化的AlipayClient
             AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
-
             //设置请求参数
             AlipayTradePagePayRequest alipayRequest = new AlipayTradePagePayRequest();
             alipayRequest.setReturnUrl(AlipayConfig.return_url);
@@ -59,7 +58,19 @@ public class SysAlipayController {
             String total_amount = amount.toString();
             //订单名称，必填
             //String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");
-            String subject = "111";
+            Long aliItem = order.getAliItem();
+
+            List<Product> proByAliNum = sysOrderService.getProByAliNum(aliItem);
+            StringBuffer subject = new StringBuffer("");
+            if (proByAliNum!=null){
+                for (Product product : proByAliNum) {
+                    subject.append(product.getProductName());
+                    subject.append("、");
+                }
+                System.out.println(subject.toString());
+            }
+
+
             //商品描述，可空
             //String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");
 
@@ -81,24 +92,27 @@ public class SysAlipayController {
             //请求
             String result = alipayClient.pageExecute(alipayRequest).getBody();
 
+            System.out.println(result);
             //输出
-            out.println(result);
+            return R.ok().put("result",result);
         }
+        return R.error("获取连接失败！");
     }
 
-    @RequestMapping("return.html")
-    public String returnPage(HttpServletRequest request) throws Exception {
-       /* *
- * 功能：支付宝服务器同步通知页面
- * 日期：2017-03-30
- * 说明：
- * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
- * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+    @ApiOperation(value ="支付宝",notes = "获取支付宝GET过来反馈信息")
+    @RequestMapping(value = "return.html",method = RequestMethod.GET)
+    public R returnPage(HttpServletRequest request) throws Exception {
+        /* *
+         * 功能：支付宝服务器同步通知页面
+         * 日期：2017-03-30
+         * 说明：
+         * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+         * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
 
 
- *************************页面功能说明*************************
- * 该页面仅做页面展示，业务逻辑处理请勿在该页面执行
- */
+         *************************页面功能说明*************************
+         * 该页面仅做页面展示，业务逻辑处理请勿在该页面执行
+         */
 
         //获取支付宝GET过来反馈信息
         Map<String, String> params = new HashMap<String, String>();
@@ -127,17 +141,17 @@ public class SysAlipayController {
             //判断交易状态，判断支付金额
             System.out.println("交易状态：" + params.get("trade_status"));
             System.out.println("支付金额：" + params.get("total_amount"));
-            return "success.jsp";
+            return R.ok("交易成功");
             //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
         } else {
             //该页面可做页面美工编辑
-            return "fail.jsp";
+            return R.error("交易失败");
         }
     }
 
-    @RequestMapping("callback.html")
-    public void callback(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        PrintWriter out = response.getWriter();
+    @ApiOperation(value ="支付宝",notes = "获取支付宝POST过来反馈信息")
+    @RequestMapping(value = "callback.html",method = RequestMethod.POST)
+    public R callback(HttpServletRequest request) throws Exception {
         //获取支付宝POST过来反馈信息
         Map<String, String> params = new HashMap<String, String>();
         Map<String, String[]> requestParams = request.getParameterMap();
@@ -180,8 +194,7 @@ public class SysAlipayController {
             if (order == null) {
                 System.out.println("哈哈哈2");
 
-                out.print("fail");
-                return;
+                return R.error("验证失败");
             }
             //——请根据您的业务逻辑来编写程序（以下代码仅作参考）——
 
@@ -204,10 +217,10 @@ public class SysAlipayController {
                 //如果有做过处理，不执行商户的业务程序
                 String sellerId = params.get("seller_id");
                 if (!sellerId.equals("2088102177349202")) {//如果商户号一致，代表是我收的钱
-                    out.println("fail");
+
                     System.out.println("哈哈哈4");
 
-                    return;
+                    return R.error("商户号不一致");
 
                 }
                 Float totalFee = Float.valueOf(params.get("total_amount")) * 100;//交易金额，单位是元,需要转化成分
@@ -215,10 +228,9 @@ public class SysAlipayController {
 
 
                 if (order.getStatus() == Constants.ORDER_STATUS_SUCCESS) {//如果是已经处理过的订单,则不处理
-                    out.println("success");
                     System.out.println("哈哈哈5");
 
-                    return;
+                    return R.ok("已经处理过");
                 }
                 if (order.getAmount().equals(amount)) {//金额一致
                     System.out.println("哈哈哈");
@@ -243,11 +255,10 @@ public class SysAlipayController {
 
             //——请根据您的业务逻辑来编写程序（以上代码仅作参考）——
 
-            out.println("success");    //请不要修改或删除
-            out.flush();
+            return R.ok("交易成功");    //请不要修改或删除
             //////////////////////////////////////////////////////////////////////////////////////////
         } else {//验证失败
-            out.println("fail");
+            return R.error("验证失败");
         }
 
         //——请在这里编写您的程序（以上代码仅作参考）——
