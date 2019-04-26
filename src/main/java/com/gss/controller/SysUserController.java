@@ -30,8 +30,8 @@ public class SysUserController {
     }
 
     @ApiOperation(value ="个人主页",notes = "个人主页")
-    @RequestMapping(value = "/user/selectMyHome/{usId}",method = RequestMethod.GET)
-    public R selectMyHome(@PathVariable Integer usId){
+    @RequestMapping(value = "/user/selectMyHome",method = RequestMethod.GET)
+    public R selectMyHome(@RequestParam("usId") Integer usId){
         return sysUserService.selectMyHome(usId);
     }
 

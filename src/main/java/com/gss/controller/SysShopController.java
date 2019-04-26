@@ -152,8 +152,8 @@ public class SysShopController {
 
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "首页根据商品类型随机查询",notes = "根据商品类型获得商品简略信息")
-    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.GET)
-    public R selectByType(String sort){
+    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.POST)
+    public R selectByType(@RequestParam String sort){
         return sysShopService.selectByType(sort);
     }
 
@@ -176,7 +176,9 @@ public class SysShopController {
 
     @ApiOperation(value = "查询",notes = "模糊查询")
     @RequestMapping(value = "/product/select",method = RequestMethod.POST)
-    public ResultData product(Pager pager, String search){
+    public ResultData product(@RequestBody Pager pager,@RequestParam("search") String search){
         return sysShopService.selectByPage(pager, search);
     }
+
+
 }

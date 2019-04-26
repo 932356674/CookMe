@@ -146,9 +146,8 @@ public class SysOrderServiceImpl implements SysOrderService {
 
         OrderItemsExample orderItemsExample=new OrderItemsExample();
         OrderItemsExample.Criteria criteria1=orderItemsExample.createCriteria();
-        criteria1.andItemsIdEqualTo(aliNum);
+        criteria1.andProItmEqualTo(aliNum);
         List<OrderItems> orderItems = orderItemsMapper.selectByExample(orderItemsExample);
-
         List list = new ArrayList();
         if (orderItems!=null) {
             for (OrderItems orderItem : orderItems) {
