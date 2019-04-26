@@ -1,11 +1,15 @@
 package com.gss.service;
 
-import com.gss.dto.BookDTO;
-import com.gss.dto.CookbookDTO;
-import com.gss.utils.Pager;
+import com.gss.dto.ShopCarDto;
+import com.gss.entity.Product;
+import com.gss.entity.Shopcar;
 import com.gss.utils.R;
+import com.gss.utils.Pager;
 import com.gss.utils.ResultData;
+
 import java.util.List;
+
+
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -38,29 +42,39 @@ import java.util.List;
  * //                  别人笑我忒疯癫，我笑自己命太贱；
  * //                  不见满街漂亮妹，哪个归得程序员？
  *
- * @Description:
- * @Company:
- * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Author: M.J
+ * @Date: 2019/4/14
+ * @Time: 18:35
  */
-public interface SysBookService {
+public interface SysShopService {
+    Product selectProduct(int productId);
 
-    //新增菜谱
-    public R add(BookDTO cookbook);
+    Product selectProductShopCar(int productId);
 
-    public R addCollect(int bookId);
+    int insertShopCar(Shopcar shopCar);
 
-    public ResultData selectBook(Pager pager, String search);
+    List<Shopcar> selectShopcarByUsId(int usId);
 
-    public R comment(int bookId,String commentValue);
+    Shopcar selectShopCarById(int productId);
 
-    CookbookDTO selectBookById(int bookId);
+    int updateShopCar(Shopcar shopcar);
+
+    Shopcar selectShopCarByUsProductId(ShopCarDto shopCarDto);
+
+    R delShopCarDel(List<Integer> CarId);
+
+    R multipleShopCar(List<Shopcar> shopcars);
+
+    //首页获取
+    R selectByType(String sort);
 
 
+    //菜市场首页
+    public List<Product> selectProductList(String sort);
 
-    ResultData selectByType(int typeId, Pager pager);
+    //模糊查询
+    public ResultData selectByPage(Pager pager,String search);
 
-    R selectByTimeType(int typeId);
-    R selectByBest();
+    //今日推荐
+    public List<Product> selectRecommend();
 }

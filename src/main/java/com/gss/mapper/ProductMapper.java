@@ -93,4 +93,12 @@ public interface ProductMapper {
      * @mbggenerated Sun Apr 14 17:34:36 CST 2019
      */
     int updateByPrimaryKey(Product record);
+
+    Product selectProduct(int id);
+
+    List<Product> selectByType(String sort);
+
+    List<Product> selectBySort(String sort);
+
+    List<Product> selectByRandom();
 }

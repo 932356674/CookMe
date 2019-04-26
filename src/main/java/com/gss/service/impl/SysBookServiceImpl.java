@@ -9,11 +9,23 @@ import com.gss.mapper.*;
 import com.gss.service.SysBookService;
 import com.gss.utils.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.*;
 
+import com.gss.entity.Cookbook;
+import com.gss.mapper.CookbookMapper;
+import com.gss.service.SysBookService;
+import com.gss.utils.Pager;
+import com.gss.utils.R;
+import com.gss.utils.RandomUtils;
+import com.gss.utils.ResultData;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -102,6 +114,7 @@ public class SysBookServiceImpl implements SysBookService {
         }
         return R.ok("新增成功！");
     }
+
 
     @Override
     public R addCollect(int bookId) {
@@ -197,4 +210,40 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
 
+
+
+
+    @Override
+    public R selectByBest() {
+        List<Cookbook> list=cookbookMapper.selectByExample(null);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        List<Cookbook> list1=new ArrayList<>();
+        for (Integer integer : set) {
+            list1.add(list.get(integer));
+        }
+        return new R().put("bestType",list1);
+    }
+
+    @Override
+    public R selectByTimeType(int typeId) {
+        List<Cookbook> list=cookbookMapper.selectByType(typeId);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        List<Cookbook> list1=new ArrayList<>();
+        for (Integer integer : set) {
+            list1.add(list.get(integer));
+        }
+        return new R().put("timeType",list1);
+    }
+
+
+    @Override
+    public ResultData selectByType(int typeId, Pager pager) {
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+
+        List<Cookbook> list=cookbookMapper.selectByType(typeId);
+        PageInfo pageInfo=new PageInfo(list);
+        list=pageInfo.getList();
+        return new ResultData(pageInfo.getTotal(),list);
+    }
 }

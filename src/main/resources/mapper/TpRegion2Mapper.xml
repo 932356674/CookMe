@@ -268,4 +268,7 @@
       level = #{level,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectparent" parameterType="int" resultType="com.gss.entity.TpRegion2">
+    select * from tp_region2 where parent_id=#{parentId}
+  </select>
 </mapper>

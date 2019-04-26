@@ -58,10 +58,10 @@ public class AlipayConfig {
             "OQIDAQAB";
 
 	// 服务器异步通知页面路径  需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String notify_url = "http://s24293p248.qicp.vip/callback.html";
+	public static String notify_url = "http://s24293p248.qicp.vip/sys/callback.html";
 
 	// 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
-	public static String return_url = "http://s24293p248.qicp.vip/return.html";
+	public static String return_url = "http://s24293p248.qicp.vip/sys/return.html";
 
 	// 签名方式
 	public static String sign_type = "RSA2";

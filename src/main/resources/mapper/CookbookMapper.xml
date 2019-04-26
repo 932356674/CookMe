@@ -382,4 +382,9 @@
   <select id="selectCookbookByUsId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
       SELECT * FROM cookbook WHERE us_id=#{usId}
   </select>
+  <select id="selectByType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT c.*
+    FROM cookbook_type t JOIN cookbook c
+    ON c.`book_Id`=t.`book_id` WHERE t.`type_id`=#{typeId jdbcType=INTEGER}
+  </select>
 </mapper>
