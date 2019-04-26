@@ -1,11 +1,9 @@
-package com.gss.service;
+package com.gss.utils;
 
-import com.gss.dto.BookDTO;
-import com.gss.dto.CookbookDTO;
-import com.gss.utils.Pager;
-import com.gss.utils.R;
-import com.gss.utils.ResultData;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -41,26 +39,23 @@ import java.util.List;
  * @Description:
  * @Company:
  * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Date: 2019/4/23 0023
+ * @Time: 下午 23:26
  */
-public interface SysBookService {
+public class Images {
 
-    //新增菜谱
-    public R add(BookDTO bookDTO);
-
-    public R addCollect(int bookId);
-
-    public ResultData selectBook(Pager pager, String search);
-
-    public R comment(int bookId,String commentValue);
-
-    R selectBookById(int bookId);
-
-
-
-    ResultData selectByType(int typeId, Pager pager);
-
-    R selectByTimeType(int typeId);
-    R selectByBest();
+    public static String getImages(MultipartFile file){
+        StringBuffer sb=new StringBuffer();
+        try{
+            byte[] b= file.getBytes();
+            String fileName = file.getOriginalFilename();
+            String suffix =fileName.substring(fileName.lastIndexOf(".")+1);
+            FastDFSClient fastDFSClient = new FastDFSClient("client.conf");
+            String ss[] = fastDFSClient.uploadFile(b,suffix);
+            sb.append(ss[0]+ File.pathSeparator+ss[1]);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return sb.toString();
+    }
 }
