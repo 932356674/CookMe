@@ -1,6 +1,7 @@
 package com.gss.mapper;
 
 import com.gss.entity.OrderItems;
+import com.gss.entity.OrderItemsAndProduct;
 import com.gss.entity.OrderItemsExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -93,4 +94,6 @@ public interface OrderItemsMapper {
      * @mbggenerated Fri Apr 19 14:58:20 CST 2019
      */
     int updateByPrimaryKey(OrderItems record);
+
+    OrderItemsAndProduct findOrderAndPro(OrderItems orderItems);
 }

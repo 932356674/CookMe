@@ -47,7 +47,7 @@
         <!--<table tableName="book_comment"></table>-->
         <!--<table tableName="booktype"></table>-->
         <!--<table tableName="collect"></table>-->
-        <!--<table tableName="consignee" ></table>-->
+        <table tableName="consignee" ></table>
         <!--<table tableName="cookbook"></table>-->
         <!--<table tableName="cookbook_type"></table>-->
         <!--<table tableName="material"></table>-->

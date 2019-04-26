@@ -1,10 +1,13 @@
 package com.gss.utils;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class R extends HashMap<String,Object> {
     private int code;
     private String msg;
+    private List<Object> list;
+
 
     public R() {
     }
@@ -35,5 +38,4 @@ public class R extends HashMap<String,Object> {
         super.put(key,o);
         return this;
     }
-
 }

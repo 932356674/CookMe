@@ -1,27 +1,29 @@
 package com.gss.service;
 
 import com.gss.entity.AliOrder;
-import com.gss.entity.Product;
+import com.gss.entity.Consignee;
+import com.gss.entity.OrderItems;
+import com.gss.entity.TpRegion2;
+import com.gss.utils.R;
 
 import java.util.List;
 
 
 public interface SysOrderService {
-
-    //新增订单信息
     void addOrder(AliOrder order);
-
-    //修改订单信息
     void updateOrder(AliOrder order);
-
-    //根据订单号查询订单信息
     AliOrder getOrderByOrderNum(String orderNum);
-
-    //根据连接号查询商品ID
-    List<Product> getProByAliNum(Long aliItem);
-
-
+    //新增地址信息并回显
+    R insertCon(Consignee consignee);
+    //新增订单详情并回显
+    List<Object> findCount(List<OrderItems> list);
+    //新增订单信息并回显
+    List<AliOrder> findtrade(AliOrder aliOrder);
+    //下拉框地址信息
+    List<TpRegion2> selectParent(int parentId);
+    //查询登录用户的地址信息
+    R selectConsignee();
+    //修改登录用户的地址信息
+    R updateConsignee(Consignee consignee);
 
 }
-
-

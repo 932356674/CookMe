@@ -1,9 +1,6 @@
 package com.gss.service.impl;
 
-import com.gss.entity.Regist;
-import com.gss.entity.RegistExample;
-import com.gss.entity.User;
-import com.gss.entity.UserExample;
+import com.gss.entity.*;
 import com.gss.mapper.RegistMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
@@ -14,13 +11,16 @@ import com.gss.mapper.CookbookMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
 import com.gss.utils.R;
+import com.gss.utils.RandomUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -258,4 +258,15 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
 
+
+    @Override
+    public R selectBest() {
+        List<User> list=userMapper.selectByExample(null);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        List<User> list1=new ArrayList<>();
+        for (Integer integer : set) {
+            list1.add(list.get(integer));
+        }
+        return new R().put("bestUser",list1);
+    }
 }

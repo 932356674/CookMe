@@ -1,10 +1,8 @@
-package com.gss.service;
+package com.gss.dto;
 
-import com.gss.entity.ConsigneeExample;
-import com.gss.utils.Pager;
-import com.gss.utils.R;
-import com.gss.utils.ResultData;
-import java.util.List;
+import com.gss.entity.Product;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -37,29 +35,58 @@ import java.util.List;
  * //                  别人笑我忒疯癫，我笑自己命太贱；
  * //                  不见满街漂亮妹，哪个归得程序员？
  *
- * @Description:
- * @Company:
- * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Author: M.J
+ * @Date: 2019/4/14
+ * @Time: 18:10
  */
-public interface SysBookService {
-
-    //新增菜谱
-    public R add(ConsigneeExample.CookbookDTO cookbook);
-
-    public R addCollect(int bookId);
-
-    public ResultData selectBook(Pager pager, String search);
-
-    public R comment(int bookId,String commentValue);
-
-    ConsigneeExample.CookbookDTO selectBookById(int bookId);
+public class ShopCarDto extends Product {
+    private Integer carId;
+    private Integer usId;
+    private Integer carCount;
+    private String isChecked;
 
 
+    public ShopCarDto() {
+    }
 
-    ResultData selectByType(int typeId, Pager pager);
+    public Integer getCarId() {
+        return carId;
+    }
 
-    R selectByTimeType(int typeId);
-    R selectByBest();
+    public void setCarId(Integer carId) {
+        this.carId = carId;
+    }
+
+    public Integer getUsId() {
+        return usId;
+    }
+
+    public void setUsId(Integer usId) {
+        this.usId = usId;
+    }
+
+    public Integer getCarCount() {
+        return carCount;
+    }
+
+    public void setCarCount(Integer carCount) {
+        this.carCount = carCount;
+    }
+
+    public String getIsChecked() {
+        return isChecked;
+    }
+
+    public void setIsChecked(String isChecked) {
+        this.isChecked = isChecked;
+    }
+
+    @Override
+    public String toString() {
+        return "ShopCarDto{" +
+                "carId=" + carId +
+                ", usId=" + usId +
+                ", carCount=" + carCount +
+                '}';
+    }
 }

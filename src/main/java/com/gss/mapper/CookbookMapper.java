@@ -94,5 +94,7 @@ public interface CookbookMapper {
      */
     int updateByPrimaryKey(Cookbook record);
 
+    List<Cookbook> selectByType(int typeId);
+
     List<Cookbook> selectCookbookByUsId(Integer usId);
 }

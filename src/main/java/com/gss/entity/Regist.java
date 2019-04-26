@@ -130,4 +130,15 @@ public class Regist {
     public void setData(Date data) {
         this.data = data;
     }
+
+
+    @Override
+    public String toString() {
+        return "Regist{" +
+                "registId=" + registId +
+                ", phone=" + phone +
+                ", code=" + code +
+                ", data=" + data +
+                '}';
+    }
 }

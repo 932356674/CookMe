@@ -11,6 +11,8 @@
     <groupId>com.gss</groupId>
     <artifactId>cookme</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
     <name>cookme</name>
     <description>Demo project for Spring Boot</description>
 
@@ -206,6 +208,7 @@ pagerhelper 的 springboot 配置方式
             <version>4.6.1</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -230,6 +233,10 @@ pagerhelper 的 springboot 配置方式
                     <configurationFile>${basedir}/src/main/resources/generatorConfig.xml</configurationFile>
                     <overwrite>true</overwrite>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

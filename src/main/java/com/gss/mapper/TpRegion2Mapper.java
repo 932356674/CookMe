@@ -93,4 +93,6 @@ public interface TpRegion2Mapper {
      * @mbggenerated Sun Apr 14 17:34:36 CST 2019
      */
     int updateByPrimaryKey(TpRegion2 record);
+
+    List<TpRegion2> selectparent(int parentId);
 }
