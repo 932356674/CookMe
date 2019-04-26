@@ -38,7 +38,7 @@ public class SysBookController {
     }
 
     @ApiOperation(value = "收藏菜谱",notes = "收藏菜谱")
-    @RequestMapping(value = "/user/bookAddCollect",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/bookAddCollect",method = RequestMethod.GET)
     public R addCollect(@RequestParam("bookId") Integer bookId){
         return sysBookService.addCollect(bookId);
     }
@@ -50,13 +50,13 @@ public class SysBookController {
     }
 
     @ApiOperation(value = "菜谱评论",notes = "菜谱评论")
-    @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/comment",method = RequestMethod.GET)
     public R comment(@RequestParam("bookId") Integer bookId,@RequestParam("commentValue") String commentValue){
         return sysBookService.comment(bookId,commentValue);
     }
 
     @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
-    @RequestMapping(value = "/book/selectById",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/selectById",method = RequestMethod.GET)
     public R selectByBookId(@RequestParam("bookId") Integer bookId){
         CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
         User user = (User) sysUserService.selectMyHome(cookbookDTO.getUsId()).get("user");
@@ -75,7 +75,7 @@ public class SysBookController {
         return sysBookService.selectByTimeType(typeId);
     }
     @ApiOperation(value = "查询首页推荐菜谱",notes = "获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByBest",method = RequestMethod.GET)
+    @RequestMapping(value = "/book/selectByBest",method = RequestMethod.POST)
     public R selectByBest(){
         return sysBookService.selectByBest();
     }

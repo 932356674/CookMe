@@ -67,7 +67,7 @@ public class SysShopController {
     private SysShopService sysShopService;
 
     @ApiOperation(value = "购物车商品详情",notes = "查询商品")
-    @RequestMapping(value = "/user/selectCommodityDetails",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/selectCommodityDetails",method = RequestMethod.GET)
     public Product selectProduct(@RequestParam("productId") Integer productId){
         return sysShopService.selectProduct(productId);
     }
@@ -135,7 +135,7 @@ public class SysShopController {
     }
 
     @ApiOperation(value = "删除",notes = "删除我的商品")
-    @RequestMapping(value = "/user/shopcardel",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/shopcardel",method = RequestMethod.DELETE)
     public R delShopCar(@RequestBody List<Shopcar> shopcars){
        List<Integer> carId = new ArrayList<Integer>();
         for (int i = 0 ; i < shopcars.size() ; i++){
@@ -152,7 +152,7 @@ public class SysShopController {
 
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "首页根据商品类型随机查询",notes = "根据商品类型获得商品简略信息")
-    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.POST)
+    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.GET)
     public R selectByType(@RequestParam String sort){
         return sysShopService.selectByType(sort);
     }

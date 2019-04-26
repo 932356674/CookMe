@@ -63,7 +63,7 @@ public class SysUserController {
 
 
     @ApiOperation(value = "重置密码",notes = "重置密码的验证码")
-    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/verifyCode",method = RequestMethod.GET)
     public R verifyCode(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
         Regist regist = new Regist();
         regist.setPhone(usMobile);
@@ -72,18 +72,18 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "重置密码",notes = "修改密码")
-    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/resetPwd",method = RequestMethod.PUT)
     public R resetPwd(@RequestBody User user){
         return sysUserService.resetPwd(user);
     }
 
     @ApiOperation(value = "首页获取用户信息",notes = "首页随机获取用户信息")
-    @RequestMapping(value = "/user/selectBest",method = RequestMethod.GET)
+    @RequestMapping(value = "/user/selectBest",method = RequestMethod.POST)
     public R selectBest(){
         return sysUserService.selectBest();
     }
 
-    @ApiOperation(value = "账号密码码登录",notes = "用户登录")
+    @ApiOperation(value = "账号密码登录",notes = "用户登录")
     @RequestMapping(value = "/user/login",method =RequestMethod.POST )
     public R login(@RequestBody User user){
         String s=null;
@@ -103,40 +103,28 @@ public class SysUserController {
     }
 
     @ApiOperation(value = "验证手机号是否存在",notes = "用户登录")
-    @RequestMapping(value = "/user/findMobile",method = RequestMethod.POST)
-    public R findMobile(@RequestParam("phone") Long phone){
-        List<User> list= sysUserService.findMobile(phone);
+    @RequestMapping(value = "/user/findMobile",method = RequestMethod.GET)
+    public R findMobile(@RequestParam("usMobile") Long usMobile){
+        List<User> list= sysUserService.findMobile(usMobile);
         if(list.size()>0&&list!=null){
-            return sysUserService.getCode(phone);
+            return sysUserService.getCode(usMobile);
         }
         return R.error("手机号未注册，请先注册");
     }
 
     @ApiOperation(value = "发送验证码",notes = "用户登录")
-    @RequestMapping(value = "/user/gainCodes",method = RequestMethod.POST)
-    public R gainCodes(@RequestParam("phone") Long phone){
-        return sysUserService.getCode(phone);
+    @RequestMapping(value = "/user/gainCodes",method = RequestMethod.GET)
+    public R gainCodes(@RequestParam("usMobile") Long usMobile){
+        return sysUserService.getCode(usMobile);
     }
 
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
-    @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.GET)
     public R mobileLogin(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
         Regist regist = new Regist();
         regist.setPhone(usMobile);
         regist.setCode(code);
         return sysUserService.mobileLogin(regist);
-    }
-
-
-    @RequestMapping(value = "/test1")
-    public String test11(@RequestParam("usMobile") String usMobile){
-        System.out.println(usMobile);
-        return usMobile+"";
-    }
-
-    @RequestMapping(value = "/test")
-    public String test1(){
-        return "测试测试！";
     }
 
 }

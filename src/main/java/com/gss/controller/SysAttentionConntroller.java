@@ -36,13 +36,13 @@ public class SysAttentionConntroller {
     }
 
     @ApiOperation(value = "他关注",notes = "查询他关注的人")
-    @RequestMapping(value = "/user/selectOtherAttention",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/selectOtherAttention",method = RequestMethod.GET)
     public List<UserAttentionDto> selectOtherAttention(@RequestParam("usId") Integer usId){
         return attentionService.selectAttentionFans(usId);
     }
 
     @ApiOperation(value = "他的粉丝",notes = "查询他的粉丝")
-    @RequestMapping(value = "/user/selectOtherFans",method = RequestMethod.POST)
+    @RequestMapping(value = "/user/selectOtherFans",method = RequestMethod.GET)
     public List<UserAttentionDto> selectOtherFans(@RequestParam("usId") Integer usId){
         return attentionService.selectMyFans(usId);
     }

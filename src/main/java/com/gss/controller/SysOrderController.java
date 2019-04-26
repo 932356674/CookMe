@@ -31,7 +31,7 @@ public class SysOrderController {
     @Resource
     private SysOrderService orderService;
 
-    @RequestMapping("create.html")
+    //@RequestMapping("create.html")
     public String create(Long amount, Model model) {
         if (amount == null || amount < 0) {
             model.addAttribute("message", "金额不对");
@@ -69,7 +69,7 @@ public class SysOrderController {
             e.printStackTrace();
         }
     }
-    @RequestMapping("app.html")//创建订单 amount单位是元
+    //@RequestMapping("app.html")//创建订单 amount单位是元
     @ResponseBody
     public String app(Long amount) {
         Integer userId = 1;//模拟当前登录的用户
@@ -120,8 +120,8 @@ public class SysOrderController {
     }
 
     @ApiOperation(value = "下拉框地址信息",notes = "收货人信息")
-    @RequestMapping(value = "/order/selectParent",method = RequestMethod.POST)
-    public List<TpRegion2> selectParent(int parentId){
+    @RequestMapping(value = "/order/selectParent",method = RequestMethod.GET)
+    public List<TpRegion2> selectParent(@RequestParam("parentId") int parentId){
         return orderService.selectParent(parentId);
     }
 
