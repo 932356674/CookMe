@@ -40,8 +40,8 @@ public class SysBookController {
     }
 
     @ApiOperation(value = "收藏菜谱",notes = "收藏菜谱")
-    @RequestMapping(value = "/user/bookAddCollect",method = RequestMethod.POST)
-    public R addCollect(@RequestParam("bookId") Integer bookId){
+    @RequestMapping(value = "/user/bookAddCollect/{bookId}",method = RequestMethod.GET)
+    public R addCollect(@PathVariable int bookId){
         return sysBookService.addCollect(bookId);
     }
 
@@ -53,34 +53,29 @@ public class SysBookController {
 
     @ApiOperation(value = "菜谱评论",notes = "菜谱评论")
     @RequestMapping(value = "/book/comment",method = RequestMethod.POST)
-    public R comment(@RequestParam("bookId") Integer bookId,@RequestParam("commentValue") String commentValue){
+    public R comment(int bookId,String commentValue){
         return sysBookService.comment(bookId,commentValue);
     }
 
     @ApiOperation(value = "查询菜谱",notes = "根据菜谱ID查询菜谱详情")
-    @RequestMapping(value = "/book/commentById",method = RequestMethod.GET)
-    public R selectByBookId(int bookId){
+    @RequestMapping(value = "/book/commentById/{bookId}",method = RequestMethod.GET)
+    public R selectByBookId(@PathVariable int bookId){
         R r= sysBookService.selectBookById(bookId);
         Cookbook cookbook = (Cookbook) r.get("cookbook");
         User user = (User) sysUserService.selectMyHome(cookbook.getUsId()).get("user");
         return r.put("user",user);
     }
-    @RequestMapping(value = "/book/selectById",method = RequestMethod.POST)
-    public R selectByBookId(@RequestParam("bookId") Integer bookId){
-        CookbookDTO cookbookDTO = sysBookService.selectBookById(bookId);
-        User user = (User) sysUserService.selectMyHome(cookbookDTO.getUsId()).get("user");
-        return R.ok().put("cookbookdto",cookbookDTO).put("user",user);
-    }
+
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "根据菜谱类型查询",notes = "根据菜谱类型获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByType",method = RequestMethod.GET)
-    public ResultData selectByType(@RequestParam("typeId") Integer typeId , @RequestBody Pager pager){
+    @RequestMapping(value = "/book/selectByType/{typeId}",method = RequestMethod.POST)
+    public ResultData selectByType(@PathVariable Integer typeId ,@RequestBody Pager pager){
         return sysBookService.selectByType(typeId,pager);
     }
 
     @ApiOperation(value = "查询首页时间菜谱",notes = "根据菜谱类型获得菜谱简略信息")
     @RequestMapping(value = "/book/selectByTimeType",method = RequestMethod.GET)
-    public R selectByTimeType(@RequestParam("typeId") Integer typeId){
+    public R selectByTimeType(Integer typeId){
         return sysBookService.selectByTimeType(typeId);
     }
     @ApiOperation(value = "查询首页推荐菜谱",notes = "获得菜谱简略信息")

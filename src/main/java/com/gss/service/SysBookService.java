@@ -57,10 +57,10 @@ public interface SysBookService {
 
     R selectBookById(int bookId);
 
-
+    R selectByTimeType(int typeId);
 
     ResultData selectByType(int typeId, Pager pager);
 
-    R selectByTimeType(int typeId);
     R selectByBest();
+
 }
