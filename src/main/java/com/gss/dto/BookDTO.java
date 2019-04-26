@@ -1,11 +1,9 @@
-package com.gss.service;
+package com.gss.dto;
 
-import com.gss.dto.BookDTO;
-import com.gss.dto.CookbookDTO;
-import com.gss.utils.Pager;
-import com.gss.utils.R;
-import com.gss.utils.ResultData;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
+
 /**
  * //                            _ooOoo_
  * //                           o8888888o
@@ -41,26 +39,27 @@ import java.util.List;
  * @Description:
  * @Company:
  * @Author: jzx
- * @Date: 2019/4/11 0011
- * @Time: 下午 14:15
+ * @Date: 2019/4/21 0021
+ * @Time: 下午 20:43
  */
-public interface SysBookService {
+public class BookDTO extends CookbookDTO {
 
-    //新增菜谱
-    public R add(BookDTO bookDTO);
+    private MultipartFile bookImagefile;
+    private List<StepDTO> stepDTOS;
 
-    public R addCollect(int bookId);
+    public MultipartFile getBookImagefile() {
+        return bookImagefile;
+    }
 
-    public ResultData selectBook(Pager pager, String search);
+    public void setBookImagefile(MultipartFile bookImagefile) {
+        this.bookImagefile = bookImagefile;
+    }
 
-    public R comment(int bookId,String commentValue);
+    public List<StepDTO> getStepDTOS() {
+        return stepDTOS;
+    }
 
-    R selectBookById(int bookId);
-
-
-
-    ResultData selectByType(int typeId, Pager pager);
-
-    R selectByTimeType(int typeId);
-    R selectByBest();
+    public void setStepDTOS(List<StepDTO> stepDTOS) {
+        this.stepDTOS = stepDTOS;
+    }
 }

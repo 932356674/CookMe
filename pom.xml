@@ -181,6 +181,11 @@ pagerhelper 的 springboot 配置方式
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.csource</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>io.springfox</groupId>
