@@ -7,8 +7,6 @@ import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @SpringBootApplication
 @ServletComponentScan(basePackages = "com.gss.config")//扫描servlet的相关注解
@@ -25,14 +23,6 @@ public class CookmeApplication {
         CommonsMultipartResolver resolver = new CommonsMultipartResolver();
         resolver.setDefaultEncoding("UTF-8");
         return resolver;
-    }
-
-
-
-    @Bean
-    public CommonsMultipartResolver commonsMultipartResolver(){
-        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
-        return commonsMultipartResolver;
     }
 
 
