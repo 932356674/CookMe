@@ -7,18 +7,19 @@ import com.gss.entity.UserExample;
 import com.gss.mapper.RegistMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
+import com.gss.utils.FastDFSClient;
 import com.gss.utils.GetMessageCode;
 import com.gss.entity.*;
 import com.gss.mapper.CollectMapper;
 import com.gss.mapper.CookbookMapper;
-import com.gss.mapper.UserMapper;
-import com.gss.service.SysUserService;
 import com.gss.utils.R;
+import com.gss.utils.ShiroUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.*;
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -230,6 +231,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R changeInfoById(User user) {
+        user.setUsId(ShiroUtils.getUserId());
+        user.setUsId(1);
         user.setUsCreatedate(new Date(System.currentTimeMillis()));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i>0){
@@ -239,7 +242,9 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public R updatePassword(Integer usId, String newPassword,String oldPassword) {
+    public R updatePassword(String newPassword,String oldPassword) {
+
+        int usId = ShiroUtils.getUserId();
         User user = userMapper.selectByPrimaryKey(usId);
         Md5Hash oldPasswords = new Md5Hash(oldPassword,user.getUsMobile()+"",1024);
         oldPassword = oldPasswords.toString();
@@ -255,6 +260,34 @@ public class SysUserServiceImpl implements SysUserService {
             }
         }
         return R.error("修改失败");
+    }
+
+    @Override
+    public Map<String,Object> updateHead(MultipartFile file) {
+        int usId = ShiroUtils.getUserId();
+        Map<String,Object> map = new HashMap<String, Object>();
+        try{
+            byte[] b = file.getBytes();
+            String filename = file.getOriginalFilename();
+
+            String suffix = filename.substring(filename.lastIndexOf(".")+1);
+
+            FastDFSClient client = new FastDFSClient("client.conf");
+
+            String paths[] = client.uploadFile(b,suffix);
+            StringBuffer sb = new StringBuffer();
+            sb.append(paths[0]+File.separator+paths[1]);
+
+            int i =userMapper.updateHead(file,usId);
+            if (i>0) {
+                map.put("result", "success");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            map.put("result","fail");
+        }
+
+        return  map;
     }
 
 

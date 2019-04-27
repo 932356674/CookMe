@@ -206,6 +206,13 @@ pagerhelper 的 springboot 配置方式
             <version>4.6.1</version>
             <scope>provided</scope>
         </dependency>
+
+        <!--fastdfs-client-java-->
+        <dependency>
+            <groupId>org.csource</groupId>
+            <artifactId>fastdfs-client-java</artifactId>
+            <version>1.27-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>

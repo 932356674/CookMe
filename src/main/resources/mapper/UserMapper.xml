@@ -462,4 +462,8 @@ where att.fans_id=#{uid}
   where u.us_id=#{uid}
   </select>
 
+  <update id="updateHead" parameterType="java.lang.Integer">
+    UPDATE USER SET us_head = #{file} WHERE us_id=#{usId}
+  </update>
+
 </mapper>

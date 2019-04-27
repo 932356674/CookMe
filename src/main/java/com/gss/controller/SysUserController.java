@@ -12,8 +12,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/sys")
 @Api(value = "个人信息" ,produces = "application/json")
@@ -37,8 +40,8 @@ public class SysUserController {
 
     @ApiOperation(value ="修改密码",notes = "修改密码")
     @RequestMapping(value = "/user/updatePassword",method = RequestMethod.PUT)
-    public R updatePassword(@RequestBody Integer usId,String newPassword,String oldPassword ){
-        return sysUserService.updatePassword(usId, newPassword, oldPassword);
+    public R updatePassword(@RequestBody String newPassword,String oldPassword ){
+        return sysUserService.updatePassword(newPassword, oldPassword);
     }
 
 
@@ -119,5 +122,11 @@ public class SysUserController {
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.POST)
     public R mobileLogin(@RequestBody Regist regist){
         return sysUserService.mobileLogin(regist);
+    }
+
+    @ApiOperation(value = "修改个人头像",notes = "修改头像")
+    @RequestMapping(value = "/user/updateHead",method = RequestMethod.POST)
+    public Map<String,Object> updateHead(@RequestBody MultipartFile file){
+        return sysUserService.updateHead(file);
     }
 }

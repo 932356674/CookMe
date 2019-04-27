@@ -5,6 +5,7 @@ import com.gss.entity.User;
 import com.gss.entity.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserMapper {
     /**
@@ -103,5 +104,7 @@ public interface UserMapper {
 
     //我的粉丝数量
     Integer selectMyFansCounts(Integer usId);
+
+    int updateHead(MultipartFile file, Integer usId);
 
 }

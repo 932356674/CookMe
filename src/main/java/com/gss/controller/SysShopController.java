@@ -27,12 +27,12 @@ public class SysShopController {
 
     @ApiOperation(value = "首页",notes = "菜市场首页")
     @RequestMapping(value = "/product/index",method = RequestMethod.POST)
-    public Map shop(@RequestBody List<Product> sorts){
+    public Map shop(@RequestBody List<Product> products){
         List<Product> timeProduct = sysShopService.selectRecommend();
         Map<String,List<Product>> map = new HashMap<>();
         map.put("timeProduct",timeProduct);
-       for(int i=0; i<sorts.size() ; i++){
-           List<Product> list1 = sysShopService.selectProductList(sorts.get(i).getSort());
+       for(int i=0; i<products.size() ; i++){
+           List<Product> list1 = sysShopService.selectProductList(products.get(i).getSort());
            map.put("sort"+(i),list1);
        }
        return map;
