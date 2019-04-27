@@ -54,7 +54,7 @@ public interface SysBookService {
 
     public R comment(int bookId,String commentValue);
 
-    CookbookDTO selectBookById(int bookId);
+    R selectBookById(int bookId);
 
     R selectByTimeType(int typeId);
 

@@ -133,10 +133,12 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
     @Override
-    public CookbookDTO selectBookById(int bookId) {
-        CookbookDTO cookbookDTO = new CookbookDTO();
+    public R selectBookById(int bookId) {
+
+        R r = new R();
 
         Cookbook cookbook = cookbookMapper.selectByPrimaryKey(bookId);
+        r.put("cookbook",cookbook);
 
         CookbookTypeExample example = new CookbookTypeExample();
         CookbookTypeExample.Criteria criteria= example.createCriteria();
@@ -149,8 +151,8 @@ public class SysBookServiceImpl implements SysBookService {
             Booktype booktype = booktypeMapper.selectByPrimaryKey(i);
             booktypes.add(booktype);
         }
-        cookbookDTO = (CookbookDTO) cookbook;
-        cookbookDTO.setTypes(booktypes);
+
+        r.put("booktypes",booktypes);
 
         StepExample stepExample = new StepExample();
         StepExample.Criteria stepcriteria = stepExample.createCriteria();
@@ -161,15 +163,10 @@ public class SysBookServiceImpl implements SysBookService {
         MaterialExample.Criteria criteria1 = materialExample.createCriteria();
         criteria1.andBookIdEqualTo(bookId);
         List<Material> materials = materialMapper.selectByExample(materialExample);
-        cookbookDTO.setMaterial(materials);
-        cookbookDTO.setMethod(stepList);
-
-        return cookbookDTO;
+        r.put("materials",materials);
+        r.put("stepList",stepList);
+        return r;
     }
-
-
-
-
 
     @Override
     public R selectByBest() {
