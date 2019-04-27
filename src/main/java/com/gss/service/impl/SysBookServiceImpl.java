@@ -2,7 +2,8 @@ package com.gss.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gss.dto.CookbookDTO;
+import com.gss.dto.BookDTO;
+import com.gss.dto.StepDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
@@ -43,27 +44,29 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
-    public R add(CookbookDTO cookbook) {
+    public R add(BookDTO bookDTO) {
         try{
-            cookbook.setUsId(ShiroUtils.getUserId());
-            cookbook.setBookTime(new Date());
-            int i = cookbookMapper.insert(cookbook);
-            List<Material> materials = cookbook.getMaterial();
+            bookDTO.setUsId(ShiroUtils.getUserId());
+            bookDTO.setBookTime(new Date());
+            bookDTO.setBookImage(Images.getImages(bookDTO.getBookImagefile()));
+            cookbookMapper.insert(bookDTO);
+            List<Material> materials = bookDTO.getMaterial();
             for (Material material : materials) {
                 materialMapper.insert(material);
             }
-            List<Step> steps = cookbook.getMethod();
-            for (Step step : steps) {
+            List<StepDTO> steps = bookDTO.getStepDTOS();
+            for (StepDTO step : steps) {
+                step.setStepImage(Images.getImages(step.getStepImageFile()));
                 stepMapper.insert(step);
             }
             User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
             u.setUsBookcount(u.getUsBookcount()+1);
             userMapper.updateByPrimaryKey(u);
-            List<Booktype> types = cookbook.getTypes();
+            List<Booktype> types = bookDTO.getTypes();
             for (Booktype type : types) {
                 CookbookType cookbookType = new CookbookType();
                 cookbookType.setTypeId(type.getTypeId());
-                cookbookType.setBookId(cookbook.getBookId());
+                cookbookType.setBookId(bookDTO.getBookId());
                 cookbookTypeMapper.insert(cookbookType);
             }
         }catch(Exception e){
@@ -89,29 +92,33 @@ public class SysBookServiceImpl implements SysBookService {
 
     @Override
     public ResultData selectBook(Pager pager, String search) {
-        PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+
         CookbookExample cookbookExample = null;
-        MaterialExample materialExample = null;
+        //MaterialExample materialExample = null;
         if(StringUtils.isNotEmpty(search)){
             cookbookExample = new CookbookExample();
             CookbookExample.Criteria criteria = cookbookExample.createCriteria();
             criteria.andBookNameLike("%"+search+"%");
 
-            materialExample = new MaterialExample();
+            /*materialExample = new MaterialExample();
             MaterialExample.Criteria criteria1 = materialExample.createCriteria();
-            criteria1.andMatNameLike("%"+search+"%");
+            criteria1.andMatNameLike("%"+search+"%");*/
         }
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
         List<Cookbook> list = cookbookMapper.selectByExample(cookbookExample);
-        List<Material> list1 = materialMapper.selectByExample(materialExample);
+
+        //List<Material> list1 = materialMapper.selectByExample(materialExample);
         List<Integer> list2=new ArrayList<>();
         for (Cookbook cookbook : list) {
             list2.add(cookbook.getBookId());
         }
-        for (Material material : list1) {
+        /*for (Material material : list1) {
             if (!list2.contains(material.getBookId())){
                 list.add(cookbookMapper.selectByPrimaryKey(material.getBookId()));
             }
-        }
+        }*/
+
         PageInfo info = new PageInfo(list);
         return new ResultData(info.getTotal(),info.getList());
     }

@@ -30,8 +30,8 @@ public class SysBookController {
 
     @ApiOperation(value = "发布",notes = "发布菜谱")
     @RequestMapping(value = "/user/book/addBook",method = RequestMethod.POST)
-    public R add(@RequestBody CookbookDTO cookbook){
-        return sysBookService.add(cookbook);
+    public R add(@RequestBody BookDTO book){
+        return sysBookService.add(book);
     }
 
     @ApiOperation(value = "收藏菜谱",notes = "收藏菜谱")
@@ -62,8 +62,8 @@ public class SysBookController {
     }
     //根据菜谱类型获得菜谱简略信息
     @ApiOperation(value = "根据菜谱类型查询",notes = "根据菜谱类型获得菜谱简略信息")
-    @RequestMapping(value = "/book/selectByType",method = RequestMethod.GET)
-    public ResultData selectByType(@RequestParam("typeId") Integer typeId , @RequestBody Pager pager){
+    @RequestMapping(value = "/book/selectByType/{typeId}",method = RequestMethod.POST)
+    public ResultData selectByType(@PathVariable Integer typeId , @RequestBody Pager pager){
         return sysBookService.selectByType(typeId,pager);
     }
 
