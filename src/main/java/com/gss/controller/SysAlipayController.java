@@ -34,8 +34,9 @@ public class SysAlipayController {
 
     @ApiOperation(value ="调用支付宝支付接口",notes = "调用支付宝支付接口")
     @RequestMapping(value = "/sys/alipay/pay",method = RequestMethod.POST)
-    public R order(@RequestParam String orderNum) throws Exception {
+    public R order() throws Exception {
 
+        String orderNum = "1555636552404";
        // String orderNum = (String)ShiroUtils.getAttribute("orderNum");
 
         if (orderNum != null) {

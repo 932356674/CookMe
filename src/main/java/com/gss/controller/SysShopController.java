@@ -74,6 +74,7 @@ public class SysShopController {
     @ApiOperation(value = "购物车",notes = "查询商品")
     @RequestMapping(value = "/user/shopcar",method = RequestMethod.POST)
     public R selectProduct(@RequestBody ShopCarDto shopCarDto){
+        shopCarDto.setUsId(ShiroUtils.getUserId());//ShiroUtils.getUserId()
         Shopcar shopcar3 = sysShopService.selectShopCarByUsProductId(shopCarDto);
         List<ShopCarDto> list = new ArrayList<ShopCarDto>();
         if(shopcar3!=null){
@@ -85,7 +86,7 @@ public class SysShopController {
         }else{
             Shopcar shopcar = new Shopcar();
             shopcar.setProductId(shopCarDto.getProductId());
-            shopcar.setUsId(ShiroUtils.getUserId());//ShiroUtils.getUserId()
+            shopcar.setUsId(shopCarDto.getUsId());//ShiroUtils.getUserId()
             shopcar.setCarCount(shopCarDto.getCarCount());
             System.out.println(shopcar.toString());
             int i = sysShopService.insertShopCar(shopcar);
@@ -93,7 +94,7 @@ public class SysShopController {
                 return R.error("服务器忙，抢刷新页面");
             }
         }
-        List<Shopcar> shopcar1 = sysShopService.selectShopcarByUsId(ShiroUtils.getUserId());//ShiroUtils.getUserId()
+        List<Shopcar> shopcar1 = sysShopService.selectShopcarByUsId(shopCarDto.getUsId());//ShiroUtils.getUserId()
         System.out.println(shopcar1);
         for (int i = 0 ; i < shopcar1.size() ; i++){
             Shopcar shopcar2 = shopcar1.get(i);
@@ -103,7 +104,7 @@ public class SysShopController {
             shopCarDto1.setProductName(product.getProductName());
             shopCarDto1.setCarCount(shopcar2.getCarCount());
             shopCarDto1.setCarId(shopcar2.getCarId());
-            shopCarDto1.setUsId(ShiroUtils.getUserId());//ShiroUtils.getUserId()
+            shopCarDto1.setUsId(shopCarDto.getUsId());//ShiroUtils.getUserId()
             shopCarDto1.setProductId(shopcar2.getProductId());
             shopCarDto1.setIsChecked(shopcar2.getIsChecked());
             list.add(shopCarDto1);
@@ -135,7 +136,7 @@ public class SysShopController {
     }
 
     @ApiOperation(value = "删除",notes = "删除我的商品")
-    @RequestMapping(value = "/user/shopcardel",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/shopcardel",method = RequestMethod.POST)
     public R delShopCar(@RequestBody List<Shopcar> shopcars){
        List<Integer> carId = new ArrayList<Integer>();
         for (int i = 0 ; i < shopcars.size() ; i++){

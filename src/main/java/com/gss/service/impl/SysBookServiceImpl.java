@@ -2,15 +2,12 @@ package com.gss.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gss.dto.BookDTO;
 import com.gss.dto.CookbookDTO;
-import com.gss.dto.StepDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
 import com.gss.utils.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -21,9 +18,6 @@ import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.RandomUtils;
 import com.gss.utils.ResultData;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -49,29 +43,27 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
-    public R add(BookDTO bookDTO) {
+    public R add(CookbookDTO cookbook) {
         try{
-            bookDTO.setUsId(ShiroUtils.getUserId());
-            bookDTO.setBookTime(new Date());
-            bookDTO.setBookImage(Images.getImages(bookDTO.getBookImagefile()));
-            cookbookMapper.insert(bookDTO);
-            List<Material> materials = bookDTO.getMaterial();
+            cookbook.setUsId(ShiroUtils.getUserId());
+            cookbook.setBookTime(new Date());
+            int i = cookbookMapper.insert(cookbook);
+            List<Material> materials = cookbook.getMaterial();
             for (Material material : materials) {
                 materialMapper.insert(material);
             }
-            List<StepDTO> steps = bookDTO.getStepDTOS();
-            for (StepDTO step : steps) {
-                step.setStepImage(Images.getImages(step.getStepImageFile()));
+            List<Step> steps = cookbook.getMethod();
+            for (Step step : steps) {
                 stepMapper.insert(step);
             }
             User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
             u.setUsBookcount(u.getUsBookcount()+1);
             userMapper.updateByPrimaryKey(u);
-            List<Booktype> types = bookDTO.getTypes();
+            List<Booktype> types = cookbook.getTypes();
             for (Booktype type : types) {
                 CookbookType cookbookType = new CookbookType();
                 cookbookType.setTypeId(type.getTypeId());
-                cookbookType.setBookId(bookDTO.getBookId());
+                cookbookType.setBookId(cookbook.getBookId());
                 cookbookTypeMapper.insert(cookbookType);
             }
         }catch(Exception e){
@@ -80,6 +72,7 @@ public class SysBookServiceImpl implements SysBookService {
         }
         return R.ok("新增成功！");
     }
+
 
     @Override
     public R addCollect(int bookId) {
@@ -140,12 +133,10 @@ public class SysBookServiceImpl implements SysBookService {
     }
 
     @Override
-    public R selectBookById(int bookId) {
-
-        R r = new R();
+    public CookbookDTO selectBookById(int bookId) {
+        CookbookDTO cookbookDTO = new CookbookDTO();
 
         Cookbook cookbook = cookbookMapper.selectByPrimaryKey(bookId);
-        r.put("cookbook",cookbook);
 
         CookbookTypeExample example = new CookbookTypeExample();
         CookbookTypeExample.Criteria criteria= example.createCriteria();
@@ -158,8 +149,8 @@ public class SysBookServiceImpl implements SysBookService {
             Booktype booktype = booktypeMapper.selectByPrimaryKey(i);
             booktypes.add(booktype);
         }
-
-        r.put("booktypes",booktypes);
+        cookbookDTO = (CookbookDTO) cookbook;
+        cookbookDTO.setTypes(booktypes);
 
         StepExample stepExample = new StepExample();
         StepExample.Criteria stepcriteria = stepExample.createCriteria();
@@ -170,9 +161,10 @@ public class SysBookServiceImpl implements SysBookService {
         MaterialExample.Criteria criteria1 = materialExample.createCriteria();
         criteria1.andBookIdEqualTo(bookId);
         List<Material> materials = materialMapper.selectByExample(materialExample);
-        r.put("materials",materials);
-        r.put("stepList",stepList);
-        return r;
+        cookbookDTO.setMaterial(materials);
+        cookbookDTO.setMethod(stepList);
+
+        return cookbookDTO;
     }
 
 

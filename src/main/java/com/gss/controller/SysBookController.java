@@ -11,17 +11,12 @@ import com.gss.service.SysUserService;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
-import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
+
 @RestController
 @RequestMapping("/sys")
 @Api(value = "菜谱控制器",produces = "application/json")
@@ -46,7 +41,7 @@ public class SysBookController {
     }
 
     @ApiOperation(value = "模糊查询菜谱或食材",notes = "模糊查询菜谱或食材")
-    @RequestMapping(value = "/book/fuzzySelectBook",method = RequestMethod.POST)
+    @RequestMapping(value = "/book/fuzzySelectBook",method = RequestMethod.GET)
     public ResultData selectBook(@RequestBody Pager pager,@RequestParam("search") String search){
         return sysBookService.selectBook(pager,search);
     }
