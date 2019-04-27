@@ -268,4 +268,18 @@ public class SysUserServiceImpl implements SysUserService {
         }
         return new R().put("bestUser",list1);
     }
+
+    @Override
+    public Regist findPhone(long phone) {
+        RegistExample example=new RegistExample();
+        RegistExample.Criteria criteria=example.createCriteria();
+        criteria.andPhoneEqualTo(phone);
+        List<Regist> list = registMapper.selectByExample(example);
+        if(list!=null&&list.size()>0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+
 }

@@ -33,9 +33,7 @@ public class UserRealm extends AuthorizingRealm {
         if(user==null){
             throw new UnknownAccountException("手机号未注册");
         }
-        if(!user.getUsPassword().equals(upass)){
-            throw  new IncorrectCredentialsException("密码错误");
-        }
+
         SimpleAuthenticationInfo info=new SimpleAuthenticationInfo(user,upass,this.getName());
 
         return info;

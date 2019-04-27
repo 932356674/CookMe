@@ -39,4 +39,7 @@ public interface SysUserService {
 //短信验证登录
     R mobileLogin(Regist regist);
 
+    //查询手机号是否存在验证码表
+    Regist findPhone(long phone);
+
 }

@@ -7,6 +7,8 @@ import com.gss.service.SysUserService;
 import com.gss.utils.R;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.web.bind.annotation.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -92,6 +94,10 @@ public class SysUserController {
             String pwd=user.getUsPassword();
             Md5Hash md5Hash=new Md5Hash(pwd,user.getUsMobile()+"",1024);
             pwd=md5Hash.toString();
+            User user1=sysUserService.login(user.getUsMobile());
+            if(!pwd.equals(user1.getUsPassword())){
+                throw  new IncorrectCredentialsException("密码错误");
+            }
             UsernamePasswordToken token=new UsernamePasswordToken(String.valueOf(user.getUsMobile()),pwd);
             subject.login(token);
             return R.ok();
@@ -121,10 +127,24 @@ public class SysUserController {
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.GET)
     public R mobileLogin(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
-        Regist regist = new Regist();
-        regist.setPhone(usMobile);
-        regist.setCode(code);
-        return sysUserService.mobileLogin(regist);
+        String s=null;
+        try{
+            Subject subject=SecurityUtils.getSubject();
+            Regist regist=sysUserService.findPhone(usMobile);
+            if(regist==null){
+                throw new UnknownAccountException("手机号未注册");
+            }
+            if(!code.equals(regist.getCode())){
+                throw  new IncorrectCredentialsException("验证码错误");
+            }
+            UsernamePasswordToken token=new UsernamePasswordToken(String.valueOf(regist.getPhone()),String.valueOf(code));
+            subject.login(token);
+            return R.ok();
+        }catch (Exception e){
+            e.printStackTrace();
+            s=e.getMessage();
+        }
+        return R.error(s);
     }
 
 }
