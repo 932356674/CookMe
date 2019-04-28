@@ -14,8 +14,11 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/sys")
 @CrossOrigin(origins = {"*"})
@@ -40,8 +43,8 @@ public class SysUserController {
 
     @ApiOperation(value ="修改密码",notes = "修改密码")
     @RequestMapping(value = "/user/updatePassword",method = RequestMethod.PUT)
-    public R updatePassword(@RequestParam("usId") Integer usId,@RequestParam("newPassword") String newPassword,@RequestParam("oldPassword") String oldPassword ){
-        return sysUserService.updatePassword(usId, newPassword, oldPassword);
+    public R updatePassword(@RequestParam("newPassword") String newPassword,@RequestParam("oldPassword") String oldPassword ){
+        return sysUserService.updatePassword(newPassword, oldPassword);
     }
 
     @ApiOperation(value = "注册",notes = "查询手机号是否存在")
@@ -145,6 +148,13 @@ public class SysUserController {
             s=e.getMessage();
         }
         return R.error(s);
+    }
+
+
+    @ApiOperation(value = "修改个人头像",notes = "修改头像")
+    @RequestMapping(value = "/user/updateHead",method = RequestMethod.POST)
+    public Map<String,Object> updateHead(@RequestBody MultipartFile file){
+        return sysUserService.updateHead(file);
     }
 
 }

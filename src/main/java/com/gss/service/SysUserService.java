@@ -5,8 +5,10 @@ import com.gss.utils.R;
 import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.utils.R;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SysUserService {
     //个人主页
@@ -14,7 +16,7 @@ public interface SysUserService {
     //完善个人信息
     public R changeInfoById(User user);
     //修改密码
-    public R updatePassword(Integer usId,String oldPassword,String newPasswords);
+    public R updatePassword(String oldPassword,String newPasswords);
 
 //查询用户手机号是否存在
     public R selectMobile(Long mobile);
@@ -41,5 +43,8 @@ public interface SysUserService {
 
     //查询手机号是否存在验证码表
     Regist findPhone(long phone);
+
+    //修改个人头像
+    public Map<String,Object> updateHead(MultipartFile file);
 
 }
