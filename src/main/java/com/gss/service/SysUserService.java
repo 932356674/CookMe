@@ -44,7 +44,7 @@ public interface SysUserService {
     //查询手机号是否存在验证码表
     Regist findPhone(long phone);
 
-    //修改个人头像
-    public Map<String,Object> updateHead(MultipartFile file);
+//修改个人头像
+    public R updateHead(MultipartFile file);
 
 }

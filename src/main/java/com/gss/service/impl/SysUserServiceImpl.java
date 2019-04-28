@@ -283,9 +283,8 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public Map<String,Object> updateHead(MultipartFile file) {
+    public R updateHead(MultipartFile file) {
         int usId = ShiroUtils.getUserId();
-        Map<String,Object> map = new HashMap<String, Object>();
         try{
             byte[] b = file.getBytes();
             String filename = file.getOriginalFilename();
@@ -300,14 +299,11 @@ public class SysUserServiceImpl implements SysUserService {
 
             int i =userMapper.updateHead(file,usId);
             if (i>0) {
-                map.put("result", "success");
+                return R.ok();
             }
         }catch(Exception e){
             e.printStackTrace();
-            map.put("result","fail");
         }
-
-        return  map;
+        return R.error("上传失败");
     }
-
 }
