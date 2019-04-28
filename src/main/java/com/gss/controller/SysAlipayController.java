@@ -36,8 +36,8 @@ public class SysAlipayController {
     @RequestMapping(value = "/sys/alipay/pay",method = RequestMethod.POST)
     public R order() throws Exception {
 
-        String orderNum = "1555636552404";
-       // String orderNum = (String)ShiroUtils.getAttribute("orderNum");
+        //String orderNum = "1555636552404";
+        String orderNum = (String)ShiroUtils.getAttribute("orderNum");
 
         if (orderNum != null) {
             AliOrder order = orderService.getOrderByOrderNum(orderNum);

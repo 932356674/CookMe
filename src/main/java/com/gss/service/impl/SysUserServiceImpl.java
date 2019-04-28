@@ -4,23 +4,21 @@ import com.gss.entity.*;
 import com.gss.mapper.RegistMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
-import com.gss.utils.GetMessageCode;
+import com.gss.utils.*;
 import com.gss.entity.*;
 import com.gss.mapper.CollectMapper;
 import com.gss.mapper.CookbookMapper;
 import com.gss.mapper.UserMapper;
 import com.gss.service.SysUserService;
-import com.gss.utils.R;
-import com.gss.utils.RandomUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.util.*;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -229,6 +227,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R changeInfoById(User user) {
+        user.setUsId(ShiroUtils.getUserId());
         user.setUsCreatedate(new Date(System.currentTimeMillis()));
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i>0){
@@ -238,7 +237,9 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public R updatePassword(Integer usId, String newPassword,String oldPassword) {
+    public R updatePassword(String newPassword,String oldPassword) {
+
+        int usId = ShiroUtils.getUserId();
         User user = userMapper.selectByPrimaryKey(usId);
         Md5Hash oldPasswords = new Md5Hash(oldPassword,user.getUsMobile()+"",1024);
         oldPassword = oldPasswords.toString();
@@ -267,5 +268,42 @@ public class SysUserServiceImpl implements SysUserService {
             list1.add(list.get(integer));
         }
         return new R().put("bestUser",list1);
+    }
+
+    @Override
+    public Regist findPhone(long phone) {
+        RegistExample example=new RegistExample();
+        RegistExample.Criteria criteria=example.createCriteria();
+        criteria.andPhoneEqualTo(phone);
+        List<Regist> list = registMapper.selectByExample(example);
+        if(list!=null&&list.size()>0){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public R updateHead(MultipartFile file) {
+        int usId = ShiroUtils.getUserId();
+        try{
+            byte[] b = file.getBytes();
+            String filename = file.getOriginalFilename();
+
+            String suffix = filename.substring(filename.lastIndexOf(".")+1);
+
+            FastDFSClient client = new FastDFSClient("client.conf");
+
+            String paths[] = client.uploadFile(b,suffix);
+            StringBuffer sb = new StringBuffer();
+            sb.append(paths[0]+File.separator+paths[1]);
+
+            int i =userMapper.updateHead(file,usId);
+            if (i>0) {
+                return R.ok();
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return R.error("上传失败");
     }
 }
