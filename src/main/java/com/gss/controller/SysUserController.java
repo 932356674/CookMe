@@ -91,7 +91,7 @@ public class SysUserController {
     @ApiOperation(value = "账号密码登录",notes = "用户登录")
     @RequestMapping(value = "/user/login",method =RequestMethod.POST )
     public R login(@RequestBody User user){
-        String s=null;
+        String s="登录失败";
         try{
             Subject subject=SecurityUtils.getSubject();
             String pwd=user.getUsPassword();
