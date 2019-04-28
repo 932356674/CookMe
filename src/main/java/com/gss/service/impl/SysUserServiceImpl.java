@@ -284,9 +284,10 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R updateHead(MultipartFile file) {
-        int usId = ShiroUtils.getUserId();
+        int usId = 1;
+        String sb = null;
         try{
-            byte[] b = file.getBytes();
+            /*byte[] b = file.getBytes();
             String filename = file.getOriginalFilename();
 
             String suffix = filename.substring(filename.lastIndexOf(".")+1);
@@ -295,15 +296,16 @@ public class SysUserServiceImpl implements SysUserService {
 
             String paths[] = client.uploadFile(b,suffix);
             StringBuffer sb = new StringBuffer();
-            sb.append(paths[0]+File.separator+paths[1]);
+            sb.append(paths[0]+File.separator+paths[1]);*/
+            sb = Images.getImages(file);
 
-            int i =userMapper.updateHead(file,usId);
+            int i =userMapper.updateHead(sb,usId);
             if (i>0) {
-                return R.ok();
+                return R.ok().put("lujin",sb);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-        return R.error("上传失败");
+        return R.error("上传失败").put("lujin",sb);
     }
 }
