@@ -178,7 +178,7 @@ public class SysBookServiceImpl implements SysBookService {
     @Override
     public R selectByBest() {
         List<Cookbook> list=cookbookMapper.selectByExample(null);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),5);
         List<Cookbook> list1=new ArrayList<>();
         for (Integer integer : set) {
             list1.add(list.get(integer));
@@ -189,7 +189,7 @@ public class SysBookServiceImpl implements SysBookService {
     @Override
     public R selectByTimeType(int typeId) {
         List<Cookbook> list=cookbookMapper.selectByType(typeId);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),5);
         List<Cookbook> list1=new ArrayList<>();
         for (Integer integer : set) {
             list1.add(list.get(integer));

@@ -32,7 +32,7 @@ public interface SysUserService {
 
 //重置密码
     public R resetPwd(User user);
-
+//首页获取推荐用户
     R selectBest();
 //验证手机号是否存在（跟注册的验证结果相反）
     List<User> findMobile(long phone);
