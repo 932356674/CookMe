@@ -47,4 +47,6 @@ public interface SysUserService {
 //修改个人头像
     public R updateHead(MultipartFile file);
 
+//他人主页
+    public R selectHeHome(Integer usId,Integer showId);
 }

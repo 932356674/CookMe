@@ -1,5 +1,6 @@
 package com.gss.service.impl;
 
+import com.gss.dto.UserAttentionDto;
 import com.gss.entity.*;
 import com.gss.mapper.RegistMapper;
 import com.gss.mapper.UserMapper;
@@ -308,4 +309,26 @@ public class SysUserServiceImpl implements SysUserService {
         }
         return R.error("上传失败").put("lujin",sb);
     }
+
+    @Override
+    public R selectHeHome(Integer usId,Integer showId) {
+        User user = userMapper.selectByPrimaryKey(usId);
+        //分享的菜谱
+        List<Cookbook> list = cookbookMapper.selectCookbookByUsId(usId);
+
+        //收藏的菜谱
+        List<Collect> list1 = collectMapper.selectCookbookByUsId(usId);
+
+        List<UserAttentionDto> list2 = userMapper.selectAttentionFans(usId);
+        Attention attention = new Attention();
+        for(int i = 0 ; i < list2.size() ; i++){
+            if(list2.get(i).getFansId()==showId||list2.get(i).getAttentionId()==showId){
+                attention.setStatus(list2.get(i).getStatus());
+                attention.setId(list2.get(i).getId());
+                return R.ok().put("user",user).put("cookbook1",list).put("cookbook2",list1).put("attention",attention);
+            }
+        }
+        return R.ok().put("user",user).put("cookbook1",list).put("cookbook2",list1).put("attention",attention);
+    }
+
 }

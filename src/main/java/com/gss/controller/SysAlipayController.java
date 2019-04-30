@@ -38,7 +38,8 @@ public class SysAlipayController {
 
         //String orderNum = "1555636552404";
         String orderNum = (String)ShiroUtils.getAttribute("orderNum");
-
+//        System.out.println(ShiroUtils.getAttribute("orderNum"));
+//        System.out.println(orderNum+"-------------");
         if (orderNum != null) {
             AliOrder order = orderService.getOrderByOrderNum(orderNum);
             // 商户订单号，商户网站订单系统中唯一订单号，必填

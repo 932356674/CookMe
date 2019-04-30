@@ -78,15 +78,6 @@ public class SysOrderServiceImpl implements SysOrderService {
 
     @Override
     public List<AliOrder> findtrade(AliOrder aliOrder) {
-         long aaa=System.currentTimeMillis();
-         aliOrder.setOrderNum(aaa+"");
-         ShiroUtils.setAttribute("aaa",aaa+"");
-         aliOrder.setUsId(ShiroUtils.getUserId());
-         aliOrder.setConId(Integer.valueOf(String.valueOf(ShiroUtils.getAttribute("conId"))).intValue());
-         aliOrder.setAliItem(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
-       //  aliOrder.setUsId(3);
-       //  aliOrder.setConId(7);
-       //  aliOrder.setAliItem(aaa);
          long orderNum=System.currentTimeMillis();
          aliOrder.setOrderNum(orderNum+"");
          ShiroUtils.setAttribute("orderNum",orderNum+"");
