@@ -3,14 +3,12 @@ package com.gss.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.gss.dto.BookDTO;
-import com.gss.dto.CookbookDTO;
 import com.gss.dto.StepDTO;
 import com.gss.entity.*;
 import com.gss.mapper.*;
 import com.gss.service.SysBookService;
 import com.gss.utils.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -21,9 +19,6 @@ import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.RandomUtils;
 import com.gss.utils.ResultData;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -81,6 +76,7 @@ public class SysBookServiceImpl implements SysBookService {
         return R.ok("新增成功！");
     }
 
+
     @Override
     public R addCollect(int bookId) {
         Collect collect = new Collect();
@@ -96,30 +92,43 @@ public class SysBookServiceImpl implements SysBookService {
 
     @Override
     public ResultData selectBook(Pager pager, String search) {
-        PageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+
         CookbookExample cookbookExample = null;
-        MaterialExample materialExample = null;
+        //MaterialExample materialExample = null;
         if(StringUtils.isNotEmpty(search)){
             cookbookExample = new CookbookExample();
             CookbookExample.Criteria criteria = cookbookExample.createCriteria();
             criteria.andBookNameLike("%"+search+"%");
 
+            /*materialExample = new MaterialExample();
+            MaterialExample.Criteria criteria1 = materialExample.createCriteria();
+            criteria1.andMatNameLike("%"+search+"%");*/
+        }
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        List<Cookbook> list = cookbookMapper.selectByExample(cookbookExample);
+
+        PageInfo info = new PageInfo(list);
+        return new ResultData(info.getTotal(),info.getList());
+    }
+
+    @Override
+    public ResultData selectBookByMaterial(Pager pager, String search) {
+        MaterialExample materialExample = null;
+        if(StringUtils.isNotEmpty(search)){
             materialExample = new MaterialExample();
             MaterialExample.Criteria criteria1 = materialExample.createCriteria();
             criteria1.andMatNameLike("%"+search+"%");
         }
-        List<Cookbook> list = cookbookMapper.selectByExample(cookbookExample);
-        List<Material> list1 = materialMapper.selectByExample(materialExample);
-        List<Integer> list2=new ArrayList<>();
-        for (Cookbook cookbook : list) {
-            list2.add(cookbook.getBookId());
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        List<Material> list = materialMapper.selectByExample(materialExample);
+        List<Cookbook> cookbooks = new ArrayList<Cookbook>();
+        for (Material material : list) {
+            Cookbook cookbook = cookbookMapper.selectByPrimaryKey(material.getBookId());
+            cookbooks.add(cookbook);
         }
-        for (Material material : list1) {
-            if (!list2.contains(material.getBookId())){
-                list.add(cookbookMapper.selectByPrimaryKey(material.getBookId()));
-            }
-        }
-        PageInfo info = new PageInfo(list);
+        PageInfo info = new PageInfo(cookbooks);
         return new ResultData(info.getTotal(),info.getList());
     }
 
@@ -175,14 +184,10 @@ public class SysBookServiceImpl implements SysBookService {
         return r;
     }
 
-
-
-
-
     @Override
     public R selectByBest() {
         List<Cookbook> list=cookbookMapper.selectByExample(null);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),5);
         List<Cookbook> list1=new ArrayList<>();
         for (Integer integer : set) {
             list1.add(list.get(integer));
@@ -193,7 +198,7 @@ public class SysBookServiceImpl implements SysBookService {
     @Override
     public R selectByTimeType(int typeId) {
         List<Cookbook> list=cookbookMapper.selectByType(typeId);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),5);
         List<Cookbook> list1=new ArrayList<>();
         for (Integer integer : set) {
             list1.add(list.get(integer));

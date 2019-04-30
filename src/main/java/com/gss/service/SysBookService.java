@@ -1,6 +1,8 @@
 package com.gss.service;
 
+
 import com.gss.dto.BookDTO;
+import com.gss.dto.CookbookDTO;
 import com.gss.utils.Pager;
 import com.gss.utils.R;
 import com.gss.utils.ResultData;
@@ -45,13 +47,15 @@ import com.gss.utils.ResultData;
 public interface SysBookService {
 
     //新增菜谱
-    public R add(BookDTO bookDTO);
+    R add(BookDTO bookDTO);
 
-    public R addCollect(int bookId);
+    R addCollect(int bookId);
 
-    public ResultData selectBook(Pager pager, String search);
+    ResultData selectBook(Pager pager, String search);
 
-    public R comment(int bookId,String commentValue);
+    ResultData selectBookByMaterial (Pager pager, String search);
+
+    R comment(int bookId,String commentValue);
 
     R selectBookById(int bookId);
 

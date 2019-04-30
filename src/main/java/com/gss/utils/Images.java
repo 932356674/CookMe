@@ -52,7 +52,7 @@ public class Images {
             String suffix =fileName.substring(fileName.lastIndexOf(".")+1);
             FastDFSClient fastDFSClient = new FastDFSClient("client.conf");
             String ss[] = fastDFSClient.uploadFile(b,suffix);
-            sb.append(ss[0]+ File.pathSeparator+ss[1]);
+            sb.append(ss[0]+"/"+ss[1]);
         }catch(Exception e){
             e.printStackTrace();
         }

@@ -15,10 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +36,7 @@ public class SysAlipayController {
     @RequestMapping(value = "/sys/alipay/pay",method = RequestMethod.POST)
     public R order() throws Exception {
 
+        //String orderNum = "1555636552404";
         String orderNum = (String)ShiroUtils.getAttribute("orderNum");
 
         if (orderNum != null) {
@@ -53,6 +51,7 @@ public class SysAlipayController {
             alipayRequest.setReturnUrl(AlipayConfig.return_url);
             alipayRequest.setNotifyUrl(AlipayConfig.notify_url);
 
+
             //商户订单号，商户网站订单系统中唯一订单号，必填
             // ("WIDout_trade_no").getBytes("ISO-8859-1"),"UTF-8");
             String out_trade_no = orderNum;
@@ -64,6 +63,7 @@ public class SysAlipayController {
             //String subject = new String(request.getParameter("WIDsubject").getBytes("ISO-8859-1"),"UTF-8");
             Long aliItem = order.getAliItem();
 
+
             List<Product> proByAliNum = sysOrderService.getProByAliNum(aliItem);
             StringBuffer subject = new StringBuffer("");
             if (proByAliNum!=null){
@@ -71,9 +71,9 @@ public class SysAlipayController {
                     subject.append(product.getProductName());
                     subject.append("、");
                 }
-                System.out.println(subject.toString());
+                System.out.println("+++++"+subject.toString());
             }
-
+            System.out.println("单号"+orderNum+"---"+"金额"+total_amount+"---"+"阿里Item"+aliItem);
 
             //商品描述，可空
             //String body = new String(request.getParameter("WIDbody").getBytes("ISO-8859-1"),"UTF-8");

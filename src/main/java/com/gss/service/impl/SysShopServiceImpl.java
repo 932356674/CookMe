@@ -136,7 +136,7 @@ public class SysShopServiceImpl implements SysShopService {
     @Override
     public R selectByType(String sort) {
         List<Product> list=productMapper.selectByType(sort);
-        Set<Integer> set=RandomUtils.getRondom(list.size(),2);
+        Set<Integer> set=RandomUtils.getRondom(list.size(),6);
         List<Product> list1=new ArrayList<>();
         for (Integer integer : set) {
             list1.add(list.get(integer));
