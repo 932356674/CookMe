@@ -285,7 +285,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R updateHead(MultipartFile file) {
-        int usId = 1;
+        int usId = ShiroUtils.getUserId();
         String sb = null;
         try{
             /*byte[] b = file.getBytes();

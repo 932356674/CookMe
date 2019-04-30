@@ -18,12 +18,5 @@ public class CookmeApplication {
     }
 
 
-    @Bean(name = "multipartResolver")
-    public MultipartResolver multipartResolver(){
-        CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-        resolver.setDefaultEncoding("UTF-8");
-        return resolver;
-    }
-
 
 }

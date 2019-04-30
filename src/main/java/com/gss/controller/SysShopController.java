@@ -153,8 +153,8 @@ public class SysShopController {
 
 
     @ApiOperation(value = "首页根据商品类型随机查询",notes = "根据商品类型获得商品简略信息")
-    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.GET)
-    public R selectByType(@RequestParam String sort){
+    @RequestMapping(value = "/shop/selectByType/{sort}",method = RequestMethod.POST)
+    public R selectByType(@PathVariable String sort){
         return sysShopService.selectByType(sort);
     }
 
