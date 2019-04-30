@@ -40,10 +40,16 @@ public class SysBookController {
         return sysBookService.addCollect(bookId);
     }
 
-    @ApiOperation(value = "模糊查询菜谱或食材",notes = "模糊查询菜谱或食材")
+    @ApiOperation(value = "模糊查询菜谱",notes = "模糊查询菜谱")
     @RequestMapping(value = "/book/fuzzySelectBook/{search}",method = RequestMethod.POST)
-    public ResultData selectBook(@RequestBody Pager pager,@PathVariable String search){
+    public ResultData selectBookByName(@RequestBody Pager pager,@PathVariable String search){
         return sysBookService.selectBook(pager,search);
+    }
+
+    @ApiOperation(value = "模糊查询食材",notes = "模糊查询菜谱")
+    @RequestMapping(value = "/book/fuzzySelectBookByMaterial/{search}",method = RequestMethod.POST)
+    public ResultData selectBookByMaterial(@RequestBody Pager pager,@PathVariable String search){
+        return sysBookService.selectBookByMaterial(pager,search);
     }
 
     @ApiOperation(value = "菜谱评论",notes = "菜谱评论")

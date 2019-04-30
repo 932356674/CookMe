@@ -108,18 +108,27 @@ public class SysBookServiceImpl implements SysBookService {
         pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
         List<Cookbook> list = cookbookMapper.selectByExample(cookbookExample);
 
-        //List<Material> list1 = materialMapper.selectByExample(materialExample);
-        List<Integer> list2=new ArrayList<>();
-        for (Cookbook cookbook : list) {
-            list2.add(cookbook.getBookId());
-        }
-        /*for (Material material : list1) {
-            if (!list2.contains(material.getBookId())){
-                list.add(cookbookMapper.selectByPrimaryKey(material.getBookId()));
-            }
-        }*/
-
         PageInfo info = new PageInfo(list);
+        return new ResultData(info.getTotal(),info.getList());
+    }
+
+    @Override
+    public ResultData selectBookByMaterial(Pager pager, String search) {
+        MaterialExample materialExample = null;
+        if(StringUtils.isNotEmpty(search)){
+            materialExample = new MaterialExample();
+            MaterialExample.Criteria criteria1 = materialExample.createCriteria();
+            criteria1.andMatNameLike("%"+search+"%");
+        }
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        List<Material> list = materialMapper.selectByExample(materialExample);
+        List<Cookbook> cookbooks = new ArrayList<Cookbook>();
+        for (Material material : list) {
+            Cookbook cookbook = cookbookMapper.selectByPrimaryKey(material.getBookId());
+            cookbooks.add(cookbook);
+        }
+        PageInfo info = new PageInfo(cookbooks);
         return new ResultData(info.getTotal(),info.getList());
     }
 
