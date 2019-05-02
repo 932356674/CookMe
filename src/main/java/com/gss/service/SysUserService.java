@@ -49,4 +49,7 @@ public interface SysUserService {
 
 //他人主页
     public R selectHeHome(Integer usId,Integer showId);
+
+    //查询个人信息
+    public R selectUserById(Integer usId);
 }

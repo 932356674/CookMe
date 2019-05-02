@@ -167,4 +167,11 @@ public class SysUserController {
     }
 
 
+    @ApiOperation(value ="个人信息",notes = "个人信息")
+    @RequestMapping(value = "/user/selectById",method = RequestMethod.GET)
+    public R selectById(){
+        int usId=ShiroUtils.getUserId();
+        return sysUserService.selectUserById(usId);
+    }
+
 }
