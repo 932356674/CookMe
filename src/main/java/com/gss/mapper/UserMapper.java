@@ -105,6 +105,4 @@ public interface UserMapper {
     //我的粉丝数量
     Integer selectMyFansCounts(Integer usId);
 
-    //修改个人头像
-    int updateHead(String file, Integer usId);
 }

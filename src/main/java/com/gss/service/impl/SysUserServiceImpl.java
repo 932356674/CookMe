@@ -285,7 +285,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R updateHead(MultipartFile file) {
-        int usId = ShiroUtils.getUserId();
+        int usId = 1;
         String sb = null;
         try{
             /*byte[] b = file.getBytes();
@@ -299,15 +299,16 @@ public class SysUserServiceImpl implements SysUserService {
             StringBuffer sb = new StringBuffer();
             sb.append(paths[0]+File.separator+paths[1]);*/
             sb = Images.getImages(file);
-
-            int i =userMapper.updateHead(sb,usId);
+            User user = userMapper.selectByPrimaryKey(usId);
+            user.setUsHead(sb);
+            int i =userMapper.updateByPrimaryKey(user);
             if (i>0) {
-                return R.ok().put("lujin",sb);
+                return R.ok().put("dizhi",sb);
             }
         }catch(Exception e){
             e.printStackTrace();
         }
-        return R.error("上传失败").put("lujin",sb);
+        return R.error("上传失败");
     }
 
     @Override
@@ -329,6 +330,15 @@ public class SysUserServiceImpl implements SysUserService {
             }
         }
         return R.ok().put("user",user).put("cookbook1",list).put("cookbook2",list1).put("attention",attention);
+    }
+
+
+    @Override
+    public R selectUserById(Integer usId) {
+
+        User user = userMapper.selectByPrimaryKey(usId);
+
+        return R.ok().put("user",user);
     }
 
 }
