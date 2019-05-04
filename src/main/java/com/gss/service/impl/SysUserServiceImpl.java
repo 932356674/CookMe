@@ -116,6 +116,7 @@ public class SysUserServiceImpl implements SysUserService {
             //Md5加密
             Md5Hash md5Hash = new Md5Hash(password,user.getUsMobile()+"",1024);
             user.setUsPassword(md5Hash.toString());
+            user.setUsHead("group1/M00/00/03/rBE1hVzNhRiAGAxkAAILvfMpz_8563.jpg");
             int insert = userMapper.insert(user);
 
             if(insert>0){
@@ -285,7 +286,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public R updateHead(MultipartFile file) {
-        int usId = 1;
+        int usId = ShiroUtils.getUserId();
         String sb = null;
         try{
             /*byte[] b = file.getBytes();

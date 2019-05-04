@@ -155,6 +155,21 @@ public class SysShopController {
     @ApiOperation(value = "首页根据商品类型随机查询",notes = "根据商品类型获得商品简略信息")
     @RequestMapping(value = "/shop/selectByType/{sort}",method = RequestMethod.POST)
     public R selectByType(@PathVariable String sort){
+        if (sort.equals("0")){
+            sort = "蔬菜水果";
+        }
+        if (sort.equals("1")){
+            sort = "家禽肉类";
+        }
+        if (sort.equals("2")){
+            sort = "水产冻品";
+        }
+        if (sort.equals("3")){
+            sort = "豆腐禽蛋";
+        }
+        if (sort.equals("4")){
+            sort = "干货粮油";
+        }
         return sysShopService.selectByType(sort);
     }
 
