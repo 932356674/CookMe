@@ -174,4 +174,12 @@ public class SysUserController {
         return sysUserService.selectUserById(usId);
     }
 
+
+    @ApiOperation(value = "用户退出",notes = "用户退出")
+    @RequestMapping(value = "/user/logout",method = RequestMethod.POST)
+    public R logout(){
+        //清空session
+        ShiroUtils.logout();
+        return R.ok();
+    }
 }

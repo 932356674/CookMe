@@ -14,7 +14,7 @@ public class FastDFSClient {
 	private StorageServer storageServer = null;
 	public FastDFSClient(String conf) throws Exception{
 		String path = this.getClass().getResource("/").getPath();
-		ClientGlobal.init(path+conf);
+		ClientGlobal.init(conf);
 		trackerClient = new TrackerClient();
 		trackerServer = trackerClient.getConnection();
 		storageClient = new StorageClient(trackerServer,storageServer);
