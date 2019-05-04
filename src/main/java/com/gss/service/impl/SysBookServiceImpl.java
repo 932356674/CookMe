@@ -48,15 +48,21 @@ public class SysBookServiceImpl implements SysBookService {
         try{
             bookDTO.setUsId(ShiroUtils.getUserId());
             bookDTO.setBookTime(new Date());
-            bookDTO.setBookImage(Images.getImages(bookDTO.getBookImagefile()));
+            if(bookDTO.getBookImagefile()!=null){
+                bookDTO.setBookImage(Images.getImages(bookDTO.getBookImagefile()));
+            }
             cookbookMapper.insert(bookDTO);
             List<Material> materials = bookDTO.getMaterial();
             for (Material material : materials) {
+                material.setBookId(bookDTO.getBookId());
                 materialMapper.insert(material);
             }
             List<StepDTO> steps = bookDTO.getStepDTOS();
             for (StepDTO step : steps) {
-                step.setStepImage(Images.getImages(step.getStepImageFile()));
+                if(step.getStepImageFile()!=null){
+                    step.setStepImage(Images.getImages(step.getStepImageFile()));
+                }
+                step.setBookId(bookDTO.getBookId());
                 stepMapper.insert(step);
             }
             User u = userMapper.selectByPrimaryKey(ShiroUtils.getUserId());
