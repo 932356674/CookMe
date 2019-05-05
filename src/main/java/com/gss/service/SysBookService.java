@@ -64,5 +64,6 @@ public interface SysBookService {
     ResultData selectByType(int typeId, Pager pager);
 
     R selectByBest();
+    ResultData selectCookbook(int num, Pager pager);
 
 }

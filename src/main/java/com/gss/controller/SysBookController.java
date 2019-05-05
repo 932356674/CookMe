@@ -84,4 +84,10 @@ public class SysBookController {
         return sysBookService.selectByBest();
     }
 
+    @ApiOperation(value = "菜谱首页查询",notes = "获得菜谱简略信息")
+    @RequestMapping(value = "/book/selectCookbook/{num}",method = RequestMethod.POST)
+    public ResultData selectCookbook(@PathVariable Integer num , @RequestBody Pager pager){
+        return sysBookService.selectCookbook(num,pager);
+    }
+
 }

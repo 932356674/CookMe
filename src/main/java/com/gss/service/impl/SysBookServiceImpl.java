@@ -44,6 +44,26 @@ public class SysBookServiceImpl implements SysBookService {
     private BooktypeMapper booktypeMapper;
 
     @Override
+    public ResultData selectCookbook(int num, Pager pager) {
+        PageHelper pageHelper=new PageHelper();
+        pageHelper.offsetPage(pager.getOffset(),pager.getLimit());
+        CookbookExample cookbookExample = new CookbookExample();
+        CookbookExample.Criteria criteria = cookbookExample.createCriteria();
+        if (num==0){
+            cookbookExample.setOrderByClause("book_time desc");
+        }else {
+            cookbookExample.setOrderByClause("book_collect desc");
+        }
+        List<Cookbook> list=cookbookMapper.selectByExample(cookbookExample);
+        PageInfo pageInfo=new PageInfo(list);
+        list=pageInfo.getList();
+        return new ResultData(pageInfo.getTotal(),list);
+
+
+
+    }
+
+    @Override
     public R add(BookDTO bookDTO) {
         try{
             bookDTO.setUsId(ShiroUtils.getUserId());

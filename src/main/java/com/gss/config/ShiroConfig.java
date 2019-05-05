@@ -86,6 +86,7 @@ public class ShiroConfig {
         //LinkedHashMap能保证存取顺序
         LinkedHashMap<String,String>map = new LinkedHashMap<>();
         map.put("/public/**","anon");//静态js css
+        map.put("/static/**","anon");
         //map.put("/json/**","anon");//假数据
         map.put("/captcha.jpg","anon");//验证码
         map.put("/sys/user/login","anon");
