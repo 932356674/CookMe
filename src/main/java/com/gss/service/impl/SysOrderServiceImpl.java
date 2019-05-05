@@ -78,42 +78,44 @@ public class SysOrderServiceImpl implements SysOrderService {
 
     @Override
     public List<AliOrder> findtrade(AliOrder aliOrder) {
-         long aaa=System.currentTimeMillis();
-         aliOrder.setOrderNum(aaa+"");
-         ShiroUtils.setAttribute("aaa",aaa+"");
-         aliOrder.setUsId(ShiroUtils.getUserId());
-         aliOrder.setConId(Integer.valueOf(String.valueOf(ShiroUtils.getAttribute("conId"))).intValue());
-         aliOrder.setAliItem(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
-       //  aliOrder.setUsId(3);
-       //  aliOrder.setConId(7);
-       //  aliOrder.setAliItem(aaa);
          long orderNum=System.currentTimeMillis();
          aliOrder.setOrderNum(orderNum+"");
          ShiroUtils.setAttribute("orderNum",orderNum+"");
          aliOrder.setUsId(ShiroUtils.getUserId());
          aliOrder.setConId(Integer.valueOf(String.valueOf(ShiroUtils.getAttribute("conId"))).intValue());
-         aliOrder.setAliItem(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
-      //   aliOrder.setUsId(2);
-      //    aliOrder.setConId(7);
-      //    aliOrder.setAliItem(aaa);
+         try {
+             aliOrder.setAliItem(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
+         }catch (NumberFormatException q){
+             aliOrder.setAliItem(null);
+         }
+        // aliOrder.setUsId(2);
+        // aliOrder.setConId(7);
+        // aliOrder.setAliItem(orderNum);
         aliOrder.setCreateDate(new Date(System.currentTimeMillis()));
         int i=aliOrderMapper.insert(aliOrder);
-        //生成订单删除购物车
-        OrderItemsExample orderItemsExample=new OrderItemsExample();
-        OrderItemsExample.Criteria criteria1=orderItemsExample.createCriteria();
-        criteria1.andProItmEqualTo(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
-        List<OrderItems> list1=orderItemsMapper.selectByExample(orderItemsExample);
-        for (OrderItems orderItems : list1) {
-            ShopcarExample shopcarExample=new ShopcarExample();
-            ShopcarExample.Criteria criteria2=shopcarExample.createCriteria();
-            criteria2.andProductIdEqualTo(orderItems.getProductId());
-            List<Shopcar> list2=shopcarMapper.selectByExample(shopcarExample);
-            for (Shopcar shopcar : list2) {
-                shopcar.setUsId(ShiroUtils.getUserId());
-                int ddd=shopcarMapper.deleteshopca(shopcar);
+        try{
+            //生成订单删除购物车
+            OrderItemsExample orderItemsExample = new OrderItemsExample();
+            OrderItemsExample.Criteria criteria1 = orderItemsExample.createCriteria();
+            System.out.println("*********************************************************");
+            criteria1.andProItmEqualTo(Long.valueOf(String.valueOf(ShiroUtils.getAttribute("j"))).longValue());
+            System.out.println("//////////////////////////////////////////////////////");
+            // criteria1.andProItmEqualTo(1555598785238L);
+            List<OrderItems> list1 = orderItemsMapper.selectByExample(orderItemsExample);
+            for (OrderItems orderItems : list1) {
+                ShopcarExample shopcarExample = new ShopcarExample();
+                ShopcarExample.Criteria criteria2 = shopcarExample.createCriteria();
+                criteria2.andProductIdEqualTo(orderItems.getProductId());
+                List<Shopcar> list2 = shopcarMapper.selectByExample(shopcarExample);
+                for (Shopcar shopcar : list2) {
+                    shopcar.setUsId(ShiroUtils.getUserId());
+                    //  shopcar.setUsId(1);
+                    int ddd = shopcarMapper.deleteshopca(shopcar);
+                }
             }
-        }
+        }catch (NumberFormatException e){
 
+        }
         AliOrderExample example=new AliOrderExample();
         AliOrderExample.Criteria criteria=example.createCriteria();
         criteria.andOrderIdEqualTo(aliOrder.getOrderId());

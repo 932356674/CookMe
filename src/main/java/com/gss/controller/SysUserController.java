@@ -5,6 +5,7 @@ import com.gss.entity.Regist;
 import com.gss.entity.User;
 import com.gss.service.SysUserService;
 import com.gss.utils.R;
+import com.gss.utils.ShiroUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -36,8 +37,8 @@ public class SysUserController {
 
     @ApiOperation(value ="个人主页",notes = "个人主页")
     @RequestMapping(value = "/user/selectMyHome",method = RequestMethod.GET)
-    public R selectMyHome(@RequestParam("usId") Integer usId){
-        return sysUserService.selectMyHome(usId);
+    public R selectMyHome(){
+        return sysUserService.selectMyHome(ShiroUtils.getUserId());
     }
 
 
@@ -91,7 +92,7 @@ public class SysUserController {
     @ApiOperation(value = "账号密码登录",notes = "用户登录")
     @RequestMapping(value = "/user/login",method =RequestMethod.POST )
     public R login(@RequestBody User user){
-        String s=null;
+        String s="登录失败，请重试！";
         try{
             Subject subject=SecurityUtils.getSubject();
             String pwd=user.getUsPassword();
@@ -130,7 +131,7 @@ public class SysUserController {
     @ApiOperation(value = "验证验证码登录",notes = "用户登录")
     @RequestMapping(value = "/user/mobileLogin",method = RequestMethod.GET)
     public R mobileLogin(@RequestParam("usMobile") Long usMobile,@RequestParam("code") Integer code){
-        String s=null;
+        String s="登录失败，请重试！";
         try{
             Subject subject=SecurityUtils.getSubject();
             Regist regist=sysUserService.findPhone(usMobile);
@@ -157,4 +158,28 @@ public class SysUserController {
         return sysUserService.updateHead(file);
     }
 
+
+    @ApiOperation(value ="他人主页",notes = "他人主页")
+    @RequestMapping(value = "/user/selectHeHome",method = RequestMethod.GET)
+    public R selectHeHome(@RequestParam("usId") Integer usId){
+
+        return sysUserService.selectHeHome(usId,ShiroUtils.getUserId());
+    }
+
+
+    @ApiOperation(value ="个人信息",notes = "个人信息")
+    @RequestMapping(value = "/user/selectById",method = RequestMethod.GET)
+    public R selectById(){
+        int usId=ShiroUtils.getUserId();
+        return sysUserService.selectUserById(usId);
+    }
+
+
+    @ApiOperation(value = "用户退出",notes = "用户退出")
+    @RequestMapping(value = "/user/logout",method = RequestMethod.POST)
+    public R logout(){
+        //清空session
+        ShiroUtils.logout();
+        return R.ok();
+    }
 }

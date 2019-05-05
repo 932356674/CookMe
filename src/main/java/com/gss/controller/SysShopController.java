@@ -151,10 +151,25 @@ public class SysShopController {
       return  sysShopService.multipleShopCar(shopcar);
     }
 
-    //根据菜谱类型获得菜谱简略信息
+
     @ApiOperation(value = "首页根据商品类型随机查询",notes = "根据商品类型获得商品简略信息")
-    @RequestMapping(value = "/shop/selectByType",method = RequestMethod.GET)
-    public R selectByType(@RequestParam String sort){
+    @RequestMapping(value = "/shop/selectByType/{sort}",method = RequestMethod.POST)
+    public R selectByType(@PathVariable String sort){
+        if (sort.equals("0")){
+            sort = "蔬菜水果";
+        }
+        if (sort.equals("1")){
+            sort = "家禽肉类";
+        }
+        if (sort.equals("2")){
+            sort = "水产冻品";
+        }
+        if (sort.equals("3")){
+            sort = "豆腐禽蛋";
+        }
+        if (sort.equals("4")){
+            sort = "干货粮油";
+        }
         return sysShopService.selectByType(sort);
     }
 
@@ -164,15 +179,22 @@ public class SysShopController {
 
     @ApiOperation(value = "首页",notes = "菜市场首页")
     @RequestMapping(value = "/product/index",method = RequestMethod.POST)
-    public Map shop(@RequestBody List<Product> sorts){
+    public Map shop(){
         List<Product> timeProduct = sysShopService.selectRecommend();
         Map<String,List<Product>> map = new HashMap<>();
         map.put("timeProduct",timeProduct);
-       for(int i=0; i<sorts.size() ; i++){
-           List<Product> list1 = sysShopService.selectProductList(sorts.get(i).getSort());
-           map.put("sort"+(i),list1);
-       }
-       return map;
+        List<Product> list1 = sysShopService.selectProductList("蔬菜水果");
+        map.put("sort0",list1);
+        List<Product> list2 = sysShopService.selectProductList("家禽肉类");
+        map.put("sort1",list2);
+        List<Product> list3 = sysShopService.selectProductList("水产冻品");
+        map.put("sort2",list3);
+        List<Product> list4 = sysShopService.selectProductList("豆腐禽蛋");
+        map.put("sort3",list4);
+        List<Product> list5 = sysShopService.selectProductList("干货粮油");
+        map.put("sort4",list5);
+
+        return map;
     }
 
     @ApiOperation(value = "查询",notes = "模糊查询")
